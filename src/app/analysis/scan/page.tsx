@@ -179,8 +179,8 @@ export default function ScanPage() {
 
             console.log("Image uploaded:", publicUrl);
 
-            // 3. Call Python Backend
-            const backendUrl = 'http://localhost:8000/analyze';
+            // 3. Call AI Backend (Modal in production, localhost in development)
+            const backendUrl = process.env.NEXT_PUBLIC_AI_API_URL || 'http://localhost:8000/analyze';
             const response = await fetch(backendUrl, {
                 method: 'POST',
                 headers: {
