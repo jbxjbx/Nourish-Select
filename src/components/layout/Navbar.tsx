@@ -4,6 +4,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Menu, ShoppingBag, Leaf, User, Globe } from 'lucide-react';
+import type { AuthChangeEvent, Session } from '@supabase/supabase-js';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -63,11 +64,11 @@ export function Navbar() {
         checkSession();
 
         // Listen for auth state changes
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((event: AuthChangeEvent, session: Session | null) => {
             setUser(session?.user ?? null);
             setIsLoading(false);
             // Force router refresh when auth state changes
-            if (_event === 'SIGNED_IN' || _event === 'SIGNED_OUT') {
+            if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') {
                 router.refresh();
             }
         });
