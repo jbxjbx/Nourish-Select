@@ -20,27 +20,49 @@ import {
     TabsList,
     TabsTrigger,
 } from '@/components/ui/tabs'
-import { login, signup } from './actions'
+import { createClient } from '@/utils/supabase/client'
+import { useAuth } from '@/context/auth-context'
 
 export function LoginForm() {
     const [isLoading, setIsLoading] = useState(false)
     const [message, setMessage] = useState<string | null>(null)
+    const [messageType, setMessageType] = useState<'error' | 'success'>('error')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [passwordMismatch, setPasswordMismatch] = useState(false)
 
-    async function handleLogin(formData: FormData) {
+    const router = useRouter()
+    const supabase = createClient()
+    const { showSuccessToast } = useAuth()
+
+    // Client-side login - much faster than server action
+    async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault()
         setIsLoading(true)
         setMessage(null)
-        const res = await login(formData)
-        if (res?.error) {
-            setMessage(res.error)
+
+        const formData = new FormData(e.currentTarget)
+        const email = formData.get('email') as string
+        const password = formData.get('password') as string
+
+        const { error } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+        })
+
+        if (error) {
+            setMessage(error.message)
+            setMessageType('error')
             setIsLoading(false)
         }
-        // If success, redirect happens in server action
+        // Success is handled by AuthProvider's onAuthStateChange
+        // which shows toast and redirects to home
     }
 
-    async function handleSignup(formData: FormData) {
+    // Client-side signup
+    async function handleSignup(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault()
+
         // Check password match before submitting
         if (password !== confirmPassword) {
             setPasswordMismatch(true)
@@ -49,13 +71,43 @@ export function LoginForm() {
         setPasswordMismatch(false)
         setIsLoading(true)
         setMessage(null)
-        const res = await signup(formData)
-        if (res?.error) {
-            setMessage(res.error)
-        } else if (res?.success) {
-            setMessage(res.message!)
+
+        const formData = new FormData(e.currentTarget)
+        const email = formData.get('email') as string
+        const firstName = formData.get('first_name') as string
+        const lastName = formData.get('last_name') as string
+        const birthday = formData.get('birthday') as string || null
+        const gender = formData.get('gender') as string || null
+
+        const { error, data } = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+                data: {
+                    first_name: firstName,
+                    last_name: lastName,
+                    full_name: `${firstName} ${lastName}`,
+                    birthday,
+                    gender,
+                },
+            },
+        })
+
+        if (error) {
+            setMessage(error.message)
+            setMessageType('error')
+            setIsLoading(false)
+            return
         }
-        setIsLoading(false)
+
+        if (data.session) {
+            // User is auto-confirmed - AuthProvider will handle redirect
+        } else {
+            // Email confirmation required
+            setMessage('Check your email to confirm your account!')
+            setMessageType('success')
+            setIsLoading(false)
+        }
     }
 
     const handleConfirmPasswordChange = (value: string) => {
@@ -85,7 +137,7 @@ export function LoginForm() {
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-2">
-                            <form action={handleLogin}>
+                            <form onSubmit={handleLogin}>
                                 <div className="space-y-4">
                                     <div className="space-y-2">
                                         <Label htmlFor="email">Email</Label>
@@ -96,13 +148,16 @@ export function LoginForm() {
                                         <Input id="password" name="password" type="password" required />
                                     </div>
                                     {message && (
-                                        <div className="text-sm p-3 rounded-md bg-destructive/10 text-destructive font-medium">
+                                        <div className={`text-sm p-3 rounded-md font-medium ${messageType === 'error'
+                                                ? 'bg-destructive/10 text-destructive'
+                                                : 'bg-green-100 text-green-700'
+                                            }`}>
                                             {message}
                                         </div>
                                     )}
                                     <Button type="submit" className="w-full" disabled={isLoading}>
                                         {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                                        Log In
+                                        {isLoading ? 'Logging in...' : 'Log In'}
                                     </Button>
                                 </div>
                             </form>
@@ -120,7 +175,7 @@ export function LoginForm() {
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-2">
-                            <form action={handleSignup}>
+                            <form onSubmit={handleSignup}>
                                 <div className="space-y-4">
                                     {/* Name Fields - Side by Side */}
                                     <div className="grid grid-cols-2 gap-3">
@@ -133,14 +188,16 @@ export function LoginForm() {
                                             <Input id="last_name" name="last_name" placeholder="Doe" required />
                                         </div>
                                     </div>
+
                                     <div className="space-y-2">
-                                        <Label htmlFor="signup-email">Email</Label>
-                                        <Input id="signup-email" name="email" type="email" placeholder="m@example.com" required />
+                                        <Label htmlFor="signup_email">Email</Label>
+                                        <Input id="signup_email" name="email" type="email" placeholder="m@example.com" required />
                                     </div>
+
                                     <div className="space-y-2">
-                                        <Label htmlFor="signup-password">Password</Label>
+                                        <Label htmlFor="signup_password">Password</Label>
                                         <Input
-                                            id="signup-password"
+                                            id="signup_password"
                                             name="password"
                                             type="password"
                                             required
@@ -148,57 +205,58 @@ export function LoginForm() {
                                             onChange={(e) => setPassword(e.target.value)}
                                         />
                                     </div>
+
                                     <div className="space-y-2">
-                                        <Label htmlFor="confirm-password">Confirm Password</Label>
+                                        <Label htmlFor="confirm_password">Confirm Password</Label>
                                         <Input
-                                            id="confirm-password"
+                                            id="confirm_password"
                                             name="confirm_password"
                                             type="password"
                                             required
                                             value={confirmPassword}
                                             onChange={(e) => handleConfirmPasswordChange(e.target.value)}
-                                            className={passwordMismatch ? 'border-red-500 focus-visible:ring-red-500' : ''}
+                                            className={passwordMismatch ? 'border-destructive' : ''}
                                         />
                                         {passwordMismatch && (
-                                            <p className="text-xs text-red-500 flex items-center gap-1 mt-1">
-                                                <AlertCircle className="w-3 h-3" />
-                                                Passwords do not match
+                                            <p className="text-xs text-destructive flex items-center gap-1">
+                                                <AlertCircle className="w-3 h-3" /> Passwords do not match
                                             </p>
                                         )}
                                     </div>
 
                                     {/* Optional Fields */}
-                                    <div className="border-t pt-4 mt-4">
-                                        <p className="text-xs text-muted-foreground mb-3">Optional Information</p>
-                                        <div className="grid grid-cols-2 gap-3">
-                                            <div className="space-y-2">
-                                                <Label htmlFor="birthday">Birthday</Label>
-                                                <Input id="birthday" name="birthday" type="date" />
-                                            </div>
-                                            <div className="space-y-2">
-                                                <Label htmlFor="gender">Gender</Label>
-                                                <select
-                                                    id="gender"
-                                                    name="gender"
-                                                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                                >
-                                                    <option value="">Prefer not to say</option>
-                                                    <option value="male">Male</option>
-                                                    <option value="female">Female</option>
-                                                    <option value="other">Other</option>
-                                                </select>
-                                            </div>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div className="space-y-2">
+                                            <Label htmlFor="birthday">Birthday (Optional)</Label>
+                                            <Input id="birthday" name="birthday" type="date" />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label htmlFor="gender">Gender (Optional)</Label>
+                                            <select
+                                                id="gender"
+                                                name="gender"
+                                                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                                            >
+                                                <option value="">Prefer not to say</option>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                                <option value="other">Other</option>
+                                            </select>
                                         </div>
                                     </div>
 
                                     {message && (
-                                        <div className="text-sm p-3 rounded-md bg-muted text-foreground font-medium border border-border">
+                                        <div className={`text-sm p-3 rounded-md font-medium ${messageType === 'error'
+                                                ? 'bg-destructive/10 text-destructive'
+                                                : 'bg-green-100 text-green-700'
+                                            }`}>
                                             {message}
                                         </div>
                                     )}
+
                                     <Button type="submit" className="w-full" disabled={isLoading || passwordMismatch}>
                                         {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                                        Create Account
+                                        {isLoading ? 'Creating Account...' : 'Create Account'}
                                     </Button>
                                 </div>
                             </form>
