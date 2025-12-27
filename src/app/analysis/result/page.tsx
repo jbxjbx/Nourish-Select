@@ -29,8 +29,42 @@ function AnalysisResultContent() {
         setMounted(true);
     }, []);
 
+    // Define types for the result object
+    interface Recommendation {
+        id: string;
+        name: string;
+        type: string;
+        reason: string;
+        link: string;
+    }
+
+    interface AnalysisResult {
+        constitution: string;
+        score: number;
+        issues: string[];
+        recommendations: Recommendation[];
+        tongue_features: {
+            teeth_marks: boolean;
+            pale_white: boolean;
+            red: boolean;
+            cracked: boolean;
+            peeling: boolean;
+        };
+        symptoms: {
+            obesity: number;
+            high_sugar: number;
+            indigestion: number;
+            fatigue: number;
+            insomnia: number;
+            acid_reflux: number;
+            dry_mouth: number;
+            constipation: number;
+            irritability: number;
+        };
+    }
+
     // Initial fallback data
-    let result = {
+    let result: AnalysisResult = {
         constitution: 'Detecting...',
         score: 0,
         issues: [],
@@ -253,8 +287,8 @@ function AnalysisResultContent() {
                                                         whileInView={{ width: `${probability * 100}%` }}
                                                         transition={{ duration: 1, delay: 0.5 + (idx * 0.1) }}
                                                         className={`h-full rounded-full ${probability > 0.7 ? 'bg-gradient-to-r from-red-400 to-red-500' :
-                                                                probability > 0.4 ? 'bg-gradient-to-r from-orange-300 to-orange-400' :
-                                                                    'bg-gradient-to-r from-green-300 to-green-400'
+                                                            probability > 0.4 ? 'bg-gradient-to-r from-orange-300 to-orange-400' :
+                                                                'bg-gradient-to-r from-green-300 to-green-400'
                                                             }`}
                                                     />
                                                 </div>
