@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 
 import { LanguageProvider } from '@/context/language-context';
 import { CartProvider } from '@/context/cart-context';
+import { AuthProvider } from '@/context/auth-context';
 
 export default function RootLayout({
   children,
@@ -30,11 +31,13 @@ export default function RootLayout({
       )}>
         <LanguageProvider>
           <CartProvider>
-            <Navbar />
-            <main className="flex-1 pt-16">
-              {children}
-            </main>
-            <Footer />
+            <AuthProvider>
+              <Navbar />
+              <main className="flex-1 pt-16">
+                {children}
+              </main>
+              <Footer />
+            </AuthProvider>
           </CartProvider>
         </LanguageProvider>
       </body>

@@ -4,7 +4,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Menu, ShoppingBag, Leaf, User, Globe } from 'lucide-react';
-import type { AuthChangeEvent, Session } from '@supabase/supabase-js';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -18,18 +18,16 @@ import {
     SheetTrigger,
 } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
-import { createClient } from '@/utils/supabase/client';
 import { CartSheet } from '@/components/cart/CartSheet';
 import { useLanguage } from '@/context/language-context';
+import { useAuth } from '@/context/auth-context';
 
 export function Navbar() {
     const pathname = usePathname();
     const router = useRouter();
     const [isScrolled, setIsScrolled] = React.useState(false);
-    const [user, setUser] = React.useState<any>(null);
-    const [isLoading, setIsLoading] = React.useState(true);
-    const supabase = createClient();
     const { language, setLanguage, t } = useLanguage();
+    const { user, isLoading, signOut } = useAuth();
 
     const navItems = [
         { name: t('nav.analysis'), href: '/analysis' },
@@ -39,49 +37,16 @@ export function Navbar() {
         { name: t('nav.contact'), href: '/contact' },
     ];
 
-    const toggleLanguage = () => {
-        setLanguage(language === 'en' ? 'cn' : 'en');
-    };
-
     React.useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 10);
         };
         window.addEventListener('scroll', handleScroll);
-
-        // Check session immediately on mount
-        const checkSession = async () => {
-            setIsLoading(true);
-            try {
-                const { data: { session } } = await supabase.auth.getSession();
-                setUser(session?.user ?? null);
-            } catch (error) {
-                console.error('Error checking session:', error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        checkSession();
-
-        // Listen for auth state changes
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((event: AuthChangeEvent, session: Session | null) => {
-            setUser(session?.user ?? null);
-            setIsLoading(false);
-            // Force router refresh when auth state changes
-            if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') {
-                router.refresh();
-            }
-        });
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-            subscription.unsubscribe();
-        };
-    }, [supabase, router]);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const handleSignOut = async () => {
-        await supabase.auth.signOut();
-        router.refresh();
+        await signOut();
     };
 
     return (
@@ -152,49 +117,68 @@ export function Navbar() {
 
                     <CartSheet />
 
-                    {user ? (
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="icon" className="rounded-full w-10 h-10 hover:bg-stone-100/80 transition-colors overflow-hidden">
-                                    {user.user_metadata?.avatar_url ? (
-                                        <img
-                                            src={user.user_metadata.avatar_url}
-                                            alt="Avatar"
-                                            className="w-full h-full object-cover rounded-full"
-                                        />
-                                    ) : (
-                                        <div className="w-full h-full bg-primary/10 flex items-center justify-center rounded-full">
-                                            <span className="text-sm font-semibold text-primary">
-                                                {user.user_metadata?.first_name?.[0]?.toUpperCase() || user.email?.[0]?.toUpperCase() || '?'}
-                                            </span>
-                                        </div>
-                                    )}
+                    {/* User Avatar / Login - with smooth transition */}
+                    <AnimatePresence mode="wait">
+                        {user ? (
+                            <motion.div
+                                key="user-avatar"
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.8 }}
+                                transition={{ duration: 0.2 }}
+                            >
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="ghost" size="icon" className="rounded-full w-10 h-10 hover:bg-stone-100/80 transition-colors overflow-hidden">
+                                            {user.user_metadata?.avatar_url ? (
+                                                <img
+                                                    src={user.user_metadata.avatar_url}
+                                                    alt="Avatar"
+                                                    className="w-full h-full object-cover rounded-full"
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full bg-primary/10 flex items-center justify-center rounded-full">
+                                                    <span className="text-sm font-semibold text-primary">
+                                                        {user.user_metadata?.first_name?.[0]?.toUpperCase() || user.email?.[0]?.toUpperCase() || '?'}
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="end" className="w-48">
+                                        <DropdownMenuItem disabled className="font-semibold">
+                                            {user.user_metadata?.first_name
+                                                ? `${user.user_metadata.first_name} ${user.user_metadata.last_name || ''}`.trim()
+                                                : t('auth.my_account')}
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem onClick={() => router.push('/account')}>
+                                            {t('auth.my_account')}
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem onClick={() => router.push('/account/orders')}>
+                                            {t('account.orders')}
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem onClick={handleSignOut} className="text-destructive">
+                                            {t('auth.sign_out')}
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </motion.div>
+                        ) : (
+                            <motion.div
+                                key="user-icon"
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.8 }}
+                                transition={{ duration: 0.2 }}
+                            >
+                                <Button variant="ghost" size="icon" asChild className="hidden md:flex rounded-full w-10 h-10 hover:bg-stone-100/80 transition-colors">
+                                    <Link href="/login">
+                                        <User className="w-5 h-5 text-stone-600" />
+                                    </Link>
                                 </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="w-48">
-                                <DropdownMenuItem disabled className="font-semibold">
-                                    {user.user_metadata?.first_name
-                                        ? `${user.user_metadata.first_name} ${user.user_metadata.last_name || ''}`.trim()
-                                        : t('auth.my_account')}
-                                </DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => router.push('/account')}>
-                                    {t('auth.my_account')}
-                                </DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => router.push('/account/orders')}>
-                                    {t('account.orders')}
-                                </DropdownMenuItem>
-                                <DropdownMenuItem onClick={handleSignOut} className="text-destructive">
-                                    {t('auth.sign_out')}
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    ) : (
-                        <Button variant="ghost" size="icon" asChild className="hidden md:flex rounded-full w-10 h-10 hover:bg-stone-100/80 transition-colors">
-                            <Link href="/login">
-                                <User className="w-5 h-5 text-stone-600" />
-                            </Link>
-                        </Button>
-                    )}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
 
                     {/* Mobile Menu */}
                     <Sheet>
