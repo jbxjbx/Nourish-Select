@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Camera, Upload, X, ArrowRight, Loader2, Video, CircleDot } from 'lucide-react';
+import { Camera, Upload, X, ArrowRight, Loader2, Video, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { createClient } from '@/utils/supabase/client';
@@ -23,6 +23,7 @@ export default function ScanPage() {
     const [error, setError] = useState<string | null>(null);
     const [isCameraMode, setIsCameraMode] = useState(false);
     const [stream, setStream] = useState<MediaStream | null>(null);
+    const [facingMode, setFacingMode] = useState<'user' | 'environment'>('user'); // Default to front camera
 
     const supabase = createClient();
 
@@ -43,14 +44,19 @@ export default function ScanPage() {
         fileInputRef.current?.click();
     };
 
-    // Start camera stream
-    const startCamera = async () => {
+    // Start camera stream with specified facing mode
+    const startCamera = async (facing: 'user' | 'environment' = facingMode) => {
         setError(null);
+
+        // Stop existing stream if any
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+        }
+
         try {
-            // Request camera access - prefers back camera on mobile, any camera on desktop
             const mediaStream = await navigator.mediaDevices.getUserMedia({
                 video: {
-                    facingMode: { ideal: 'environment' }, // Back camera on mobile
+                    facingMode: { ideal: facing },
                     width: { ideal: 1280 },
                     height: { ideal: 720 }
                 },
@@ -59,6 +65,7 @@ export default function ScanPage() {
 
             setStream(mediaStream);
             setIsCameraMode(true);
+            setFacingMode(facing);
 
             // Wait for next render to attach stream to video
             setTimeout(() => {
@@ -80,6 +87,12 @@ export default function ScanPage() {
         }
     };
 
+    // Switch between front and back cameras
+    const switchCamera = () => {
+        const newFacing = facingMode === 'user' ? 'environment' : 'user';
+        startCamera(newFacing);
+    };
+
     // Stop camera stream
     const stopCamera = useCallback(() => {
         if (stream) {
@@ -87,6 +100,16 @@ export default function ScanPage() {
             setStream(null);
         }
         setIsCameraMode(false);
+    }, [stream]);
+
+    // Cleanup camera on unmount (when user leaves page)
+    useEffect(() => {
+        return () => {
+            // Stop all tracks when component unmounts
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+        };
     }, [stream]);
 
     // Capture photo from video stream
@@ -100,6 +123,11 @@ export default function ScanPage() {
 
             const ctx = canvas.getContext('2d');
             if (ctx) {
+                // For front camera, flip the image horizontally
+                if (facingMode === 'user') {
+                    ctx.translate(canvas.width, 0);
+                    ctx.scale(-1, 1);
+                }
                 ctx.drawImage(video, 0, 0);
 
                 // Convert to blob and create file
@@ -211,42 +239,82 @@ export default function ScanPage() {
                                         autoPlay
                                         playsInline
                                         muted
-                                        className="absolute inset-0 w-full h-full object-cover transform scale-125"
+                                        className={`absolute inset-0 w-full h-full object-cover ${facingMode === 'user' ? 'scale-x-[-1]' : ''}`}
                                     />
 
-                                    {/* Tongue Guide Overlay */}
-                                    <div className="absolute inset-0 pointer-events-none z-10 opacity-60">
-                                        <svg viewBox="0 0 100 133" className="w-full h-full stroke-white stroke-[1.5] fill-none drop-shadow-md">
-                                            {/* Natural Tongue Shape */}
-                                            {/* M30,50 (Top Left) -> C30,25 70,25 70,50 (Top Arch) -> L70,85 (Right Side) -> C70,115 30,115 30,85 (Bottom Tip) -> Z */}
-                                            <path d="M32,50 C32,25 68,25 68,50 L68,85 C68,115 32,115 32,85 Z" className="stroke-white/80" />
+                                    {/* Tongue Guide Overlay - Modern Design */}
+                                    <div className="absolute inset-0 pointer-events-none z-10 flex items-center justify-center">
+                                        {/* Dark overlay outside the scan area */}
+                                        <div className="absolute inset-0 bg-black/40" />
 
-                                            {/* Center Line alignment help */}
-                                            <line x1="50" y1="30" x2="50" y2="110" strokeDasharray="3 3" className="stroke-white/40" />
+                                        {/* Scan Frame Container - Large for better image quality */}
+                                        <div className="relative w-[80%] aspect-[3/4] max-w-[300px]">
+                                            {/* Clear center area */}
+                                            <div className="absolute inset-0 bg-transparent" style={{
+                                                boxShadow: '0 0 0 9999px rgba(0,0,0,0.4)'
+                                            }} />
 
-                                            <text x="50" y="20" textAnchor="middle" fill="white" fontSize="5" fontWeight="bold" className="uppercase tracking-widest drop-shadow-sm font-sans">
-                                                {t('analysis.align_tongue') || 'Align Tongue Here'}
-                                            </text>
-                                        </svg>
+                                            {/* Corner Brackets - Top Left */}
+                                            <div className="absolute top-0 left-0 w-8 h-8 border-l-[3px] border-t-[3px] border-white rounded-tl-lg" />
+                                            {/* Top Right */}
+                                            <div className="absolute top-0 right-0 w-8 h-8 border-r-[3px] border-t-[3px] border-white rounded-tr-lg" />
+                                            {/* Bottom Left */}
+                                            <div className="absolute bottom-0 left-0 w-8 h-8 border-l-[3px] border-b-[3px] border-white rounded-bl-lg" />
+                                            {/* Bottom Right */}
+                                            <div className="absolute bottom-0 right-0 w-8 h-8 border-r-[3px] border-b-[3px] border-white rounded-br-lg" />
+
+                                            {/* Dashed Tongue Shape Outline - Large, fills frame */}
+                                            <svg
+                                                viewBox="0 0 100 130"
+                                                className="absolute inset-0 w-full h-full"
+                                                style={{ padding: '3%' }}
+                                            >
+                                                {/* Realistic tongue shape - large with heart-shaped top */}
+                                                <path
+                                                    d="M50,8 
+                                                       C35,8 25,12 22,22
+                                                       C18,35 20,30 35,18
+                                                       C42,13 50,15 50,15
+                                                       C50,15 58,13 65,18
+                                                       C80,30 82,35 78,22
+                                                       C75,12 65,8 50,8
+                                                       M22,22
+                                                       C15,40 12,55 12,75
+                                                       C12,100 28,120 50,120
+                                                       C72,120 88,100 88,75
+                                                       C88,55 85,40 78,22"
+                                                    fill="none"
+                                                    stroke="#FF6B6B"
+                                                    strokeWidth="2"
+                                                    strokeDasharray="8 5"
+                                                    strokeLinecap="round"
+                                                    opacity="0.85"
+                                                />
+
+                                                {/* Center alignment line */}
+                                                <line
+                                                    x1="50" y1="25" x2="50" y2="115"
+                                                    stroke="#FF6B6B"
+                                                    strokeWidth="1.2"
+                                                    strokeDasharray="5 4"
+                                                    opacity="0.5"
+                                                />
+
+                                                {/* Alignment text */}
+                                                <text
+                                                    x="50" y="70"
+                                                    textAnchor="middle"
+                                                    fill="white"
+                                                    fontSize="6"
+                                                    fontWeight="500"
+                                                    className="drop-shadow-lg"
+                                                >
+                                                    {t('analysis.align_tongue') || '将舌头对准此处'}
+                                                </text>
+                                            </svg>
+                                        </div>
                                     </div>
 
-                                    <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-4 z-20">
-                                        <Button
-                                            variant="destructive"
-                                            size="icon"
-                                            className="rounded-full w-12 h-12"
-                                            onClick={stopCamera}
-                                        >
-                                            <X className="w-5 h-5" />
-                                        </Button>
-                                        <Button
-                                            size="lg"
-                                            className="rounded-full bg-white text-black hover:bg-gray-100 shadow-xl w-16 h-16 p-0 flex items-center justify-center"
-                                            onClick={capturePhoto}
-                                        >
-                                            <div className="w-12 h-12 rounded-full border-4 border-red-500" />
-                                        </Button>
-                                    </div>
                                     {/* Hidden canvas for capturing */}
                                     <canvas ref={canvasRef} className="hidden" />
                                 </>
@@ -285,7 +353,7 @@ export default function ScanPage() {
                                             <Upload className="mr-2 w-5 h-5" /> {t('analysis.upload_btn')}
                                         </Button>
                                         <p className="text-sm text-muted-foreground">or</p>
-                                        <Button onClick={startCamera} variant="outline" size="lg" className="rounded-full w-48">
+                                        <Button onClick={() => startCamera('user')} variant="outline" size="lg" className="rounded-full w-48">
                                             <Video className="mr-2 w-5 h-5" /> {t('analysis.camera_btn')}
                                         </Button>
                                     </div>
@@ -314,6 +382,51 @@ export default function ScanPage() {
                         </div>
                     </CardContent>
                 </Card>
+
+                {/* Camera Controls - Outside the frame */}
+                {isCameraMode && !imagePreview && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mt-6 flex flex-col items-center"
+                    >
+                        <div className="flex items-center justify-center gap-8">
+                            {/* Cancel Button */}
+                            <Button
+                                variant="outline"
+                                size="icon"
+                                className="rounded-full w-12 h-12 border-2 border-stone-300 hover:border-stone-400 hover:bg-stone-100"
+                                onClick={stopCamera}
+                            >
+                                <X className="w-5 h-5 text-stone-600" />
+                            </Button>
+
+                            {/* Capture Button */}
+                            <button
+                                onClick={capturePhoto}
+                                className="relative w-16 h-16 flex items-center justify-center group"
+                            >
+                                <div className="absolute w-full h-full rounded-full border-4 border-primary opacity-80 group-hover:opacity-100 transition-opacity" />
+                                <div className="w-12 h-12 rounded-full bg-primary group-hover:scale-95 transition-transform shadow-lg" />
+                            </button>
+
+                            {/* Switch Camera Button */}
+                            <Button
+                                variant="outline"
+                                size="icon"
+                                className="rounded-full w-12 h-12 border-2 border-stone-300 hover:border-stone-400 hover:bg-stone-100"
+                                onClick={switchCamera}
+                            >
+                                <RefreshCw className="w-5 h-5 text-stone-600" />
+                            </Button>
+                        </div>
+
+                        {/* Camera Mode Indicator */}
+                        <p className="text-center text-stone-500 text-sm mt-3">
+                            {facingMode === 'user' ? '📸 Front Camera' : '📷 Back Camera'}
+                        </p>
+                    </motion.div>
+                )}
 
                 {imagePreview && !isAnalyzing && (
                     <motion.div

@@ -52,7 +52,7 @@ export function CartSheet() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ items }),
+                body: JSON.stringify({ items, userId: session.user.id }),
             });
 
             const { url } = await response.json();

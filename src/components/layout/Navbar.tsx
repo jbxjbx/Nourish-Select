@@ -139,16 +139,33 @@ export function Navbar() {
                     {user ? (
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="icon" className="rounded-full w-10 h-10 hover:bg-stone-100/80 transition-colors">
-                                    <User className="w-5 h-5 text-stone-600" />
+                                <Button variant="ghost" size="icon" className="rounded-full w-10 h-10 hover:bg-stone-100/80 transition-colors overflow-hidden">
+                                    {user.user_metadata?.avatar_url ? (
+                                        <img
+                                            src={user.user_metadata.avatar_url}
+                                            alt="Avatar"
+                                            className="w-full h-full object-cover rounded-full"
+                                        />
+                                    ) : (
+                                        <div className="w-full h-full bg-primary/10 flex items-center justify-center rounded-full">
+                                            <span className="text-sm font-semibold text-primary">
+                                                {user.user_metadata?.first_name?.[0]?.toUpperCase() || user.email?.[0]?.toUpperCase() || '?'}
+                                            </span>
+                                        </div>
+                                    )}
                                 </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
+                            <DropdownMenuContent align="end" className="w-48">
                                 <DropdownMenuItem disabled className="font-semibold">
-                                    {user.user_metadata.full_name || t('auth.my_account')}
+                                    {user.user_metadata?.first_name
+                                        ? `${user.user_metadata.first_name} ${user.user_metadata.last_name || ''}`.trim()
+                                        : t('auth.my_account')}
                                 </DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => router.push('/analysis')}>
-                                    {t('auth.my_history')}
+                                <DropdownMenuItem onClick={() => router.push('/account')}>
+                                    {t('auth.my_account')}
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => router.push('/account/orders')}>
+                                    {t('account.orders')}
                                 </DropdownMenuItem>
                                 <DropdownMenuItem onClick={handleSignOut} className="text-destructive">
                                     {t('auth.sign_out')}
