@@ -26,6 +26,7 @@ export function Navbar() {
     const router = useRouter();
     const [isScrolled, setIsScrolled] = React.useState(false);
     const [user, setUser] = React.useState<any>(null);
+    const [isLoading, setIsLoading] = React.useState(true);
     const supabase = createClient();
     const { language, setLanguage, t } = useLanguage();
 
@@ -47,21 +48,35 @@ export function Navbar() {
         };
         window.addEventListener('scroll', handleScroll);
 
-        const getUser = async () => {
-            const { data: { user } } = await supabase.auth.getUser();
-            setUser(user);
+        // Check session immediately on mount
+        const checkSession = async () => {
+            setIsLoading(true);
+            try {
+                const { data: { session } } = await supabase.auth.getSession();
+                setUser(session?.user ?? null);
+            } catch (error) {
+                console.error('Error checking session:', error);
+            } finally {
+                setIsLoading(false);
+            }
         };
-        getUser();
+        checkSession();
 
+        // Listen for auth state changes
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
             setUser(session?.user ?? null);
+            setIsLoading(false);
+            // Force router refresh when auth state changes
+            if (_event === 'SIGNED_IN' || _event === 'SIGNED_OUT') {
+                router.refresh();
+            }
         });
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
             subscription.unsubscribe();
         };
-    }, [supabase]);
+    }, [supabase, router]);
 
     const handleSignOut = async () => {
         await supabase.auth.signOut();
