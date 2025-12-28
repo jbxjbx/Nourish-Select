@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
 import type { User, AuthChangeEvent, Session } from '@supabase/supabase-js';
@@ -9,7 +9,7 @@ import { AuthSuccessToast } from '@/components/auth/AuthSuccessToast';
 interface AuthContextType {
     user: User | null;
     isLoading: boolean;
-    showSuccessToast: (message: string) => void;
+    showSuccessToast: (message: string, shouldRedirect?: boolean) => void;
     signOut: () => Promise<void>;
 }
 
@@ -20,13 +20,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [isLoading, setIsLoading] = useState(true);
     const [toastVisible, setToastVisible] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
+    const [shouldRedirectAfterToast, setShouldRedirectAfterToast] = useState(false);
     const router = useRouter();
     const supabase = createClient();
-
-    // Track if we've already shown the welcome toast for current session
-    const hasShownWelcomeToast = useRef(false);
-    // Track if this is initial load (not a real login event)
-    const isInitialLoad = useRef(true);
 
     // Check session on mount
     useEffect(() => {
@@ -35,39 +31,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             try {
                 const { data: { session } } = await supabase.auth.getSession();
                 setUser(session?.user ?? null);
-                // If user already logged in on mount, don't show toast
-                if (session?.user) {
-                    hasShownWelcomeToast.current = true;
-                }
             } catch (error) {
                 console.error('Error checking session:', error);
             } finally {
                 setIsLoading(false);
-                // Mark initial load as complete after a short delay
-                setTimeout(() => {
-                    isInitialLoad.current = false;
-                }, 1000);
             }
         };
         checkSession();
 
-        // Listen for auth state changes
+        // Listen for auth state changes - BUT don't show toast here
+        // Toast is only shown when explicitly called from login form
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
             (event: AuthChangeEvent, session: Session | null) => {
-                const newUser = session?.user ?? null;
-                setUser(newUser);
+                setUser(session?.user ?? null);
                 setIsLoading(false);
 
-                // Only show toast and redirect on actual login, not on page revisit
-                if (event === 'SIGNED_IN' && newUser && !isInitialLoad.current && !hasShownWelcomeToast.current) {
-                    hasShownWelcomeToast.current = true;
-                    showSuccessToast(`Welcome, ${newUser.user_metadata?.first_name || 'User'}!`);
-                    setTimeout(() => {
-                        router.push('/');
-                        router.refresh();
-                    }, 1500);
-                } else if (event === 'SIGNED_OUT') {
-                    hasShownWelcomeToast.current = false;
+                // Only handle sign out redirect here
+                if (event === 'SIGNED_OUT') {
                     router.push('/');
                     router.refresh();
                 }
@@ -79,16 +59,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         };
     }, [supabase, router]);
 
-    const showSuccessToast = useCallback((message: string) => {
+    // Called explicitly from login form after successful login
+    const showSuccessToast = useCallback((message: string, shouldRedirect: boolean = true) => {
         setToastMessage(message);
+        setShouldRedirectAfterToast(shouldRedirect);
         setToastVisible(true);
-    }, []);
+
+        if (shouldRedirect) {
+            setTimeout(() => {
+                router.push('/');
+                router.refresh();
+            }, 1500);
+        }
+    }, [router]);
 
     const signOut = useCallback(async () => {
         setIsLoading(true);
         await supabase.auth.signOut();
         setUser(null);
-        hasShownWelcomeToast.current = false;
         setIsLoading(false);
         router.push('/');
         router.refresh();

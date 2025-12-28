@@ -45,7 +45,7 @@ export function LoginForm() {
         const email = formData.get('email') as string
         const password = formData.get('password') as string
 
-        const { error } = await supabase.auth.signInWithPassword({
+        const { error, data } = await supabase.auth.signInWithPassword({
             email,
             password,
         })
@@ -54,9 +54,12 @@ export function LoginForm() {
             setMessage(error.message)
             setMessageType('error')
             setIsLoading(false)
+        } else if (data.user) {
+            // Login successful - show toast and redirect
+            const firstName = data.user.user_metadata?.first_name || 'User'
+            showSuccessToast(`Welcome, ${firstName}!`, true)
+            // Keep loading state since we're redirecting
         }
-        // Success is handled by AuthProvider's onAuthStateChange
-        // which shows toast and redirects to home
     }
 
     // Client-side signup
@@ -100,8 +103,10 @@ export function LoginForm() {
             return
         }
 
-        if (data.session) {
-            // User is auto-confirmed - AuthProvider will handle redirect
+        if (data.session && data.user) {
+            // User is auto-confirmed - show toast and redirect
+            const firstName = data.user.user_metadata?.first_name || 'User'
+            showSuccessToast(`Welcome, ${firstName}!`, true)
         } else {
             // Email confirmation required
             setMessage('Check your email to confirm your account!')
@@ -149,8 +154,8 @@ export function LoginForm() {
                                     </div>
                                     {message && (
                                         <div className={`text-sm p-3 rounded-md font-medium ${messageType === 'error'
-                                                ? 'bg-destructive/10 text-destructive'
-                                                : 'bg-green-100 text-green-700'
+                                            ? 'bg-destructive/10 text-destructive'
+                                            : 'bg-green-100 text-green-700'
                                             }`}>
                                             {message}
                                         </div>
@@ -247,8 +252,8 @@ export function LoginForm() {
 
                                     {message && (
                                         <div className={`text-sm p-3 rounded-md font-medium ${messageType === 'error'
-                                                ? 'bg-destructive/10 text-destructive'
-                                                : 'bg-green-100 text-green-700'
+                                            ? 'bg-destructive/10 text-destructive'
+                                            : 'bg-green-100 text-green-700'
                                             }`}>
                                             {message}
                                         </div>
