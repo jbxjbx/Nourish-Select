@@ -160,7 +160,7 @@ function AnalysisResultContent() {
                         <Check className="w-5 h-5 mr-2" /> {t('analysis.result_title')}
                     </div>
                     <h1 className="text-4xl md:text-6xl font-serif text-stone-800 mb-4 tracking-tight">
-                        {result.constitution}
+                        {t(`analysis.constitutions.${result.constitution}`) || result.constitution}
                     </h1>
                     <p className="text-stone-500 max-w-xl mx-auto text-lg leading-relaxed">
                         {t('analysis.result_desc')}
