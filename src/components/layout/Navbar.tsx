@@ -196,29 +196,6 @@ export function Navbar() {
                                     </>
                                 )}
                             </div>
-
-                            {/* Language Toggle at Bottom */}
-                            <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-border/50 bg-stone-50/50">
-                                <p className="text-xs text-muted-foreground mb-2">{language === 'en' ? 'Language' : '语言'}</p>
-                                <div className="flex gap-2">
-                                    <Button
-                                        variant={language === 'en' ? 'default' : 'outline'}
-                                        size="sm"
-                                        onClick={() => setLanguage('en')}
-                                        className="flex-1"
-                                    >
-                                        🇺🇸 English
-                                    </Button>
-                                    <Button
-                                        variant={language === 'cn' ? 'default' : 'outline'}
-                                        size="sm"
-                                        onClick={() => setLanguage('cn')}
-                                        className="flex-1"
-                                    >
-                                        🇨🇳 中文
-                                    </Button>
-                                </div>
-                            </div>
                         </SheetContent>
                     </Sheet>
 
@@ -252,13 +229,13 @@ export function Navbar() {
                 {/* Actions (Language / Cart / Auth) */}
                 <div className="flex items-center gap-1 md:gap-2">
 
-                    {/* Language Switcher - Desktop only */}
+                    {/* Language Switcher - Show on both mobile and desktop */}
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button
                                 variant="ghost"
                                 size="icon"
-                                className="hidden md:flex rounded-full w-10 h-10 hover:bg-stone-100/80 transition-colors"
+                                className="rounded-full w-10 h-10 hover:bg-stone-100/80 transition-colors"
                             >
                                 <Globe className="h-5 w-5 text-stone-600" />
                             </Button>
