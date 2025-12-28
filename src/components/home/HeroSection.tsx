@@ -58,7 +58,7 @@ export function HeroSection() {
                     transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
                 >
                     <span className="inline-block px-4 py-1.5 mb-6 text-sm font-medium tracking-widest text-emerald-400 uppercase border border-emerald-500/30 rounded-full bg-emerald-950/30 backdrop-blur-md">
-                        Ancient Wisdom · Modern Science
+                        {t('hero.badge')}
                     </span>
 
                     <h1 className="text-4xl md:text-7xl lg:text-8xl font-serif font-bold tracking-tight text-white mb-8 drop-shadow-lg leading-tight">

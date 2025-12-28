@@ -188,9 +188,49 @@ export function Navbar() {
                                 <span className="sr-only">Toggle menu</span>
                             </Button>
                         </SheetTrigger>
-                        <SheetContent side="right" className="bg-background/95 backdrop-blur-xl">
-                            <div className="flex flex-col gap-2 mb-8">
-                                <p className="text-xs text-muted-foreground mb-1">Language</p>
+                        <SheetContent side="left" className="bg-background/95 backdrop-blur-xl w-[280px]">
+                            {/* Navigation Links First */}
+                            <div className="flex flex-col gap-5 mt-8">
+                                {navItems.map((item) => (
+                                    <Link
+                                        key={item.href}
+                                        href={item.href}
+                                        className="text-lg font-medium text-foreground hover:text-primary transition-colors"
+                                    >
+                                        {item.name}
+                                    </Link>
+                                ))}
+
+                                {/* Divider */}
+                                <div className="h-px bg-border my-2" />
+
+                                {/* Auth Links */}
+                                {!user && (
+                                    <Link
+                                        href="/login"
+                                        className="text-lg font-medium text-primary transition-colors"
+                                    >
+                                        {t('auth.sign_in')}
+                                    </Link>
+                                )}
+                                {user && (
+                                    <>
+                                        <Link
+                                            href="/account"
+                                            className="text-lg font-medium text-foreground hover:text-primary transition-colors"
+                                        >
+                                            {t('auth.my_account')}
+                                        </Link>
+                                        <button onClick={handleSignOut} className="text-lg font-medium text-destructive text-left">
+                                            {t('auth.sign_out')}
+                                        </button>
+                                    </>
+                                )}
+                            </div>
+
+                            {/* Language Toggle at Bottom */}
+                            <div className="absolute bottom-8 left-6 right-6">
+                                <p className="text-xs text-muted-foreground mb-2">{language === 'en' ? 'Language' : '语言'}</p>
                                 <div className="flex gap-2">
                                     <Button
                                         variant={language === 'en' ? 'default' : 'outline'}
@@ -198,7 +238,7 @@ export function Navbar() {
                                         onClick={() => setLanguage('en')}
                                         className="flex-1"
                                     >
-                                        🇺🇸 English
+                                        🇺🇸 EN
                                     </Button>
                                     <Button
                                         variant={language === 'cn' ? 'default' : 'outline'}
@@ -209,31 +249,6 @@ export function Navbar() {
                                         🇨🇳 中文
                                     </Button>
                                 </div>
-                            </div>
-
-                            <div className="flex flex-col gap-6">
-                                {navItems.map((item) => (
-                                    <Link
-                                        key={item.href}
-                                        href={item.href}
-                                        className="text-lg font-medium text-foreground hover:text-primary transition-colors"
-                                    >
-                                        {item.name}
-                                    </Link>
-                                ))}
-                                {!user && (
-                                    <Link
-                                        href="/login"
-                                        className="text-lg font-medium text-primary transition-colors"
-                                    >
-                                        {t('auth.sign_in')}
-                                    </Link>
-                                )}
-                                {user && (
-                                    <button onClick={handleSignOut} className="text-lg font-medium text-destructive text-left">
-                                        {t('auth.sign_out')}
-                                    </button>
-                                )}
                             </div>
                         </SheetContent>
                     </Sheet>

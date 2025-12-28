@@ -10,6 +10,7 @@ export const translations = {
             contact: 'Contact',
         },
         hero: {
+            badge: 'Ancient Wisdom · Modern Science',
             title_1: 'Balance Your',
             title_chi: 'Chi',
             title_2: 'Heal Your',
@@ -206,6 +207,7 @@ export const translations = {
             contact: '联系我们',
         },
         hero: {
+            badge: '古老智慧 · 现代科技',
             title_1: '平衡你的',
             title_chi: '气',
             title_2: '疗愈你的',
