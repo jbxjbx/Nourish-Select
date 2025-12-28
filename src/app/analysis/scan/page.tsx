@@ -4,11 +4,12 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Camera, Upload, X, ArrowRight, Loader2, Video, RefreshCw } from 'lucide-react';
+import { Camera, Upload, X, ArrowRight, Loader2, Video, RefreshCw, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { createClient } from '@/utils/supabase/client';
 import { useLanguage } from '@/context/language-context';
+import { useFaceDetection } from '@/hooks/useFaceDetection';
 
 export default function ScanPage() {
     const router = useRouter();
@@ -23,9 +24,20 @@ export default function ScanPage() {
     const [error, setError] = useState<string | null>(null);
     const [isCameraMode, setIsCameraMode] = useState(false);
     const [stream, setStream] = useState<MediaStream | null>(null);
-    const [facingMode, setFacingMode] = useState<'user' | 'environment'>('user'); // Default to front camera
+    const [facingMode, setFacingMode] = useState<'user' | 'environment'>('user');
+    const [autoDetectEnabled, setAutoDetectEnabled] = useState(true);
 
     const supabase = createClient();
+
+    // Auto-detection using TensorFlow.js
+    const { status: detectionStatus, faceInFrame, isLoading: isModelLoading, reset: resetDetection } = useFaceDetection({
+        videoRef: videoRef as React.RefObject<HTMLVideoElement>,
+        enabled: isCameraMode && autoDetectEnabled && !imagePreview,
+        onAutoCapture: () => {
+            console.log('🎯 Auto-capture triggered!');
+            capturePhoto();
+        },
+    });
 
     // Handle file upload from local folder
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -313,6 +325,57 @@ export default function ScanPage() {
                                                 </text>
                                             </svg>
                                         </div>
+
+                                        {/* Auto-Detection Status Indicator */}
+                                        {autoDetectEnabled && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20"
+                                            >
+                                                <div className={`px-4 py-2 rounded-full backdrop-blur-md flex items-center gap-2 text-sm font-medium shadow-lg transition-all duration-300 ${detectionStatus === 'aligned'
+                                                    ? 'bg-green-500/90 text-white'
+                                                    : detectionStatus === 'detecting'
+                                                        ? 'bg-white/80 text-stone-700'
+                                                        : 'bg-white/60 text-stone-500'
+                                                    }`}>
+                                                    {detectionStatus === 'loading' && (
+                                                        <>
+                                                            <Loader2 className="w-4 h-4 animate-spin" />
+                                                            <span>Loading AI...</span>
+                                                        </>
+                                                    )}
+                                                    {detectionStatus === 'ready' && (
+                                                        <>
+                                                            <Sparkles className="w-4 h-4" />
+                                                            <span>Ready to detect</span>
+                                                        </>
+                                                    )}
+                                                    {detectionStatus === 'detecting' && (
+                                                        <>
+                                                            <motion.div
+                                                                animate={{ scale: [1, 1.2, 1] }}
+                                                                transition={{ repeat: Infinity, duration: 1 }}
+                                                            >
+                                                                <Camera className="w-4 h-4" />
+                                                            </motion.div>
+                                                            <span>Align your tongue...</span>
+                                                        </>
+                                                    )}
+                                                    {detectionStatus === 'aligned' && (
+                                                        <>
+                                                            <motion.div
+                                                                animate={{ scale: [1, 1.3, 1] }}
+                                                                transition={{ repeat: Infinity, duration: 0.5 }}
+                                                            >
+                                                                <Sparkles className="w-4 h-4" />
+                                                            </motion.div>
+                                                            <span>Perfect! Capturing...</span>
+                                                        </>
+                                                    )}
+                                                </div>
+                                            </motion.div>
+                                        )}
                                     </div>
 
                                     {/* Hidden canvas for capturing */}
