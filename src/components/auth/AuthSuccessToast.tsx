@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle, X } from 'lucide-react';
 import { useEffect } from 'react';
+import { useLanguage } from '@/context/language-context';
 
 interface AuthSuccessToastProps {
     isVisible: boolean;
@@ -17,6 +18,7 @@ export function AuthSuccessToast({
     onClose,
     autoCloseMs = 2000
 }: AuthSuccessToastProps) {
+    const { t } = useLanguage();
 
     useEffect(() => {
         if (isVisible && autoCloseMs > 0) {
@@ -72,7 +74,7 @@ export function AuthSuccessToast({
                                 transition={{ delay: 0.3 }}
                                 className="text-sm text-gray-500"
                             >
-                                Redirecting...
+                                {t('auth.redirecting')}
                             </motion.p>
                         </div>
 

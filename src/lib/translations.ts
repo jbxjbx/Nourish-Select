@@ -45,6 +45,8 @@ export const translations = {
             added: 'Added',
             price: 'Price',
             monthly: '/ month',
+            monthly_protocol: 'Monthly Protocol',
+            quick_view: 'Quick View',
         },
         analysis: {
             title: 'Capture Your Tongue',
@@ -86,6 +88,7 @@ export const translations = {
             },
             symptoms: {
                 title: 'Potential Symptom Analysis',
+                desc: 'Based on your tongue morphology, these are potential wellness risks.',
                 obesity: 'Chronic Obesity',
                 high_sugar: 'High Blood Sugar',
                 indigestion: 'Indigestion',
@@ -96,6 +99,8 @@ export const translations = {
                 constipation: 'Constipation',
                 irritability: 'Irritability',
             },
+            result_desc: 'Based on AI analysis of your tongue, we\'ve mapped your internal landscape.',
+            no_anomalies: 'No specific anomalies detected.',
         },
         about: {
             title: 'Our Story & Motivation',
@@ -144,6 +149,12 @@ export const translations = {
             checkout_login_desc: 'Please sign in or create an account to complete your purchase.',
             login_btn: 'Sign In',
             register_btn: 'Create Account',
+            logging_in: 'Logging in...',
+            log_in: 'Log In',
+            creating_account: 'Creating Account...',
+            create_account: 'Create Account',
+            redirecting: 'Redirecting...',
+            loading: 'Loading...',
         },
         account: {
             welcome: 'Welcome back,',
@@ -242,6 +253,8 @@ export const translations = {
             added: '已添加',
             price: '价格',
             monthly: '/ 月',
+            monthly_protocol: '月度调理方案',
+            quick_view: '快速查看',
         },
         analysis: {
             title: '拍摄舌象',
@@ -283,6 +296,7 @@ export const translations = {
             },
             symptoms: {
                 title: '潜在症状风险分析',
+                desc: '基于您的舌象形态分析，以下是潜在的健康风险提示。',
                 obesity: '长期肥胖风险',
                 high_sugar: '血糖偏高风险',
                 indigestion: '消化不良',
@@ -293,6 +307,8 @@ export const translations = {
                 constipation: '排泄不通畅',
                 irritability: '心烦易怒',
             },
+            result_desc: '基于 AI 舌象分析，我们已绘制出您的内在健康图谱。',
+            no_anomalies: '未检测到明显异常。',
         },
         about: {
             title: '我们的故事与初衷',
@@ -341,6 +357,12 @@ export const translations = {
             checkout_login_desc: '请登录或创建账户以完成购买。',
             login_btn: '登录',
             register_btn: '注册账户',
+            logging_in: '正在登录...',
+            log_in: '登录',
+            creating_account: '正在创建账户...',
+            create_account: '创建账户',
+            redirecting: '正在跳转...',
+            loading: '加载中...',
         },
         account: {
             welcome: '欢迎回来，',

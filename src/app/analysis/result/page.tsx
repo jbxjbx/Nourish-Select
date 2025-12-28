@@ -163,7 +163,7 @@ function AnalysisResultContent() {
                         {result.constitution}
                     </h1>
                     <p className="text-stone-500 max-w-xl mx-auto text-lg leading-relaxed">
-                        Based on AI analysis of your tongue, we've mapped your internal landscape.
+                        {t('analysis.result_desc')}
                     </p>
                 </motion.div>
 
@@ -237,7 +237,7 @@ function AnalysisResultContent() {
                                             ))}
                                         </div>
                                     ) : (
-                                        <p className="text-stone-400 italic text-sm">No specific anomalies detected.</p>
+                                        <p className="text-stone-400 italic text-sm">{t('analysis.no_anomalies')}</p>
                                     )}
                                 </CardContent>
                             </Card>
@@ -259,7 +259,7 @@ function AnalysisResultContent() {
                                         {t('analysis.symptoms.title')}
                                     </CardTitle>
                                     <CardDescription>
-                                        Based on your tongue morphology, these are potential wellness risks.
+                                        {t('analysis.symptoms.desc')}
                                     </CardDescription>
                                 </CardHeader>
                                 <CardContent className="space-y-6">

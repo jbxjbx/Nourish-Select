@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/tabs'
 import { createClient } from '@/utils/supabase/client'
 import { useAuth } from '@/context/auth-context'
+import { useLanguage } from '@/context/language-context'
 
 export function LoginForm() {
     const [isLoading, setIsLoading] = useState(false)
@@ -34,6 +35,7 @@ export function LoginForm() {
     const router = useRouter()
     const supabase = createClient()
     const { showSuccessToast } = useAuth()
+    const { t } = useLanguage()
 
     // Client-side login - much faster than server action
     async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
@@ -162,7 +164,7 @@ export function LoginForm() {
                                     )}
                                     <Button type="submit" className="w-full" disabled={isLoading}>
                                         {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                                        {isLoading ? 'Logging in...' : 'Log In'}
+                                        {isLoading ? t('auth.logging_in') : t('auth.log_in')}
                                     </Button>
                                 </div>
                             </form>
@@ -261,7 +263,7 @@ export function LoginForm() {
 
                                     <Button type="submit" className="w-full" disabled={isLoading || passwordMismatch}>
                                         {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                                        {isLoading ? 'Creating Account...' : 'Create Account'}
+                                        {isLoading ? t('auth.creating_account') : t('auth.create_account')}
                                     </Button>
                                 </div>
                             </form>

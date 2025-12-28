@@ -139,13 +139,13 @@ export function ProductCard({
                                 size="sm"
                                 className="scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300 delay-100 shadow-lg text-xs md:text-sm"
                             >
-                                <Eye className="w-4 h-4 mr-2" /> Quick View
+                                <Eye className="w-4 h-4 mr-2" /> {t('shop.quick_view')}
                             </Button>
                         </div>
 
                         {isSubscription && (
                             <Badge className="absolute top-3 left-3 bg-stone-900/90 text-stone-50 backdrop-blur-md border-none font-serif tracking-wide shadow-sm z-10">
-                                Monthly Protocol
+                                {t('shop.monthly_protocol')}
                             </Badge>
                         )}
                     </div>
