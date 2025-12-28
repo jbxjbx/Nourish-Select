@@ -41,7 +41,7 @@ export function AuthSuccessToast({
                     }}
                     className="fixed top-20 left-1/2 -translate-x-1/2 z-[100]"
                 >
-                    <div className="bg-white rounded-2xl shadow-2xl border border-green-100 px-6 py-4 flex items-center gap-4 min-w-[280px]">
+                    <div className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-green-100/50 px-6 py-4 flex items-center gap-4 min-w-[280px]">
                         {/* Animated checkmark */}
                         <motion.div
                             initial={{ scale: 0, rotate: -180 }}

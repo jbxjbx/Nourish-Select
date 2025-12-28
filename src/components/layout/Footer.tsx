@@ -8,7 +8,7 @@ export function Footer() {
     const { t } = useLanguage();
 
     return (
-        <footer className="bg-secondary/30 mt-auto border-t border-border">
+        <footer className="bg-secondary/20 backdrop-blur-sm mt-auto border-t border-border/50">
             <div className="container mx-auto px-4 py-8 md:py-12">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-8">
                     <div className="space-y-4">
