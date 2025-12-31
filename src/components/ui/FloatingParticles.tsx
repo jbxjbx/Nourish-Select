@@ -12,7 +12,7 @@ interface Particle {
     type: 'leaf' | 'glow' | 'dot';
 }
 
-export function FloatingParticles({ count = 15, className = '' }: { count?: number; className?: string }) {
+export function FloatingParticles({ count = 30, className = '' }: { count?: number; className?: string }) {
     const [particles, setParticles] = useState<Particle[]>([]);
 
     useEffect(() => {
@@ -21,10 +21,10 @@ export function FloatingParticles({ count = 15, className = '' }: { count?: numb
             generated.push({
                 id: i,
                 x: Math.random() * 100,
-                size: Math.random() * 12 + 4,
-                duration: Math.random() * 15 + 20,
-                delay: Math.random() * 10,
-                type: ['leaf', 'glow', 'dot'][Math.floor(Math.random() * 3)] as 'leaf' | 'glow' | 'dot',
+                size: Math.random() * 16 + 8,
+                duration: Math.random() * 12 + 15,
+                delay: Math.random() * 8,
+                type: ['leaf', 'leaf', 'glow', 'dot'][Math.floor(Math.random() * 4)] as 'leaf' | 'glow' | 'dot',
             });
         }
         setParticles(generated);
@@ -44,7 +44,7 @@ export function FloatingParticles({ count = 15, className = '' }: { count?: numb
                         y: [0, -window?.innerHeight * 1.2 || -1000],
                         x: [0, Math.sin(particle.id) * 50, 0],
                         rotate: [0, 360],
-                        opacity: [0, 0.6, 0.6, 0],
+                        opacity: [0, 0.8, 0.8, 0],
                     }}
                     transition={{
                         duration: particle.duration,
@@ -59,7 +59,7 @@ export function FloatingParticles({ count = 15, className = '' }: { count?: numb
                             height={particle.size}
                             viewBox="0 0 24 24"
                             fill="none"
-                            className="text-emerald-500/30"
+                            className="text-emerald-400/50"
                         >
                             <path
                                 d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c1.5-2 2.5-5 2.5-10S13.5 2 12 2z"
@@ -69,7 +69,7 @@ export function FloatingParticles({ count = 15, className = '' }: { count?: numb
                     )}
                     {particle.type === 'glow' && (
                         <div
-                            className="rounded-full bg-gradient-to-br from-emerald-400/40 to-amber-400/20 blur-sm"
+                            className="rounded-full bg-gradient-to-br from-emerald-400/50 to-amber-400/30 blur-sm"
                             style={{ width: particle.size, height: particle.size }}
                         />
                     )}

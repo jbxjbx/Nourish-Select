@@ -34,8 +34,8 @@ export function HeroSection() {
             className="relative h-screen min-h-[600px] md:min-h-[800px] w-full overflow-hidden flex items-center justify-center"
             onMouseMove={handleMouseMove}
         >
-            {/* Floating Particles */}
-            <FloatingParticles count={20} className="z-15" />
+            {/* Floating Particles - dense herbal effect */}
+            <FloatingParticles count={40} className="z-15" />
 
             {/* Dynamic Background Image */}
             <motion.div
