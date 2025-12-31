@@ -77,8 +77,12 @@ export function IngredientsSection() {
     const { language } = useLanguage();
 
     return (
-        <section className="py-20 md:py-32 bg-stone-900 text-white overflow-hidden">
-            <div className="container mx-auto px-4">
+        <section className="py-20 md:py-32 bg-stone-900 text-white overflow-hidden relative">
+            {/* Breathing background blobs */}
+            <div className="absolute top-20 -left-20 w-96 h-96 bg-emerald-900/20 rounded-full blur-[100px] animate-breathe" />
+            <div className="absolute bottom-10 -right-20 w-80 h-80 bg-amber-900/20 rounded-full blur-[80px] animate-breathe" style={{ animationDelay: '2s' }} />
+
+            <div className="container mx-auto px-4 relative z-10">
                 {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -147,7 +151,7 @@ export function IngredientsSection() {
                     className="text-center mt-12"
                 >
                     <p className="text-stone-500 text-sm flex items-center justify-center gap-2">
-                        <Leaf className="w-4 h-4" />
+                        <Leaf className="w-4 h-4 animate-float" />
                         {language === 'cn' ? '100% 天然有机成分' : '100% Organic Natural Ingredients'}
                     </p>
                 </motion.div>
