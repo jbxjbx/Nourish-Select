@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Leaf } from 'lucide-react';
+import Image from 'next/image';
 import { useLanguage } from '@/context/language-context';
 
 export function Footer() {
@@ -13,7 +13,13 @@ export function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-8">
                     <div className="space-y-4">
                         <div className="flex items-center gap-2">
-                            <Leaf className="w-6 h-6 text-primary" />
+                            <Image
+                                src="/logo-icon.png"
+                                alt="Nourish Select"
+                                width={32}
+                                height={32}
+                                className="rounded-lg"
+                            />
                             <span className="text-xl font-semibold tracking-tight">
                                 Nourish<span className="text-primary font-normal">Select</span>
                             </span>

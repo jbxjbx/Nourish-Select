@@ -2,8 +2,9 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { Menu, Leaf, User, Globe, Sparkles, Wine, Footprints, Info, MessageCircle, LogIn, UserCircle, LogOut } from 'lucide-react';
+import { Menu, User, Globe, Sparkles, Wine, Footprints, Info, MessageCircle, LogIn, UserCircle, LogOut } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import {
@@ -80,7 +81,13 @@ export function Navbar() {
                             {/* Header with logo */}
                             <div className="p-6 border-b border-border/50">
                                 <Link href="/" onClick={handleNavClick} className="flex items-center gap-2">
-                                    <Leaf className="w-6 h-6 text-primary" />
+                                    <Image
+                                        src="/logo-icon.png"
+                                        alt="Nourish Select"
+                                        width={32}
+                                        height={32}
+                                        className="rounded-lg"
+                                    />
                                     <span className="text-xl font-semibold tracking-tight text-foreground">
                                         Nourish<span className="text-primary font-normal">Select</span>
                                     </span>
@@ -201,7 +208,13 @@ export function Navbar() {
 
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-2">
-                        <Leaf className="w-6 h-6 text-primary" />
+                        <Image
+                            src="/logo-icon.png"
+                            alt="Nourish Select"
+                            width={32}
+                            height={32}
+                            className="rounded-lg"
+                        />
                         <span className="text-xl font-semibold tracking-tight text-foreground">
                             Nourish<span className="text-primary font-normal">Select</span>
                         </span>
