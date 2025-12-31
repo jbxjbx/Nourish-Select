@@ -1,6 +1,8 @@
 'use client';
 
 import { HeroSection } from '@/components/home/HeroSection';
+import { TestimonialsSection } from '@/components/home/TestimonialsSection';
+import { IngredientsSection } from '@/components/home/IngredientsSection';
 import { motion } from 'framer-motion';
 import { Sparkles, Droplets, Footprints } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -91,6 +93,12 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Super Ingredients Section */}
+      <IngredientsSection />
+
+      {/* Customer Testimonials Section */}
+      <TestimonialsSection />
     </div>
   );
 }
