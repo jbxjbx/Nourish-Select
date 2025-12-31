@@ -6,7 +6,7 @@ export const translations = {
             drinks: 'Wellness Drinks',
             masks: 'Foot Masks',
             analysis: 'Tongue Analysis',
-            about: 'About',
+            about: 'Our Story',
             contact: 'Contact',
         },
         hero: {
@@ -225,7 +225,7 @@ export const translations = {
             drinks: '养生饮品',
             masks: '足部护理',
             analysis: 'AI舌诊',
-            about: '关于我们',
+            about: '品牌故事',
             contact: '联系我们',
         },
         hero: {
