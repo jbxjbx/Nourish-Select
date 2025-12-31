@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from 'framer-motion';
-import { ArrowRight, Leaf, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useRef, useEffect } from 'react';
@@ -54,16 +54,6 @@ export function HeroSection() {
             {/* Gradient Overlay for Readability */}
             <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/60 to-transparent z-10" />
 
-            {/* Floating decorative elements */}
-            <div className="absolute top-20 left-10 z-15 animate-float">
-                <Leaf className="w-8 h-8 text-emerald-500/30" />
-            </div>
-            <div className="absolute top-40 right-20 z-15 animate-float" style={{ animationDelay: '1s' }}>
-                <Sparkles className="w-6 h-6 text-amber-400/30" />
-            </div>
-            <div className="absolute bottom-40 left-20 z-15 animate-float" style={{ animationDelay: '2s' }}>
-                <Leaf className="w-10 h-10 text-emerald-400/20 rotate-45" />
-            </div>
 
             {/* Content  */}
             <div className="container relative z-20 px-4 mx-auto text-center">
