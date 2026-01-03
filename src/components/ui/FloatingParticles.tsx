@@ -8,7 +8,7 @@ interface Particle {
     x: number;
     size: number;
     duration: number;
-    delay: number;
+    startY: number; // Starting Y position (0-100% of screen height)
     type: 'leaf' | 'glow' | 'dot';
 }
 
@@ -23,7 +23,7 @@ export function FloatingParticles({ count = 30, className = '' }: { count?: numb
                 x: Math.random() * 100,
                 size: Math.random() * 16 + 8,
                 duration: Math.random() * 12 + 15,
-                delay: Math.random() * 8,
+                startY: Math.random() * 100, // Random starting position from 0-100%
                 type: ['leaf', 'leaf', 'glow', 'dot'][Math.floor(Math.random() * 4)] as 'leaf' | 'glow' | 'dot',
             });
         }
@@ -38,47 +38,51 @@ export function FloatingParticles({ count = 30, className = '' }: { count?: numb
                     className="absolute"
                     style={{
                         left: `${particle.x}%`,
-                        bottom: '-20px',
+                        bottom: `${particle.startY}%`, // Start at random height
                     }}
                     animate={{
-                        y: [0, -window?.innerHeight * 1.2 || -1000],
-                        x: [0, Math.sin(particle.id) * 50, 0],
+                        y: [0, '-120vh'], // Move up by 120% of viewport height
+                        x: [0, Math.sin(particle.id) * 40, 0],
                         rotate: [0, 360],
-                        opacity: [0, 0.8, 0.8, 0],
                     }}
                     transition={{
                         duration: particle.duration,
-                        delay: particle.delay,
+                        delay: 0,
                         repeat: Infinity,
                         ease: 'linear',
                     }}
                 >
-                    {particle.type === 'leaf' && (
-                        <svg
-                            width={particle.size}
-                            height={particle.size}
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            className="text-emerald-400/50"
-                        >
-                            <path
-                                d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c1.5-2 2.5-5 2.5-10S13.5 2 12 2z"
-                                fill="currentColor"
+                    <motion.div
+                        animate={{ opacity: [0.6, 0.8, 0.6] }}
+                        transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                    >
+                        {particle.type === 'leaf' && (
+                            <svg
+                                width={particle.size}
+                                height={particle.size}
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                className="text-emerald-400/50"
+                            >
+                                <path
+                                    d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c1.5-2 2.5-5 2.5-10S13.5 2 12 2z"
+                                    fill="currentColor"
+                                />
+                            </svg>
+                        )}
+                        {particle.type === 'glow' && (
+                            <div
+                                className="rounded-full bg-gradient-to-br from-emerald-400/50 to-amber-400/30 blur-sm"
+                                style={{ width: particle.size, height: particle.size }}
                             />
-                        </svg>
-                    )}
-                    {particle.type === 'glow' && (
-                        <div
-                            className="rounded-full bg-gradient-to-br from-emerald-400/50 to-amber-400/30 blur-sm"
-                            style={{ width: particle.size, height: particle.size }}
-                        />
-                    )}
-                    {particle.type === 'dot' && (
-                        <div
-                            className="rounded-full bg-stone-400/20"
-                            style={{ width: particle.size / 2, height: particle.size / 2 }}
-                        />
-                    )}
+                        )}
+                        {particle.type === 'dot' && (
+                            <div
+                                className="rounded-full bg-stone-400/30"
+                                style={{ width: particle.size / 2, height: particle.size / 2 }}
+                            />
+                        )}
+                    </motion.div>
                 </motion.div>
             ))}
         </div>
