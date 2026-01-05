@@ -135,6 +135,48 @@ export function Navbar() {
                             {/* Divider */}
                             <div className="h-px bg-border mx-6" />
 
+                            {/* Language Toggle for Mobile */}
+                            <div className="p-4">
+                                <div className="flex gap-2">
+                                    <button
+                                        onClick={() => { setLanguage('en'); handleNavClick(); }}
+                                        className={cn(
+                                            "flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all",
+                                            language === 'en'
+                                                ? "bg-primary text-white"
+                                                : "bg-stone-100 text-stone-600 hover:bg-stone-200"
+                                        )}
+                                    >
+                                        🇺🇸 EN
+                                    </button>
+                                    <button
+                                        onClick={() => { setLanguage('cn'); handleNavClick(); }}
+                                        className={cn(
+                                            "flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all",
+                                            language === 'cn'
+                                                ? "bg-primary text-white"
+                                                : "bg-stone-100 text-stone-600 hover:bg-stone-200"
+                                        )}
+                                    >
+                                        🇨🇳 中文
+                                    </button>
+                                    <button
+                                        onClick={() => { setLanguage('jp'); handleNavClick(); }}
+                                        className={cn(
+                                            "flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all",
+                                            language === 'jp'
+                                                ? "bg-primary text-white"
+                                                : "bg-stone-100 text-stone-600 hover:bg-stone-200"
+                                        )}
+                                    >
+                                        🇯🇵 日本語
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Divider */}
+                            <div className="h-px bg-border mx-6" />
+
                             {/* Auth Section */}
                             <div className="p-4 flex flex-col gap-2">
                                 {!user ? (
@@ -265,6 +307,12 @@ export function Navbar() {
                                 className={cn("cursor-pointer", language === 'cn' && "font-semibold bg-stone-100")}
                             >
                                 🇨🇳 中文
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                                onClick={() => setLanguage('jp')}
+                                className={cn("cursor-pointer", language === 'jp' && "font-semibold bg-stone-100")}
+                            >
+                                🇯🇵 日本語
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>

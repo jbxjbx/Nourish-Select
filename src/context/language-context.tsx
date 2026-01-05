@@ -13,15 +13,40 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 const LANGUAGE_STORAGE_KEY = 'nourish-select-language';
 
+// Detect browser language and map to our supported languages
+function detectBrowserLanguage(): Language {
+    if (typeof navigator === 'undefined') return 'en';
+
+    const browserLang = navigator.language || (navigator as any).userLanguage || 'en';
+    const langCode = browserLang.toLowerCase().split('-')[0];
+
+    // Map browser language codes to our supported languages
+    if (langCode === 'zh' || langCode === 'cn') {
+        return 'cn';
+    } else if (langCode === 'ja' || langCode === 'jp') {
+        return 'jp';
+    }
+
+    // Default to English for all other languages
+    return 'en';
+}
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
     const [language, setLanguageState] = useState<Language>('en');
     const [isHydrated, setIsHydrated] = useState(false);
 
-    // Load language from localStorage on mount
+    // Load language from localStorage on mount, or detect from browser
     useEffect(() => {
         const savedLanguage = localStorage.getItem(LANGUAGE_STORAGE_KEY) as Language | null;
-        if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'cn')) {
+
+        if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'cn' || savedLanguage === 'jp')) {
+            // User has previously set a preference
             setLanguageState(savedLanguage);
+        } else {
+            // First-time visitor: detect browser language
+            const detectedLang = detectBrowserLanguage();
+            setLanguageState(detectedLang);
+            localStorage.setItem(LANGUAGE_STORAGE_KEY, detectedLang);
         }
         setIsHydrated(true);
     }, []);
