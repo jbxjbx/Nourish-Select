@@ -12,6 +12,16 @@ const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
+interface CartItem {
+    id: string;
+    name: string;
+    price: number;
+    quantity: number;
+    imageUrl?: string;
+    category?: string;
+    isSubscription?: boolean;
+}
+
 export async function POST(req: Request) {
     try {
         const { items, userId } = await req.json();
@@ -20,8 +30,69 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'No items in checkout' }, { status: 400 });
         }
 
-        // Map cart items to Stripe line items
-        const lineItems = items.map((item: any) => ({
+        // Separate subscription items from one-time purchase items
+        const subscriptionItems = items.filter((item: CartItem) => item.isSubscription);
+        const oneTimeItems = items.filter((item: CartItem) => !item.isSubscription);
+
+        const origin = req.headers.get('origin') || 'https://nourishselect.co';
+
+        // If we have subscription items, create a subscription checkout
+        if (subscriptionItems.length > 0) {
+            // For subscriptions, we'll create dynamic prices with recurring billing
+            const lineItems = subscriptionItems.map((item: CartItem) => ({
+                price_data: {
+                    currency: 'usd',
+                    product_data: {
+                        name: item.name.replace(' (Subscribe)', '').replace(' (订阅)', '').replace(' (定期)', ''),
+                        description: 'Monthly subscription - Cancel anytime',
+                        images: item.imageUrl?.startsWith('http') ? [item.imageUrl] : undefined,
+                    },
+                    unit_amount: Math.round(item.price * 100),
+                    recurring: {
+                        interval: 'month' as const,
+                        interval_count: 1,
+                    },
+                },
+                quantity: item.quantity,
+            }));
+
+            // If there are also one-time items, we need to handle them separately
+            // For simplicity, we'll prioritize subscription checkout
+            const sessionConfig: Stripe.Checkout.SessionCreateParams = {
+                payment_method_types: ['card'],
+                line_items: lineItems,
+                mode: 'subscription',
+                success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&type=subscription`,
+                cancel_url: `${origin}/?canceled=true`,
+                billing_address_collection: 'required',
+                metadata: {
+                    user_id: userId || '',
+                    type: 'subscription',
+                    items: JSON.stringify(subscriptionItems.map((i: CartItem) => ({
+                        id: i.id,
+                        name: i.name,
+                        price: i.price,
+                        quantity: i.quantity,
+                    }))),
+                },
+                subscription_data: {
+                    metadata: {
+                        user_id: userId || '',
+                    },
+                },
+            };
+
+            // Add customer creation for subscription management
+            if (userId) {
+                sessionConfig.customer_creation = 'always';
+            }
+
+            const session = await stripe.checkout.sessions.create(sessionConfig);
+            return NextResponse.json({ url: session.url });
+        }
+
+        // One-time purchase checkout
+        const lineItems = oneTimeItems.map((item: CartItem) => ({
             price_data: {
                 currency: 'usd',
                 product_data: {
@@ -34,26 +105,25 @@ export async function POST(req: Request) {
         }));
 
         // Calculate total for order record
-        const totalAmount = items.reduce((sum: number, item: any) =>
+        const totalAmount = oneTimeItems.reduce((sum: number, item: CartItem) =>
             sum + (item.price * item.quantity), 0
         );
 
-        // Build session config
+        // Build session config for one-time payment
         const sessionConfig: Stripe.Checkout.SessionCreateParams = {
             payment_method_types: ['card'],
             line_items: lineItems,
             mode: 'payment',
-            success_url: `${req.headers.get('origin')}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `${req.headers.get('origin')}/?canceled=true`,
-            // Enable address collection
+            success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&type=payment`,
+            cancel_url: `${origin}/?canceled=true`,
             billing_address_collection: 'required',
             shipping_address_collection: {
-                allowed_countries: ['US', 'CA', 'GB', 'AU', 'CN'],
+                allowed_countries: ['US', 'CA', 'GB', 'AU', 'CN', 'JP'],
             },
-            // Store metadata for order creation
             metadata: {
                 user_id: userId || '',
-                items: JSON.stringify(items.map((i: any) => ({
+                type: 'payment',
+                items: JSON.stringify(oneTimeItems.map((i: CartItem) => ({
                     id: i.id,
                     name: i.name,
                     price: i.price,
@@ -84,7 +154,7 @@ export async function POST(req: Request) {
 
             // Pre-fill shipping address if available
             if (shippingAddr) {
-                sessionConfig.shipping_address_collection = undefined; // Don't ask again
+                sessionConfig.shipping_address_collection = undefined;
                 sessionConfig.shipping_options = [{
                     shipping_rate_data: {
                         type: 'fixed_amount',
@@ -98,13 +168,8 @@ export async function POST(req: Request) {
                 }];
             }
 
-            // Create or retrieve Stripe customer with pre-filled info
             if (profile) {
-                const customerName = `${profile.first_name || ''} ${profile.last_name || ''}`.trim();
                 sessionConfig.customer_creation = 'always';
-
-                // Pre-fill customer email (if we have it in request)
-                // Note: Stripe Checkout will still allow editing
             }
         }
 

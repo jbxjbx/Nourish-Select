@@ -9,6 +9,7 @@ export type CartItem = {
     imageUrl: string;
     quantity: number;
     category: 'drink' | 'mask';
+    isSubscription?: boolean;
 };
 
 interface CartContextType {

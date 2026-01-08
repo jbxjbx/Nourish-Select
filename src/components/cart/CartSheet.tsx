@@ -156,7 +156,14 @@ export function CartSheet() {
                                                         <h3 className="line-clamp-2 font-serif font-medium leading-tight">{item.name}</h3>
                                                         <p className="ml-4 font-semibold">${(item.price * item.quantity).toFixed(2)}</p>
                                                     </div>
-                                                    <p className="mt-1 text-xs text-stone-500 capitalize tracking-wide">{item.category}</p>
+                                                    <div className="flex items-center gap-2 mt-1">
+                                                        <p className="text-xs text-stone-500 capitalize tracking-wide">{item.category}</p>
+                                                        {item.isSubscription && (
+                                                            <span className="text-[10px] font-bold text-white bg-gradient-to-r from-pink-600 to-purple-600 px-2 py-0.5 rounded-full">
+                                                                Monthly
+                                                            </span>
+                                                        )}
+                                                    </div>
                                                 </div>
 
                                                 <div className="flex items-center justify-between mt-2">

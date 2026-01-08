@@ -83,6 +83,7 @@ export function ProductCard({
             price: itemPrice,
             imageUrl,
             category,
+            isSubscription: purchaseMode === 'subscribe',
         });
 
         setIsAdded(true);
