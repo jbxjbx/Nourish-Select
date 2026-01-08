@@ -69,7 +69,6 @@ export default function DrinksPage() {
     ];
 
     return (
-    return (
         <div className="min-h-screen bg-stone-50">
             {/* COMPACT PUNK HERO */}
             <section className="bg-black text-white py-12 md:py-16 relative overflow-hidden border-b-4 border-primary shadow-stark z-20">
