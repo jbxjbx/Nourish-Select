@@ -125,16 +125,16 @@ export function HeroSection() {
                         {t('hero.subtitle')}
                     </p>
 
-                    <div className="flex flex-col sm:flex-row gap-8 justify-center items-center py-4 relative z-20">
+                    <div className="flex flex-col sm:flex-row gap-6 justify-center items-center py-4 relative z-20">
                         <div className="relative group transition-all duration-300 hover:z-50">
-                            <Button asChild size="lg" className="h-16 px-12 text-xl shadow-stark hover:shadow-stark-hover hover:-translate-y-1 transition-all border-2 border-black bg-black text-white hover:bg-stone-900 rounded-full">
+                            <Button asChild size="lg" className="h-14 px-8 text-lg shadow-stark hover:shadow-stark-hover hover:-translate-y-1 transition-all border-2 border-black bg-black text-white hover:bg-stone-900 rounded-full">
                                 <Link href="/analysis">
-                                    {t('hero.cta_scan')} <ArrowRight className="ml-3 w-6 h-6" />
+                                    {t('hero.cta_scan')} <ArrowRight className="ml-2 w-5 h-5" />
                                 </Link>
                             </Button>
                         </div>
                         <div className="relative group transition-all duration-300 hover:z-50">
-                            <Button asChild size="lg" variant="outline" className="h-16 px-12 text-xl shadow-stark hover:shadow-stark-hover hover:-translate-y-1 transition-all bg-white text-black border-2 border-black hover:bg-primary hover:text-black rounded-full">
+                            <Button asChild size="lg" variant="outline" className="h-14 px-8 text-lg shadow-stark hover:shadow-stark-hover hover:-translate-y-1 transition-all bg-white text-black border-2 border-black hover:bg-primary hover:text-black rounded-full">
                                 <Link href="/shop/drinks">
                                     {t('hero.cta_shop')}
                                 </Link>
@@ -144,15 +144,14 @@ export function HeroSection() {
                 </motion.div>
             </div>
 
-            {/* Scroll Indicator */}
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1 }}
-                className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 hidden md:flex flex-col items-center gap-2"
+                className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 hidden md:flex flex-col items-center gap-2"
             >
-                <div className="w-6 h-10 border-4 border-black rounded-full flex justify-center p-1">
-                    <div className="w-1.5 h-3 bg-black rounded-full animate-bounce" />
+                <div className="w-5 h-8 border-2 border-black rounded-full flex justify-center p-1">
+                    <div className="w-1 h-2 bg-black rounded-full animate-bounce" />
                 </div>
             </motion.div>
         </section>
