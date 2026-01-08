@@ -25,10 +25,9 @@ interface CartItem {
 // Map product names to Stripe Product IDs (add more as you create them in Stripe)
 const SUBSCRIPTION_PRODUCTS: { [key: string]: string } = {
     'wrecked-ralph': 'prod_Tkx2XHSptIXqmP',
-    // Add more products here as you create them in Stripe Dashboard:
-    // 'bloated-bob': 'prod_xxx',
-    // 'heavy-kev': 'prod_xxx',
-    // 'manic-max': 'prod_xxx',
+    'bloated-bob': 'prod_TkxHcWyP25IVVa',
+    'heavy-kev': 'prod_TkxKhzMu49QDET',
+    'manic-max': 'prod_TkxKDbylNY5jcE',
 };
 
 // Helper to get full image URL
