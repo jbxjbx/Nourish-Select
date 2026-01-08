@@ -139,9 +139,8 @@ export async function POST(req: Request) {
                 },
             };
 
-            if (userId) {
-                sessionConfig.customer_creation = 'always';
-            }
+            // Subscription mode automatically creates a customer, so we don't need 'customer_creation: always'
+            // and actually it is forbidden to use it in subscription mode.
 
             const session = await stripe.checkout.sessions.create(sessionConfig);
             console.log('Subscription session created:', session.id);
