@@ -22,6 +22,14 @@ interface CartItem {
     isSubscription?: boolean;
 }
 
+// Helper to get full image URL
+function getFullImageUrl(imageUrl: string | undefined, origin: string): string[] | undefined {
+    if (!imageUrl) return undefined;
+    if (imageUrl.startsWith('http')) return [imageUrl];
+    // Convert relative path to absolute URL
+    return [`${origin}${imageUrl}`];
+}
+
 export async function POST(req: Request) {
     try {
         const { items, userId } = await req.json();
@@ -36,16 +44,21 @@ export async function POST(req: Request) {
 
         const origin = req.headers.get('origin') || 'https://nourishselect.co';
 
+        console.log('Checkout request:', {
+            subscriptionCount: subscriptionItems.length,
+            oneTimeCount: oneTimeItems.length,
+            origin
+        });
+
         // If we have subscription items, create a subscription checkout
         if (subscriptionItems.length > 0) {
-            // For subscriptions, we'll create dynamic prices with recurring billing
             const lineItems = subscriptionItems.map((item: CartItem) => ({
                 price_data: {
                     currency: 'usd',
                     product_data: {
                         name: item.name.replace(' (Subscribe)', '').replace(' (订阅)', '').replace(' (定期)', ''),
                         description: 'Monthly subscription - Cancel anytime',
-                        images: item.imageUrl?.startsWith('http') ? [item.imageUrl] : undefined,
+                        images: getFullImageUrl(item.imageUrl, origin),
                     },
                     unit_amount: Math.round(item.price * 100),
                     recurring: {
@@ -56,8 +69,8 @@ export async function POST(req: Request) {
                 quantity: item.quantity,
             }));
 
-            // If there are also one-time items, we need to handle them separately
-            // For simplicity, we'll prioritize subscription checkout
+            console.log('Creating subscription session with items:', JSON.stringify(lineItems, null, 2));
+
             const sessionConfig: Stripe.Checkout.SessionCreateParams = {
                 payment_method_types: ['card'],
                 line_items: lineItems,
@@ -82,12 +95,12 @@ export async function POST(req: Request) {
                 },
             };
 
-            // Add customer creation for subscription management
             if (userId) {
                 sessionConfig.customer_creation = 'always';
             }
 
             const session = await stripe.checkout.sessions.create(sessionConfig);
+            console.log('Subscription session created:', session.id);
             return NextResponse.json({ url: session.url });
         }
 
@@ -97,19 +110,19 @@ export async function POST(req: Request) {
                 currency: 'usd',
                 product_data: {
                     name: item.name,
-                    images: item.imageUrl?.startsWith('http') ? [item.imageUrl] : undefined,
+                    images: getFullImageUrl(item.imageUrl, origin),
                 },
                 unit_amount: Math.round(item.price * 100),
             },
             quantity: item.quantity,
         }));
 
-        // Calculate total for order record
+        console.log('Creating payment session with items:', JSON.stringify(lineItems, null, 2));
+
         const totalAmount = oneTimeItems.reduce((sum: number, item: CartItem) =>
             sum + (item.price * item.quantity), 0
         );
 
-        // Build session config for one-time payment
         const sessionConfig: Stripe.Checkout.SessionCreateParams = {
             payment_method_types: ['card'],
             line_items: lineItems,
@@ -134,50 +147,45 @@ export async function POST(req: Request) {
             },
         };
 
-        // If user is logged in, try to pre-fill with saved addresses
         if (userId) {
-            // Fetch user's default shipping address
-            const { data: shippingAddr } = await supabase
-                .from('addresses')
-                .select('*')
-                .eq('user_id', userId)
-                .eq('type', 'shipping')
-                .eq('is_default', true)
-                .single();
+            try {
+                const { data: shippingAddr } = await supabase
+                    .from('addresses')
+                    .select('*')
+                    .eq('user_id', userId)
+                    .eq('type', 'shipping')
+                    .eq('is_default', true)
+                    .single();
 
-            // Fetch user profile for customer info
-            const { data: profile } = await supabase
-                .from('profiles')
-                .select('first_name, last_name, phone')
-                .eq('id', userId)
-                .single();
-
-            // Pre-fill shipping address if available
-            if (shippingAddr) {
-                sessionConfig.shipping_address_collection = undefined;
-                sessionConfig.shipping_options = [{
-                    shipping_rate_data: {
-                        type: 'fixed_amount',
-                        fixed_amount: { amount: 0, currency: 'usd' },
-                        display_name: 'Free Shipping',
-                        delivery_estimate: {
-                            minimum: { unit: 'business_day', value: 5 },
-                            maximum: { unit: 'business_day', value: 7 },
+                if (shippingAddr) {
+                    sessionConfig.shipping_address_collection = undefined;
+                    sessionConfig.shipping_options = [{
+                        shipping_rate_data: {
+                            type: 'fixed_amount',
+                            fixed_amount: { amount: 0, currency: 'usd' },
+                            display_name: 'Free Shipping',
+                            delivery_estimate: {
+                                minimum: { unit: 'business_day', value: 5 },
+                                maximum: { unit: 'business_day', value: 7 },
+                            },
                         },
-                    },
-                }];
+                    }];
+                }
+            } catch (e) {
+                // Ignore address lookup errors
+                console.log('Address lookup skipped');
             }
 
-            if (profile) {
-                sessionConfig.customer_creation = 'always';
-            }
+            sessionConfig.customer_creation = 'always';
         }
 
         const session = await stripe.checkout.sessions.create(sessionConfig);
+        console.log('Payment session created:', session.id);
 
         return NextResponse.json({ url: session.url });
     } catch (err: any) {
-        console.error('Stripe Error:', err);
+        console.error('Stripe Error:', err.message);
+        console.error('Stripe Error Stack:', err.stack);
         return NextResponse.json({ error: err.message }, { status: 500 });
     }
 }
