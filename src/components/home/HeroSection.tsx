@@ -125,7 +125,7 @@ export function HeroSection() {
                         {t('hero.subtitle')}
                     </p>
 
-                    <div className="flex flex-col sm:flex-row gap-6 justify-center items-center py-4 relative z-20">
+                    <div className="flex flex-col sm:flex-row gap-16 justify-center items-center py-4 relative z-20">
                         <div className="relative group transition-all duration-300 hover:z-50">
                             <Button asChild size="lg" className="h-14 px-8 text-lg shadow-stark hover:shadow-stark-hover hover:-translate-y-1 transition-all border-2 border-black bg-black text-white hover:bg-stone-900 rounded-full">
                                 <Link href="/analysis">
