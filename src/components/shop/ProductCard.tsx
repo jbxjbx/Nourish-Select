@@ -119,7 +119,7 @@ export function ProductCard({
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={handleMouseLeave}
             >
-                <Card className="overflow-hidden border-none shadow-xl bg-card h-full flex flex-col relative bg-stone-50 hover:shadow-2xl transition-all duration-300">
+                <Card className="overflow-hidden border-2 border-black shadow-stark hover:shadow-stark-hover bg-background h-full flex flex-col relative transition-all duration-300 rounded-xl">
 
                     {/* Image Area with "Layer Reveal" Effect */}
                     <div className="relative aspect-[4/5] overflow-hidden bg-stone-900">
@@ -240,10 +240,10 @@ export function ProductCard({
                             className={cn(
                                 "w-full rounded-full transition-all duration-500 shadow-md font-bold",
                                 isAdded
-                                    ? "bg-emerald-600 hover:bg-emerald-700 text-white"
+                                    ? "bg-emerald-600 hover:bg-emerald-700 text-white border-2 border-black"
                                     : purchaseMode === 'subscribe'
-                                        ? "bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white"
-                                        : "bg-stone-900 hover:bg-stone-800 text-white"
+                                        ? "variant-punk shadow-stark border-2 border-black bg-secondary hover:bg-secondary/90 text-white"
+                                        : "bg-black hover:bg-stone-800 text-white"
                             )}
                             onClick={handleAddToCart}
                             size="lg"

@@ -47,243 +47,310 @@
 }
 
 :root {
-  --radius: 0.75rem; /* Slightly more rounded for organic feel */
-  
-  /* Feng Shui Light: Parchment / Stone / Bamboo */
-  --background: oklch(0.97 0.01 100); /* Stone White */
-  --foreground: oklch(0.25 0.02 100); /* Dark Charcoal */
-  
-  --card: oklch(0.99 0.005 100);
-  --card-foreground: oklch(0.25 0.02 100);
-  
-  --popover: oklch(0.99 0.005 100);
-  --popover-foreground: oklch(0.25 0.02 100);
-  
-  --primary: oklch(0.55 0.12 140); /* Bamboo Green */
-  --primary-foreground: oklch(0.98 0.01 140);
-  
-  --secondary: oklch(0.92 0.02 90); /* Sand / Earth */
-  --secondary-foreground: oklch(0.3 0.03 90);
-  
-  --muted: oklch(0.94 0.01 100);
-  --muted-foreground: oklch(0.5 0.02 100);
-  
-  --accent: oklch(0.90 0.03 140); /* Light Bamboo */
-  --accent-foreground: oklch(0.3 0.05 140);
-  
-  --destructive: oklch(0.6 0.2 25); /* Muted Red */
-  --destructive-foreground: oklch(0.98 0 0);
-  
-  --border: oklch(0.9 0.01 100);
-  --input: oklch(0.9 0.01 100);
-  --ring: oklch(0.55 0.12 140); /* Bamboo Green Ring */
-  
-  --chart-1: oklch(0.55 0.12 140); /* Green (Wood) */
-  --chart-2: oklch(0.5 0.15 40);  /* Red (Fire) */
-  --chart-3: oklch(0.7 0.15 80);  /* Yellow (Earth) */
-  --chart-4: oklch(0.8 0.05 200); /* Blue (Water) */
-  --chart-5: oklch(0.5 0.05 270); /* Metal/Purple */
+  --radius: 0.5rem;
+  /* Sharper, tech-y radius or pill shapes */
 
-  --sidebar: oklch(0.97 0.01 100);
-  --sidebar-foreground: oklch(0.25 0.02 100);
-  --sidebar-primary: oklch(0.55 0.12 140);
-  --sidebar-primary-foreground: oklch(0.98 0.01 140);
-  --sidebar-accent: oklch(0.92 0.02 90);
-  --sidebar-accent-foreground: oklch(0.3 0.03 90);
-  --sidebar-border: oklch(0.9 0.01 100);
-  --sidebar-ring: oklch(0.55 0.12 140);
+  /* PUNK ROCK PALETTE: High Contrast, Neon, Gen Z */
+  /* Using OKLCH for vibrant gamut */
+
+  /* Base */
+  --background: oklch(0.98 0.01 0);
+  /* Stark White */
+  --foreground: oklch(0.0 0.0 0);
+  /* Pure Black */
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.0 0.0 0);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.0 0.0 0);
+
+  /* Primary: Electric Neon Green (Wrecked Ralph Green) */
+  --primary: oklch(0.75 0.25 145);
+  --primary-foreground: oklch(0.0 0.0 0);
+  /* Black text on neon green */
+
+  /* Secondary: Hot Pink (Accent) */
+  --secondary: oklch(0.65 0.3 340);
+  --secondary-foreground: oklch(1 0 0);
+
+  /* Muted: Cool Gray */
+  --muted: oklch(0.95 0.01 200);
+  --muted-foreground: oklch(0.4 0.02 200);
+
+  /* Accent: Electric Purple */
+  --accent: oklch(0.6 0.25 300);
+  --accent-foreground: oklch(1 0 0);
+
+  --destructive: oklch(0.6 0.25 20);
+  --destructive-foreground: oklch(1 0 0);
+
+  --border: oklch(0.9 0.0 0);
+  --input: oklch(0.9 0.0 0);
+  --ring: oklch(0.0 0.0 0);
+  /* Black focus rings */
+
+  --chart-1: oklch(0.75 0.25 145);
+  /* Green */
+  --chart-2: oklch(0.65 0.3 340);
+  /* Pink */
+  --chart-3: oklch(0.6 0.25 300);
+  /* Purple */
+  --chart-4: oklch(0.85 0.2 90);
+  /* Yellow */
+  --chart-5: oklch(0.0 0.0 0);
+  /* Black */
+
+  /* Sidebar */
+  --sidebar: oklch(0.98 0.01 0);
+  --sidebar-foreground: oklch(0.0 0.0 0);
+  --sidebar-primary: oklch(0.0 0.0 0);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.95 0.0 0);
+  --sidebar-accent-foreground: oklch(0.0 0.0 0);
+  --sidebar-border: oklch(0.9 0.0 0);
+  --sidebar-ring: oklch(0.0 0.0 0);
 }
 
 .dark {
-  /* Feng Shui Dark: Night Garden / Deep Stone */
-  --background: oklch(0.15 0.02 100); /* Dark Stone */
-  --foreground: oklch(0.95 0.01 100); /* Light Mist */
-  
-  --card: oklch(0.2 0.02 100);
-  --card-foreground: oklch(0.95 0.01 100);
-  
-  --popover: oklch(0.2 0.02 100);
-  --popover-foreground: oklch(0.95 0.01 100);
-  
-  --primary: oklch(0.6 0.12 140); /* Bright Bamboo */
-  --primary-foreground: oklch(0.1 0.05 140);
-  
-  --secondary: oklch(0.25 0.03 90); /* Dark Earth */
-  --secondary-foreground: oklch(0.9 0.02 90);
-  
-  --muted: oklch(0.25 0.02 100);
-  --muted-foreground: oklch(0.7 0.02 100);
-  
-  --accent: oklch(0.25 0.05 140); /* Dark Bamboo Accent */
-  --accent-foreground: oklch(0.9 0.05 140);
-  
-  --destructive: oklch(0.5 0.2 25);
-  --destructive-foreground: oklch(0.98 0 0);
-  
-  --border: oklch(0.3 0.02 100);
-  --input: oklch(0.3 0.02 100);
-  --ring: oklch(0.6 0.12 140);
-  
-  --chart-1: oklch(0.6 0.12 140);
-  --chart-2: oklch(0.6 0.15 40);
-  --chart-3: oklch(0.8 0.15 80);
-  --chart-4: oklch(0.7 0.1 200);
-  --chart-5: oklch(0.6 0.1 270);
+  /* Dark Mode: Cyberpunk Matrix Style */
+  --background: oklch(0.1 0.0 0);
+  /* Deep Black */
+  --foreground: oklch(1 0 0);
+  /* White */
 
-  --sidebar: oklch(0.15 0.02 100);
-  --sidebar-foreground: oklch(0.95 0.01 100);
-  --sidebar-primary: oklch(0.6 0.12 140);
-  --sidebar-primary-foreground: oklch(0.1 0.05 140);
-  --sidebar-accent: oklch(0.25 0.03 90);
-  --sidebar-accent-foreground: oklch(0.9 0.02 90);
-  --sidebar-border: oklch(0.3 0.02 100);
-  --sidebar-ring: oklch(0.6 0.12 140);
+  --card: oklch(0.15 0.0 0);
+  --card-foreground: oklch(1 0 0);
+
+  --popover: oklch(0.15 0.0 0);
+  --popover-foreground: oklch(1 0 0);
+
+  --primary: oklch(0.75 0.25 145);
+  /* Neon Green */
+  --primary-foreground: oklch(0.0 0.0 0);
+
+  --secondary: oklch(0.65 0.3 340);
+  /* Hot Pink */
+  --secondary-foreground: oklch(1 0 0);
+
+  --muted: oklch(0.2 0.0 0);
+  --muted-foreground: oklch(0.7 0.0 0);
+
+  --accent: oklch(0.6 0.25 300);
+  --accent-foreground: oklch(1 0 0);
+
+  --destructive: oklch(0.6 0.25 20);
+  --destructive-foreground: oklch(1 0 0);
+
+  --border: oklch(0.2 0.0 0);
+  --input: oklch(0.2 0.0 0);
+  --ring: oklch(0.75 0.25 145);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground antialiased font-sans;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-black tracking-tighter uppercase;
   }
 }
 
 /* ============================================
-   NATURE-INSPIRED ANIMATIONS
+   GEN Z / PUNK ANIMATIONS
    ============================================ */
 
-/* Gentle floating animation like leaves in wind */
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-10px) rotate(2deg); }
-  50% { transform: translateY(-5px) rotate(-1deg); }
-  75% { transform: translateY(-15px) rotate(1deg); }
+/* Glitch Effect */
+@keyframes glitch {
+  0% {
+    transform: translate(0)
+  }
+
+  20% {
+    transform: translate(-2px, 2px)
+  }
+
+  40% {
+    transform: translate(-2px, -2px)
+  }
+
+  60% {
+    transform: translate(2px, 2px)
+  }
+
+  80% {
+    transform: translate(2px, -2px)
+  }
+
+  100% {
+    transform: translate(0)
+  }
 }
 
-/* Slow breathing pulse like living organism */
-@keyframes breathe {
-  0%, 100% { transform: scale(1); opacity: 0.6; }
-  50% { transform: scale(1.05); opacity: 0.8; }
+/* Fast Shake */
+@keyframes shake {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(1deg);
+  }
+
+  50% {
+    transform: rotate(0deg);
+  }
+
+  75% {
+    transform: rotate(-1deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
 }
 
-/* Shimmer effect like morning dew */
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+/* TV Static Background */
+@keyframes noise {
+
+  0%,
+  100% {
+    background-position: 0 0;
+  }
+
+  10% {
+    background-position: -5% -10%;
+  }
+
+  20% {
+    background-position: -15% 5%;
+  }
+
+  30% {
+    background-position: 7% -25%;
+  }
+
+  40% {
+    background-position: 20% 25%;
+  }
+
+  50% {
+    background-position: -25% 10%;
+  }
+
+  60% {
+    background-position: 15% 5%;
+  }
+
+  70% {
+    background-position: 0% 15%;
+  }
+
+  80% {
+    background-position: 25% 35%;
+  }
+
+  90% {
+    background-position: -10% 10%;
+  }
 }
 
-/* Organic wave motion */
-@keyframes wave {
-  0%, 100% { transform: translateX(0) translateY(0); }
-  25% { transform: translateX(5px) translateY(-5px); }
-  50% { transform: translateX(0) translateY(-8px); }
-  75% { transform: translateX(-5px) translateY(-3px); }
+/* Marquee / Ticker text */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
-/* Fade in with natural easing */
-@keyframes fadeInUp {
-  from {
+/* Pop In */
+@keyframes pop-in {
+  0% {
     opacity: 0;
-    transform: translateY(30px);
+    transform: scale(0.8);
   }
-  to {
+
+  80% {
+    transform: scale(1.05);
+  }
+
+  100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: scale(1);
   }
-}
-
-/* Gentle glow pulse */
-@keyframes glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.2); }
-  50% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.4); }
-}
-
-/* Floating particles */
-@keyframes floatParticle {
-  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
 }
 
 /* ============================================
    UTILITY CLASSES
    ============================================ */
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+.animate-glitch {
+  animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
 }
 
-.animate-breathe {
-  animation: breathe 4s ease-in-out infinite;
+.hover-glitch:hover {
+  animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both;
 }
 
-.animate-wave {
-  animation: wave 5s ease-in-out infinite;
+.animate-shake {
+  animation: shake 0.2s ease-in-out infinite;
 }
 
-.animate-glow {
-  animation: glow 3s ease-in-out infinite;
+.animate-marquee {
+  animation: marquee 20s linear infinite;
 }
 
-.animate-shimmer {
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.4) 50%,
-    transparent 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite;
+.animate-pop {
+  animation: pop-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
-/* Organic gradient backgrounds */
-.bg-nature-gradient {
-  background: linear-gradient(
-    135deg,
-    oklch(0.97 0.02 120) 0%,
-    oklch(0.95 0.01 90) 50%,
-    oklch(0.98 0.02 140) 100%
-  );
+/* Noise overlay utility */
+.bg-noise {
+  position: relative;
 }
 
-.bg-forest-gradient {
-  background: linear-gradient(
-    180deg,
-    oklch(0.18 0.04 140) 0%,
-    oklch(0.12 0.02 100) 50%,
-    oklch(0.08 0.01 80) 100%
-  );
+.bg-noise::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.05;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-/* Glassmorphism with natural tint */
-.glass-nature {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(34, 197, 94, 0.1);
+/* Punk / Sticker shadow */
+.shadow-stark {
+  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
 }
 
-.glass-dark {
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.shadow-stark-hover:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 1);
 }
 
-/* Organic shadow */
-.shadow-nature {
-  box-shadow: 
-    0 4px 6px -1px rgba(34, 197, 94, 0.1),
-    0 10px 40px -5px rgba(0, 0, 0, 0.1);
-}
-
-/* Smooth scroll behavior */
-html {
-  scroll-behavior: smooth;
+.shadow-stark-active:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 1);
 }
 
 /* Selection color */
 ::selection {
-  background: rgba(34, 197, 94, 0.3);
-  color: inherit;
+  background: var(--primary);
+  color: black;
 }
