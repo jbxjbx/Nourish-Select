@@ -33,7 +33,7 @@ export function Footer() {
                         <h3 className="font-semibold mb-4 text-foreground">{t('footer.shop')}</h3>
                         <ul className="space-y-2 text-sm text-muted-foreground">
                             <li><Link href="/shop/drinks" className="hover:text-primary transition-colors">{t('nav.drinks')}</Link></li>
-                            <li><Link href="/shop/foot-masks" className="hover:text-primary transition-colors">{t('nav.masks')}</Link></li>
+                            {/* <li><Link href="/shop/foot-masks" className="hover:text-primary transition-colors">{t('nav.masks')}</Link></li> */}
                             <li><Link href="/analysis" className="hover:text-primary transition-colors">{t('nav.analysis')}</Link></li>
                         </ul>
                     </div>

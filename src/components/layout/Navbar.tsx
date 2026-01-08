@@ -35,7 +35,7 @@ export function Navbar() {
     const navItems = [
         { name: t('nav.analysis'), href: '/analysis', icon: Sparkles },
         { name: t('nav.drinks'), href: '/shop/drinks', icon: Wine },
-        { name: t('nav.masks'), href: '/shop/foot-masks', icon: Footprints },
+        // { name: t('nav.masks'), href: '/shop/foot-masks', icon: Footprints }, // Hidden for now - launching later
         { name: t('nav.about'), href: '/about', icon: Info },
         { name: t('nav.contact'), href: '/contact', icon: MessageCircle },
     ];
