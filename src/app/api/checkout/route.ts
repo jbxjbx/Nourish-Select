@@ -22,12 +22,39 @@ interface CartItem {
     isSubscription?: boolean;
 }
 
+// Map product names to Stripe Product IDs (add more as you create them in Stripe)
+const SUBSCRIPTION_PRODUCTS: { [key: string]: string } = {
+    'wrecked-ralph': 'prod_Tkx2XHSptIXqmP',
+    // Add more products here as you create them in Stripe Dashboard:
+    // 'bloated-bob': 'prod_xxx',
+    // 'heavy-kev': 'prod_xxx',
+    // 'manic-max': 'prod_xxx',
+};
+
 // Helper to get full image URL
 function getFullImageUrl(imageUrl: string | undefined, origin: string): string[] | undefined {
     if (!imageUrl) return undefined;
     if (imageUrl.startsWith('http')) return [imageUrl];
-    // Convert relative path to absolute URL
     return [`${origin}${imageUrl}`];
+}
+
+// Helper to get price ID from product ID
+async function getPriceIdForProduct(productId: string): Promise<string | null> {
+    try {
+        const prices = await stripe.prices.list({
+            product: productId,
+            active: true,
+            type: 'recurring',
+            limit: 1,
+        });
+        if (prices.data.length > 0) {
+            return prices.data[0].id;
+        }
+        return null;
+    } catch (err) {
+        console.error('Error fetching price for product:', productId, err);
+        return null;
+    }
 }
 
 export async function POST(req: Request) {
@@ -52,21 +79,53 @@ export async function POST(req: Request) {
 
         // If we have subscription items, create a subscription checkout
         if (subscriptionItems.length > 0) {
-            const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = subscriptionItems.map((item: CartItem) => ({
-                price_data: {
-                    currency: 'usd',
-                    product_data: {
-                        name: item.name.replace(' (Subscribe)', '').replace(' (订阅)', '').replace(' (定期)', ''),
-                    },
-                    unit_amount: Math.round(item.price * 100),
-                    recurring: {
-                        interval: 'month',
-                    },
-                },
-                quantity: item.quantity,
-            }));
+            const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
-            console.log('Creating subscription session with items:', JSON.stringify(lineItems, null, 2));
+            for (const item of subscriptionItems) {
+                // Extract product key from item id (e.g., "wrecked-ralph-sub" -> "wrecked-ralph")
+                const productKey = item.id.replace('-sub', '');
+                const stripeProductId = SUBSCRIPTION_PRODUCTS[productKey];
+
+                if (stripeProductId) {
+                    // Use pre-created Stripe product
+                    const priceId = await getPriceIdForProduct(stripeProductId);
+                    if (priceId) {
+                        lineItems.push({
+                            price: priceId,
+                            quantity: item.quantity,
+                        });
+                        console.log(`Using Stripe price ${priceId} for ${productKey}`);
+                    } else {
+                        console.log(`No price found for product ${stripeProductId}, using dynamic price`);
+                        // Fallback to dynamic price
+                        lineItems.push({
+                            price_data: {
+                                currency: 'usd',
+                                product: stripeProductId,
+                                unit_amount: Math.round(item.price * 100),
+                                recurring: { interval: 'month' },
+                            },
+                            quantity: item.quantity,
+                        });
+                    }
+                } else {
+                    // Fallback: create dynamic price for products not in mapping
+                    console.log(`Product ${productKey} not in mapping, falling back to dynamic creation`);
+                    lineItems.push({
+                        price_data: {
+                            currency: 'usd',
+                            product_data: {
+                                name: item.name.replace(' (Subscribe)', '').replace(' (订阅)', '').replace(' (定期)', ''),
+                            },
+                            unit_amount: Math.round(item.price * 100),
+                            recurring: { interval: 'month' },
+                        },
+                        quantity: item.quantity,
+                    });
+                }
+            }
+
+            console.log('Creating subscription session with line items:', JSON.stringify(lineItems, null, 2));
 
             const sessionConfig: Stripe.Checkout.SessionCreateParams = {
                 line_items: lineItems,
