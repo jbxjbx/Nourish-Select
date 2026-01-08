@@ -181,8 +181,8 @@ export function ProductCard({
                             {description}
                         </p>
 
-                        {/* Purchase Mode Toggle */}
-                        {isSubscription && (
+                        {/* Purchase Mode Toggle - Temporarily disabled, subscription coming soon */}
+                        {false && isSubscription && (
                             <div className="flex gap-2 mb-4">
                                 <button
                                     onClick={(e) => { e.stopPropagation(); setPurchaseMode('once'); }}
