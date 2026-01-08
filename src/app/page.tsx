@@ -52,7 +52,7 @@ export default function Home() {
             <div className="w-24 h-1 bg-gradient-to-r from-emerald-400 via-emerald-500 to-amber-400 mx-auto rounded-full" />
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 max-w-4xl mx-auto">
             {/* Feature 1 - AI Analysis */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
@@ -101,7 +101,7 @@ export default function Home() {
               </Card>
             </motion.div>
 
-            {/* Feature 3 - Foot Masks */}
+            {/* Feature 3 - Foot Masks - Hidden for now, launching later
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -124,6 +124,7 @@ export default function Home() {
                 </CardContent>
               </Card>
             </motion.div>
+            */}
           </div>
         </div>
       </section>
