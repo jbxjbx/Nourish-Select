@@ -43,19 +43,12 @@ export function TestimonialsSection() {
     const { language } = useLanguage();
 
     return (
-        <section className="py-20 md:py-32 relative overflow-hidden">
-            {/* Organic gradient background */}
-            <div className="absolute inset-0 bg-gradient-to-b from-stone-50 via-emerald-50/30 to-white" />
+        <section className="py-20 md:py-32 relative overflow-hidden bg-secondary text-black">
+            {/* NOISE OVERLAY */}
+            <div className="absolute inset-0 bg-noise opacity-30 z-0 pointer-events-none" />
 
-            {/* Decorative organic shapes */}
-            <div className="absolute top-20 left-10 w-72 h-72 bg-emerald-200/20 rounded-full blur-3xl" />
-            <div className="absolute bottom-20 right-10 w-96 h-96 bg-amber-200/20 rounded-full blur-3xl" />
-
-            {/* Subtle pattern overlay */}
-            <div className="absolute inset-0 opacity-[0.02]" style={{
-                backgroundImage: `radial-gradient(circle at 1px 1px, rgba(34, 197, 94, 0.3) 1px, transparent 0)`,
-                backgroundSize: '40px 40px',
-            }} />
+            {/* TAPE BORDERS */}
+            <div className="absolute top-0 left-0 w-full h-4 bg-black/10 rotate-1 transform scale-110" />
 
             <div className="container mx-auto px-4 relative z-10">
                 {/* Header */}
@@ -66,107 +59,60 @@ export function TestimonialsSection() {
                     transition={{ duration: 0.8 }}
                     className="text-center mb-16"
                 >
-                    <motion.div
-                        initial={{ scale: 0, rotate: -180 }}
-                        whileInView={{ scale: 1, rotate: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-                        className="inline-flex items-center gap-2 px-5 py-2 mb-6 text-sm font-medium tracking-widest text-emerald-700 uppercase border border-emerald-200 rounded-full bg-gradient-to-r from-emerald-50 to-white shadow-sm"
-                    >
-                        <Sparkles className="w-4 h-4" />
-                        {language === 'cn' ? '真实评价' : 'Real Reviews'}
-                    </motion.div>
-                    <h2 className="text-3xl md:text-5xl font-serif font-bold text-stone-900 mb-4">
-                        {language === 'cn' ? '用户怎么说' : 'What Our Customers Say'}
+                    <h2 className="text-4xl md:text-7xl font-black text-white mb-4 uppercase stroke-black tracking-tighter drop-shadow-[4px_4px_0px_rgba(0,0,0,1)] text-shadow">
+                        {language === 'cn' ? '用户怎么说' : 'REAL TALK'}
                     </h2>
-                    <motion.div
-                        className="w-32 h-1 bg-gradient-to-r from-emerald-400 via-emerald-500 to-amber-400 mx-auto rounded-full"
-                        initial={{ scaleX: 0 }}
-                        whileInView={{ scaleX: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.5, duration: 0.6 }}
-                    />
-                    <p className="text-lg text-stone-600 max-w-2xl mx-auto mt-4">
-                        {language === 'cn'
-                            ? '来自我们社区真实用户的声音'
-                            : 'Hear from real people in our wellness community'}
-                    </p>
+                    <div className="inline-block bg-black text-white px-4 py-1 font-mono text-sm transform -rotate-2">
+                        NO BS REVIEWS
+                    </div>
                 </motion.div>
 
                 {/* Testimonials Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {testimonials.map((testimonial, index) => (
                         <motion.div
                             key={index}
-                            initial={{ opacity: 0, y: 40, scale: 0.95 }}
-                            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1, duration: 0.5 }}
-                            whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                            className="group"
+                            className="group relative"
                         >
-                            <div className="h-full bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg shadow-stone-200/50 border border-stone-100/50 hover:shadow-xl hover:shadow-emerald-100/50 hover:border-emerald-100 transition-all duration-500">
-                                {/* Quote Icon with gradient */}
-                                <div className="relative mb-4">
-                                    <Quote className="w-10 h-10 text-emerald-100 group-hover:text-emerald-200 transition-colors duration-300" />
-                                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/20 to-transparent rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                                </div>
+                            {/* SCOTCH TAPE EFFECT */}
+                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-6 bg-white/30 backdrop-blur-sm z-20 transform -rotate-2 border-l border-r border-white/50 shadow-sm"></div>
 
-                                {/* Rating with animation */}
+                            <div className={`h-full bg-white p-6 shadow-stark border-2 border-black transition-all duration-300 hover:shadow-stark-hover transform ${index % 2 === 0 ? 'rotate-1' : '-rotate-1'} hover:rotate-0 hover:z-10 relative`}>
+
+                                {/* Rating */}
                                 <div className="flex gap-1 mb-4">
                                     {Array.from({ length: testimonial.rating }).map((_, i) => (
-                                        <motion.div
-                                            key={i}
-                                            initial={{ opacity: 0, scale: 0 }}
-                                            whileInView={{ opacity: 1, scale: 1 }}
-                                            viewport={{ once: true }}
-                                            transition={{ delay: index * 0.1 + i * 0.05 }}
-                                        >
-                                            <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-                                        </motion.div>
+                                        <Star key={i} className="w-4 h-4 fill-black text-black" />
                                     ))}
                                 </div>
 
                                 {/* Content */}
-                                <p className="text-stone-700 mb-6 leading-relaxed text-sm">
+                                <p className="text-black font-medium mb-6 leading-relaxed text-sm font-mono uppercase bg-yellow-100 p-2 inline-block transform -rotate-1">
                                     "{language === 'cn' ? testimonial.content_zh : testimonial.content_en}"
                                 </p>
 
-                                {/* Author with hover effect */}
-                                <div className="flex items-center gap-3">
+                                {/* Author */}
+                                <div className="flex items-center gap-3 mt-auto">
                                     <div className="relative">
                                         <img
                                             src={testimonial.avatar}
                                             alt={testimonial.name}
-                                            className="w-11 h-11 rounded-full object-cover ring-2 ring-stone-100 group-hover:ring-emerald-200 transition-all duration-300"
+                                            className="w-12 h-12 grayscale contrast-125 border-2 border-black object-cover"
                                         />
-                                        <div className="absolute -inset-1 bg-gradient-to-br from-emerald-400 to-amber-400 rounded-full opacity-0 group-hover:opacity-20 blur transition-opacity duration-300" />
                                     </div>
                                     <div>
-                                        <p className="font-semibold text-stone-900 text-sm group-hover:text-emerald-700 transition-colors duration-300">{testimonial.name}</p>
-                                        <p className="text-xs text-stone-500">{testimonial.role}</p>
+                                        <p className="font-black text-black text-sm uppercase tracking-tighter">{testimonial.name}</p>
+                                        <p className="text-xs text-stone-500 font-bold uppercase">{testimonial.role}</p>
                                     </div>
                                 </div>
                             </div>
                         </motion.div>
                     ))}
                 </div>
-
-                {/* Trust Badge with animation */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.5 }}
-                    className="text-center mt-14"
-                >
-                    <div className="inline-flex items-center gap-3 px-6 py-3 bg-white/60 backdrop-blur-sm rounded-full border border-stone-200/50 shadow-sm">
-                        <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                        <p className="text-stone-600 text-sm font-medium">
-                            {language === 'cn' ? '30天无条件退款保证' : '30-Day Money Back Guarantee'}
-                        </p>
-                    </div>
-                </motion.div>
             </div>
         </section>
     );

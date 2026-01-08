@@ -125,17 +125,21 @@ export function HeroSection() {
                         {t('hero.subtitle')}
                     </p>
 
-                    <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                        <Button asChild size="lg" className="h-16 px-12 text-xl shadow-stark hover:shadow-stark-hover hover:-translate-y-1 transition-all border-2 border-black bg-black text-white hover:bg-stone-900">
-                            <Link href="/analysis">
-                                {t('hero.cta_scan')} <ArrowRight className="ml-3 w-6 h-6" />
-                            </Link>
-                        </Button>
-                        <Button asChild size="lg" variant="outline" className="h-16 px-12 text-xl shadow-stark hover:shadow-stark-hover hover:-translate-y-1 transition-all bg-white text-black border-2 border-black hover:bg-primary hover:text-black">
-                            <Link href="/shop/drinks">
-                                {t('hero.cta_shop')}
-                            </Link>
-                        </Button>
+                    <div className="flex flex-col sm:flex-row gap-8 justify-center items-center py-4 relative z-20">
+                        <div className="relative group transition-all duration-300 hover:z-50">
+                            <Button asChild size="lg" className="h-16 px-12 text-xl shadow-stark hover:shadow-stark-hover hover:-translate-y-1 transition-all border-2 border-black bg-black text-white hover:bg-stone-900 rounded-full">
+                                <Link href="/analysis">
+                                    {t('hero.cta_scan')} <ArrowRight className="ml-3 w-6 h-6" />
+                                </Link>
+                            </Button>
+                        </div>
+                        <div className="relative group transition-all duration-300 hover:z-50">
+                            <Button asChild size="lg" variant="outline" className="h-16 px-12 text-xl shadow-stark hover:shadow-stark-hover hover:-translate-y-1 transition-all bg-white text-black border-2 border-black hover:bg-primary hover:text-black rounded-full">
+                                <Link href="/shop/drinks">
+                                    {t('hero.cta_shop')}
+                                </Link>
+                            </Button>
+                        </div>
                     </div>
                 </motion.div>
             </div>

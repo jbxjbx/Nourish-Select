@@ -7,52 +7,52 @@ import { useLanguage } from '@/context/language-context';
 
 const faqs = [
     {
-        question_en: 'What is AI Tongue Analysis and how does it work?',
-        question_zh: 'AI舌诊是什么？它是如何工作的？',
-        answer_en: 'Our AI Tongue Analysis uses advanced computer vision technology based on Traditional Chinese Medicine principles. Simply take a photo of your tongue, and our AI will analyze its color, coating, shape, and other features to provide personalized wellness recommendations.',
-        answer_zh: '我们的AI舌诊使用基于中医原理的先进计算机视觉技术。只需拍摄一张舌头照片，AI就会分析其颜色、舌苔、形状等特征，为您提供个性化的养生建议。',
+        question_en: 'What is AI Tongue Analysis?',
+        question_zh: 'AI舌诊是什么？',
+        answer_en: 'Computer vision meets TCM. Snap a pic, get roasted (and helped). We analyze coating, shape, and color to tell you exactly what your body is screaming for.',
+        answer_zh: '计算机视觉遇上中医。拍张照，不仅能被吐槽（还能被拯救）。我们分析舌苔、形状和颜色，告诉你身体到底渴望什么。',
     },
     {
-        question_en: 'Are there any additives or artificial sweeteners in your drinks?',
-        question_zh: '你们的饮品中是否含有添加剂或人工甜味剂？',
-        answer_en: 'Absolutely none. All our wellness drinks are made with 100% natural, organic ingredients. We believe in the pure power of Traditional Chinese herbs without any artificial additives, sweeteners, or preservatives.',
-        answer_zh: '完全没有。我们所有的养生饮品都采用100%天然有机成分制成。我们相信传统中草药的纯净力量，不添加任何人工添加剂、甜味剂或防腐剂。',
+        question_en: 'Any nasty additives?',
+        question_zh: '有任何糟糕的添加剂吗？',
+        answer_en: 'Zero. None. Zilch. 100% natural, organic, and clean AF. No fake sweeteners, no preservatives, no BS.',
+        answer_zh: '零。没有。完全没有。100%天然、有机、超级干净。无人工甜味剂，无防腐剂，无废话。',
     },
     {
-        question_en: 'Can I consume your products while pregnant or breastfeeding?',
-        question_zh: '怀孕或哺乳期间可以使用你们的产品吗？',
-        answer_en: 'While our products contain safe, natural ingredients, we always recommend consulting with your physician before use during pregnancy or breastfeeding. Each person\'s health situation is unique, and professional medical advice is important.',
-        answer_zh: '虽然我们的产品含有安全、天然的成分，但我们始终建议在怀孕或哺乳期间使用前咨询医生。每个人的健康状况都是独特的，专业的医疗建议非常重要。',
+        question_en: 'Pregnancy safe?',
+        question_zh: '孕期安全吗？',
+        answer_en: 'Usually yes, but ask your doc. You\'re growing a human, don\'t take advice from a soda website.',
+        answer_zh: '通常是安全的，但请咨询医生。你在孕育生命，别听汽水网站的建议。',
     },
     {
-        question_en: 'When is the best time to drink your wellness elixirs?',
-        question_zh: '什么时候饮用养生饮品最好？',
-        answer_en: 'It depends on the specific blend. Generally, energizing formulas are best in the morning, calming blends in the evening, and immunity-boosting drinks can be consumed anytime. Each product comes with recommended timing based on TCM principles.',
-        answer_zh: '这取决于具体的配方。一般来说，提神配方最适合早晨饮用，舒缓配方适合晚间，增强免疫力的饮品可以随时饮用。每款产品都附有基于中医原理的建议饮用时间。',
+        question_en: 'When to drink?',
+        question_zh: '什么时候喝？',
+        answer_en: 'Morning for energy. Night for chill. Anytime for immunity. It\'s functional soda, not rocket science.',
+        answer_zh: '早上喝提神。晚上喝放松。随时喝增强免疫。这是功能性汽水，不是火箭科学。',
     },
     {
-        question_en: 'Where do you ship? How long does delivery take?',
-        question_zh: '你们发货到哪里？配送需要多长时间？',
-        answer_en: 'We currently ship within the United States with free shipping on all subscription orders. Standard delivery takes 3-5 business days. We are working on expanding international shipping options soon.',
-        answer_zh: '我们目前在美国境内发货，所有订阅订单均可享受免费配送。标准配送需要3-5个工作日。我们正在努力扩展国际配送选项。',
+        question_en: 'Shipping time?',
+        question_zh: '配送时间？',
+        answer_en: 'We ship fast. 3-5 days in the US. International coming soon-ish.',
+        answer_zh: '我们发货很快。美国境内3-5天。国际配送即将推出（大概吧）。',
     },
     {
-        question_en: 'What makes your products different from regular herbal teas?',
-        question_zh: '你们的产品与普通草药茶有什么不同？',
-        answer_en: 'Our formulas are crafted based on authentic TCM principles by certified practitioners. We use premium-grade ingredients in clinically-effective concentrations, not just symbolic amounts. Plus, our AI analysis helps personalize recommendations to your specific constitution.',
-        answer_zh: '我们的配方由认证中医师根据正宗中医原理精心调配。我们使用临床有效浓度的优质成分，而不仅仅是象征性的用量。此外，我们的AI分析可以根据您的具体体质提供个性化建议。',
+        question_en: 'Why better than tea?',
+        question_zh: '为什么比茶好？',
+        answer_en: 'Tea is boring. This is effective doses of TCM herbs that actually taste good. Plus, our AI customizes it for you.',
+        answer_zh: '茶太无聊了。这是有效剂量的中草药，而且真的好喝。另外，我们的AI为你量身定制。',
     },
     {
-        question_en: 'Are your products organic and gluten-free?',
-        question_zh: '你们的产品是有机的和无麸质的吗？',
-        answer_en: 'Yes! All our herbal ingredients are 100% organic and certified gluten-free. We source from trusted farms that follow sustainable and ethical practices.',
-        answer_zh: '是的！我们所有的草药成分都是100%有机的，并经过无麸质认证。我们从遵循可持续和道德规范的可信农场采购原料。',
+        question_en: 'Organic?',
+        question_zh: '有机吗？',
+        answer_en: '100% Organic. Certified Gluten-Free. Ethical sourcing. We care about the planet, unlike your ex.',
+        answer_zh: '100%有机。无麸质认证。道德采购。我们关心地球，不像你的前任。',
     },
     {
-        question_en: 'How do I use the subscription service? Can I cancel anytime?',
-        question_zh: '订阅服务如何使用？可以随时取消吗？',
-        answer_en: 'Simply choose your preferred products and frequency during checkout. You\'ll save 15% on every order, and you can pause, skip, or cancel your subscription anytime through your account dashboard. No commitments, full flexibility.',
-        answer_zh: '只需在结账时选择您喜欢的产品和配送频率。每次订单可节省15%，您可以随时通过账户仪表板暂停、跳过或取消订阅。没有承诺，完全灵活。',
+        question_en: 'How to cancel sub?',
+        question_zh: '怎么取消订阅？',
+        answer_en: 'One click in your dashboard. We don\'t hold you hostage. Save 15% if you stay, though.',
+        answer_zh: '仪表板一键取消。要把你绑架。不过留下来的话能省15%。',
     },
 ];
 
@@ -65,17 +65,12 @@ function FAQItem({ faq, isOpen, onToggle, index }: {
     const { language } = useLanguage();
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.05 }}
-            className="border-b border-stone-200 last:border-none"
-        >
+        <div className="border-b-2 border-stone-800 last:border-b-2">
             <button
                 onClick={onToggle}
-                className="w-full py-5 flex items-center justify-between text-left hover:text-emerald-600 transition-colors"
+                className={`w-full py-6 px-4 flex items-center justify-between text-left transition-all duration-300 ${isOpen ? 'bg-primary text-black' : 'bg-transparent text-white hover:bg-stone-900'}`}
             >
-                <span className="text-base md:text-lg font-medium text-stone-800 pr-4">
+                <span className="text-lg md:text-xl font-black uppercase tracking-tight pr-4">
                     {language === 'cn' ? faq.question_zh : faq.question_en}
                 </span>
                 <motion.div
@@ -83,7 +78,7 @@ function FAQItem({ faq, isOpen, onToggle, index }: {
                     transition={{ duration: 0.2 }}
                     className="flex-shrink-0"
                 >
-                    <ChevronDown className={`w-5 h-5 ${isOpen ? 'text-emerald-600' : 'text-stone-400'}`} />
+                    <ChevronDown className={`w-6 h-6 ${isOpen ? 'text-black' : 'text-primary'}`} />
                 </motion.div>
             </button>
 
@@ -94,15 +89,16 @@ function FAQItem({ faq, isOpen, onToggle, index }: {
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.2 }}
-                        className="overflow-hidden"
+                        className="overflow-hidden bg-stone-900"
                     >
-                        <p className="pb-5 text-stone-600 leading-relaxed">
+                        <p className="p-6 text-stone-300 leading-relaxed font-mono text-sm border-t border-stone-800">
+                            <span className="text-primary font-bold mr-2">&gt;</span>
                             {language === 'cn' ? faq.answer_zh : faq.answer_en}
                         </p>
                     </motion.div>
                 )}
             </AnimatePresence>
-        </motion.div>
+        </div>
     );
 }
 
@@ -111,30 +107,36 @@ export function FAQSection() {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
 
     return (
-        <section className="py-20 md:py-32 bg-stone-50">
-            <div className="container mx-auto px-4">
+        <section className="py-20 md:py-32 bg-black text-white relative overflow-hidden">
+            {/* Grid Background */}
+            <div className="absolute inset-0 z-0 opacity-20" style={{
+                backgroundImage: `linear-gradient(#222 1px, transparent 1px), linear-gradient(90deg, #222 1px, transparent 1px)`,
+                backgroundSize: '40px 40px'
+            }} />
+
+            <div className="container mx-auto px-4 relative z-10">
                 {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="text-center mb-12"
+                    className="text-center mb-16"
                 >
-                    <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-emerald-100 flex items-center justify-center">
-                        <HelpCircle className="w-8 h-8 text-emerald-600" />
+                    <div className="w-20 h-20 mx-auto mb-6 bg-black border-2 border-primary flex items-center justify-center shadow-[4px_4px_0px_#22c55e]">
+                        <HelpCircle className="w-10 h-10 text-primary" />
                     </div>
-                    <h2 className="text-3xl md:text-5xl font-serif font-bold text-stone-900 mb-4">
-                        {language === 'cn' ? '常见问题' : 'Frequently Asked Questions'}
+                    <h2 className="text-4xl md:text-7xl font-black text-white mb-4 uppercase tracking-tighter">
+                        {language === 'cn' ? '常见问题' : 'F*cking Asked Qs'}
                     </h2>
-                    <p className="text-lg text-stone-600 max-w-2xl mx-auto">
+                    <p className="text-xl text-stone-400 max-w-2xl mx-auto font-mono">
                         {language === 'cn'
-                            ? '找到关于我们产品和服务的常见问题答案'
-                            : 'Find answers to common questions about our products and services'}
+                            ? '别问了，答案都在这'
+                            : 'Don\'t DM us, read this first.'}
                     </p>
                 </motion.div>
 
                 {/* FAQ List */}
-                <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg shadow-stone-200/50 p-6 md:p-8">
+                <div className="max-w-3xl mx-auto border-2 border-stone-800 shadow-[8px_8px_0px_#333]">
                     {faqs.map((faq, index) => (
                         <FAQItem
                             key={index}
@@ -151,12 +153,12 @@ export function FAQSection() {
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
-                    className="text-center mt-12"
+                    className="text-center mt-16"
                 >
-                    <p className="text-stone-600">
-                        {language === 'cn' ? '还有其他问题？' : 'Still have questions?'}{' '}
-                        <a href="mailto:support@nourishselect.com" className="text-emerald-600 font-medium hover:underline">
-                            {language === 'cn' ? '联系我们' : 'Contact us'}
+                    <p className="text-stone-500 font-mono text-sm uppercase">
+                        {language === 'cn' ? '还有其他问题？' : 'Still unclear?'}{' '}
+                        <a href="mailto:support@nourishselect.co" className="text-primary font-bold hover:underline hover:text-white transition-colors">
+                            support@nourishselect.co
                         </a>
                     </p>
                 </motion.div>

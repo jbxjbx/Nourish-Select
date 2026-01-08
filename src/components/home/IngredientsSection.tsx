@@ -73,14 +73,23 @@ const ingredients = [
     },
 ];
 
+// ... imports ...
+
 export function IngredientsSection() {
     const { language } = useLanguage();
 
     return (
-        <section className="py-20 md:py-32 bg-stone-900 text-white overflow-hidden relative">
-            {/* Breathing background blobs */}
-            <div className="absolute top-20 -left-20 w-96 h-96 bg-emerald-900/20 rounded-full blur-[100px] animate-breathe" />
-            <div className="absolute bottom-10 -right-20 w-80 h-80 bg-amber-900/20 rounded-full blur-[80px] animate-breathe" style={{ animationDelay: '2s' }} />
+        <section className="py-20 md:py-32 bg-stone-950 text-white overflow-hidden relative border-t-2 border-b-2 border-primary">
+            {/* Grid Background */}
+            <div className="absolute inset-0 z-0 opacity-10" style={{
+                backgroundImage: `linear-gradient(#22c55e 1px, transparent 1px), linear-gradient(90deg, #22c55e 1px, transparent 1px)`,
+                backgroundSize: '20px 20px'
+            }} />
+
+            {/* Floating Elements */}
+            <div className="absolute top-10 right-10 animate-spin-slow opacity-20 hidden md:block">
+                <Zap className="w-32 h-32 text-primary" />
+            </div>
 
             <div className="container mx-auto px-4 relative z-10">
                 {/* Header */}
@@ -90,16 +99,16 @@ export function IngredientsSection() {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <span className="inline-block px-4 py-1.5 mb-4 text-sm font-medium tracking-widest text-emerald-400 uppercase border border-emerald-500/30 rounded-full bg-emerald-950/30">
+                    <span className="inline-block px-4 py-1.5 mb-4 text-sm font-black tracking-widest text-black bg-primary uppercase transform -rotate-2 border-2 border-black shadow-stark">
                         {language === 'cn' ? '核心成分' : 'Super Ingredients'}
                     </span>
-                    <h2 className="text-3xl md:text-5xl font-serif font-bold mb-4">
-                        {language === 'cn' ? '古老智慧的力量' : 'The Power of Ancient Wisdom'}
+                    <h2 className="text-4xl md:text-6xl font-black mb-4 uppercase text-white tracking-tighter">
+                        {language === 'cn' ? '古老智慧 X 现代科技' : 'Ancient Herbs X Modern Tech'}
                     </h2>
-                    <p className="text-lg text-stone-400 max-w-2xl mx-auto">
+                    <p className="text-lg text-stone-400 max-w-2xl mx-auto font-mono">
                         {language === 'cn'
-                            ? '每一种成分都经过精心挑选，来自千年中医养生传统'
-                            : 'Each ingredient is carefully selected from thousands of years of TCM wellness tradition'}
+                            ? '每一种成分都经过精心挑选，拒绝没有任何作用的安慰剂'
+                            : 'No placebo dust. Just effective doses of the real stuff.'}
                     </p>
                 </motion.div>
 
@@ -114,27 +123,27 @@ export function IngredientsSection() {
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1 }}
-                                whileHover={{ y: -8, scale: 1.02 }}
+                                whileHover={{ y: -4, scale: 1.05 }}
                                 className="group relative"
                             >
-                                <div className={`${ingredient.bgColor} rounded-2xl p-5 text-center h-full transition-all duration-300 group-hover:shadow-xl group-hover:shadow-black/20`}>
+                                <div className={`bg-stone-900 border-2 border-stone-800 hover:border-primary transition-all duration-300 rounded-sm p-5 text-center h-full group-hover:shadow-[4px_4px_0px_#22c55e]`}>
                                     {/* Icon */}
-                                    <div className={`w-12 h-12 mx-auto mb-3 rounded-xl bg-gradient-to-br ${ingredient.color} flex items-center justify-center shadow-lg`}>
-                                        <Icon className="w-6 h-6 text-white" />
+                                    <div className={`w-12 h-12 mx-auto mb-3 bg-black border border-stone-700 flex items-center justify-center group-hover:bg-primary group-hover:text-black transition-colors rounded-none`}>
+                                        <Icon className="w-6 h-6 text-white group-hover:text-black" />
                                     </div>
 
                                     {/* Benefit Badge */}
-                                    <span className="text-xs font-semibold text-stone-500 uppercase tracking-wider">
+                                    <span className="text-xs font-bold text-primary uppercase tracking-wider block mb-2 font-mono">
                                         {language === 'cn' ? ingredient.benefit_zh : ingredient.benefit_en}
                                     </span>
 
                                     {/* Name */}
-                                    <h3 className="text-lg font-bold text-stone-900 mt-1 mb-2">
+                                    <h3 className="text-lg font-black text-white mt-1 mb-2 uppercase">
                                         {language === 'cn' ? ingredient.name_zh : ingredient.name_en}
                                     </h3>
 
                                     {/* Description */}
-                                    <p className="text-xs text-stone-600 leading-relaxed">
+                                    <p className="text-xs text-stone-500 leading-relaxed font-mono">
                                         {language === 'cn' ? ingredient.desc_zh : ingredient.desc_en}
                                     </p>
                                 </div>
@@ -150,9 +159,9 @@ export function IngredientsSection() {
                     viewport={{ once: true }}
                     className="text-center mt-12"
                 >
-                    <p className="text-stone-500 text-sm flex items-center justify-center gap-2">
-                        <Leaf className="w-4 h-4 animate-float" />
-                        {language === 'cn' ? '100% 天然有机成分' : '100% Organic Natural Ingredients'}
+                    <p className="text-white text-sm flex items-center justify-center gap-2 font-black uppercase tracking-tight">
+                        <Leaf className="w-4 h-4 text-primary animate-pulse" />
+                        {language === 'cn' ? '100% 天然有机成分' : '100% Organic. 0% Bullsh*t.'}
                     </p>
                 </motion.div>
             </div>
