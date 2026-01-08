@@ -52,18 +52,15 @@ export async function POST(req: Request) {
 
         // If we have subscription items, create a subscription checkout
         if (subscriptionItems.length > 0) {
-            const lineItems = subscriptionItems.map((item: CartItem) => ({
+            const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = subscriptionItems.map((item: CartItem) => ({
                 price_data: {
                     currency: 'usd',
                     product_data: {
                         name: item.name.replace(' (Subscribe)', '').replace(' (订阅)', '').replace(' (定期)', ''),
-                        description: 'Monthly subscription - Cancel anytime',
-                        images: getFullImageUrl(item.imageUrl, origin),
                     },
                     unit_amount: Math.round(item.price * 100),
                     recurring: {
-                        interval: 'month' as const,
-                        interval_count: 1,
+                        interval: 'month',
                     },
                 },
                 quantity: item.quantity,
@@ -72,7 +69,6 @@ export async function POST(req: Request) {
             console.log('Creating subscription session with items:', JSON.stringify(lineItems, null, 2));
 
             const sessionConfig: Stripe.Checkout.SessionCreateParams = {
-                payment_method_types: ['card'],
                 line_items: lineItems,
                 mode: 'subscription',
                 success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&type=subscription`,
@@ -81,17 +77,6 @@ export async function POST(req: Request) {
                 metadata: {
                     user_id: userId || '',
                     type: 'subscription',
-                    items: JSON.stringify(subscriptionItems.map((i: CartItem) => ({
-                        id: i.id,
-                        name: i.name,
-                        price: i.price,
-                        quantity: i.quantity,
-                    }))),
-                },
-                subscription_data: {
-                    metadata: {
-                        user_id: userId || '',
-                    },
                 },
             };
 
@@ -105,7 +90,7 @@ export async function POST(req: Request) {
         }
 
         // One-time purchase checkout
-        const lineItems = oneTimeItems.map((item: CartItem) => ({
+        const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = oneTimeItems.map((item: CartItem) => ({
             price_data: {
                 currency: 'usd',
                 product_data: {
@@ -124,7 +109,6 @@ export async function POST(req: Request) {
         );
 
         const sessionConfig: Stripe.Checkout.SessionCreateParams = {
-            payment_method_types: ['card'],
             line_items: lineItems,
             mode: 'payment',
             success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&type=payment`,
@@ -141,7 +125,6 @@ export async function POST(req: Request) {
                     name: i.name,
                     price: i.price,
                     quantity: i.quantity,
-                    imageUrl: i.imageUrl,
                 }))),
                 total_amount: totalAmount.toString(),
             },
@@ -172,7 +155,6 @@ export async function POST(req: Request) {
                     }];
                 }
             } catch (e) {
-                // Ignore address lookup errors
                 console.log('Address lookup skipped');
             }
 
@@ -185,7 +167,7 @@ export async function POST(req: Request) {
         return NextResponse.json({ url: session.url });
     } catch (err: any) {
         console.error('Stripe Error:', err.message);
-        console.error('Stripe Error Stack:', err.stack);
+        console.error('Stripe Error Details:', JSON.stringify(err, null, 2));
         return NextResponse.json({ error: err.message }, { status: 500 });
     }
 }
