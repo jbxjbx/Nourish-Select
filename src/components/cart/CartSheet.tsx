@@ -55,14 +55,16 @@ export function CartSheet() {
                 body: JSON.stringify({ items, userId: session.user.id }),
             });
 
-            const { url } = await response.json();
+            const { url, error } = await response.json();
             if (url) {
                 window.location.href = url;
             } else {
-                console.error('No checkout URL received');
+                console.error('Checkout error:', error);
+                alert(`Checkout Failed: ${error || 'Unknown error. Please try again.'}`);
             }
         } catch (error) {
-            console.error('Checkout error:', error);
+            console.error('Checkout error details:', error);
+            alert('Connection failed. Please check your internet or try again later.');
         } finally {
             setIsLoading(false);
         }

@@ -94,10 +94,10 @@ export async function POST(req: Request) {
                             price: priceId,
                             quantity: item.quantity,
                         });
-                        console.log(`Using Stripe price ${priceId} for ${productKey}`);
+                        console.log(`Using existing Stripe price ${priceId} for ${productKey}`);
                     } else {
-                        console.log(`No price found for product ${stripeProductId}, using dynamic price`);
-                        // Fallback to dynamic price
+                        console.log(`No recursive price found for product ${stripeProductId}. Fallback to inline price creation.`);
+                        // Fallback to inline price data attached to the existing product
                         lineItems.push({
                             price_data: {
                                 currency: 'usd',
