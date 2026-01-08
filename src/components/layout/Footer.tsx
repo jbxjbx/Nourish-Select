@@ -1,13 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
+// Image import removed
 import { useLanguage } from '@/context/language-context';
 
 export function Footer() {
     const { t } = useLanguage();
 
-    return (
     return (
         <footer className="bg-black text-white border-t-2 border-stone-800">
             <div className="container mx-auto px-4 py-8 md:py-16">
@@ -67,5 +66,5 @@ export function Footer() {
             </div>
         </footer>
     );
-    );
+
 }
