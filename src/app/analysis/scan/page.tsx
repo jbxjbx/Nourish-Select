@@ -3,8 +3,8 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
-import { Camera, Upload, X, ArrowRight, Loader2, Video, RefreshCw, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Camera, Upload, X, ArrowRight, Loader2, Video, RefreshCw, Sparkles, Scan, Crosshair } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { createClient } from '@/utils/supabase/client';
@@ -219,27 +219,39 @@ export default function ScanPage() {
     };
 
     return (
-        <div className="min-h-screen bg-background py-16 px-4">
-            <div className="container max-w-2xl mx-auto">
+        <div className="min-h-screen bg-black text-white py-16 px-4 relative overflow-hidden font-mono">
+            {/* Sci-Fi Grid Background */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#333_1px,transparent_1px),linear-gradient(to_bottom,#333_1px,transparent_1px)] bg-[size:40px_40px] opacity-20 pointer-events-none" />
+
+            <div className="container max-w-2xl mx-auto relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="text-center mb-10"
                 >
-                    <h1 className="text-3xl font-bold mb-4">{t('analysis.title')}</h1>
-                    <p className="text-muted-foreground">
-                        {t('analysis.desc')}
+                    <div className="inline-flex items-center gap-2 border border-primary px-3 py-1 bg-primary/10 text-primary text-xs uppercase tracking-widest mb-4 animate-pulse">
+                        <Scan className="w-4 h-4" /> System Ready
+                    </div>
+                    <h1 className="text-4xl md:text-5xl font-black uppercase italic tracking-tighter mb-4 text-white">
+                        {t('analysis.title')}
+                    </h1>
+                    <p className="text-stone-400 max-w-lg mx-auto font-mono text-sm leading-relaxed">
+                        {t('analysis.desc')} <br />
+                        <span className="text-primary opacity-70">&gt;&gt; Initializing biometric sensors...</span>
                     </p>
                 </motion.div>
 
                 {error && (
-                    <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg text-center">
-                        {error}
-                        <p className="text-xs mt-1 text-muted-foreground">Make sure the Python Backend is running on port 8000.</p>
+                    <div className="mb-6 p-4 bg-red-900/20 border border-red-500/50 text-red-500 rounded-none text-center font-bold uppercase relative overflow-hidden">
+                        <div className="absolute inset-0 bg-red-500/10 animate-pulse" />
+                        <span className="relative z-10">ERROR: {error}</span>
                     </div>
                 )}
 
-                <Card className="overflow-hidden border-2 border-dashed border-muted-foreground/20 bg-muted/30 w-full max-w-sm mx-auto">
+                <Card className="overflow-hidden border-2 border-primary bg-black/50 shadow-[0_0_30px_rgba(34,197,94,0.1)] w-full max-w-sm mx-auto relative group">
+                    {/* Scanner Lines Decoration */}
+                    <div className="absolute top-0 left-0 w-full h-1 bg-primary z-20 animate-scan-line opacity-50 pointer-events-none" />
+
                     <CardContent className="p-0">
                         <div className="relative aspect-[3/4] flex flex-col items-center justify-center">
 
@@ -254,76 +266,19 @@ export default function ScanPage() {
                                         className={`absolute inset-0 w-full h-full object-cover ${facingMode === 'user' ? 'scale-x-[-1]' : ''}`}
                                     />
 
-                                    {/* Tongue Guide Overlay - Modern Design */}
+                                    {/* Tongue Guide Overlay - Sci-Fi HUD Design */}
                                     <div className="absolute inset-0 pointer-events-none z-10 flex items-center justify-center">
-                                        {/* Dark overlay outside the scan area */}
-                                        <div className="absolute inset-0 bg-black/40" />
+                                        <div className="absolute inset-0 bg-primary/5 video-scanlines opacity-20" />
 
-                                        {/* Scan Frame Container - Large for better image quality */}
-                                        <div className="relative w-[80%] aspect-[3/4] max-w-[300px]">
-                                            {/* Clear center area */}
-                                            <div className="absolute inset-0 bg-transparent" style={{
-                                                boxShadow: '0 0 0 9999px rgba(0,0,0,0.4)'
-                                            }} />
+                                        {/* HUD Corners */}
+                                        <div className="absolute top-4 left-4 w-12 h-12 border-l-2 border-t-2 border-primary" />
+                                        <div className="absolute top-4 right-4 w-12 h-12 border-r-2 border-t-2 border-primary" />
+                                        <div className="absolute bottom-4 left-4 w-12 h-12 border-l-2 border-bottom-2 border-primary" />
+                                        <div className="absolute bottom-4 right-4 w-12 h-12 border-r-2 border-bottom-2 border-primary" />
 
-                                            {/* Corner Brackets - Top Left */}
-                                            <div className="absolute top-0 left-0 w-8 h-8 border-l-[3px] border-t-[3px] border-white rounded-tl-lg" />
-                                            {/* Top Right */}
-                                            <div className="absolute top-0 right-0 w-8 h-8 border-r-[3px] border-t-[3px] border-white rounded-tr-lg" />
-                                            {/* Bottom Left */}
-                                            <div className="absolute bottom-0 left-0 w-8 h-8 border-l-[3px] border-b-[3px] border-white rounded-bl-lg" />
-                                            {/* Bottom Right */}
-                                            <div className="absolute bottom-0 right-0 w-8 h-8 border-r-[3px] border-b-[3px] border-white rounded-br-lg" />
-
-                                            {/* Dashed Tongue Shape Outline - Large, fills frame */}
-                                            <svg
-                                                viewBox="0 0 100 130"
-                                                className="absolute inset-0 w-full h-full"
-                                                style={{ padding: '3%' }}
-                                            >
-                                                {/* Realistic tongue shape - large with heart-shaped top */}
-                                                <path
-                                                    d="M50,8 
-                                                       C35,8 25,12 22,22
-                                                       C18,35 20,30 35,18
-                                                       C42,13 50,15 50,15
-                                                       C50,15 58,13 65,18
-                                                       C80,30 82,35 78,22
-                                                       C75,12 65,8 50,8
-                                                       M22,22
-                                                       C15,40 12,55 12,75
-                                                       C12,100 28,120 50,120
-                                                       C72,120 88,100 88,75
-                                                       C88,55 85,40 78,22"
-                                                    fill="none"
-                                                    stroke="#FF6B6B"
-                                                    strokeWidth="2"
-                                                    strokeDasharray="8 5"
-                                                    strokeLinecap="round"
-                                                    opacity="0.85"
-                                                />
-
-                                                {/* Center alignment line */}
-                                                <line
-                                                    x1="50" y1="25" x2="50" y2="115"
-                                                    stroke="#FF6B6B"
-                                                    strokeWidth="1.2"
-                                                    strokeDasharray="5 4"
-                                                    opacity="0.5"
-                                                />
-
-                                                {/* Alignment text */}
-                                                <text
-                                                    x="50" y="70"
-                                                    textAnchor="middle"
-                                                    fill="white"
-                                                    fontSize="6"
-                                                    fontWeight="500"
-                                                    className="drop-shadow-lg"
-                                                >
-                                                    {t('analysis.align_tongue') || '将舌头对准此处'}
-                                                </text>
-                                            </svg>
+                                        {/* Crosshair Center */}
+                                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-80 border border-primary/30 rounded-full flex items-center justify-center">
+                                            <Crosshair className="w-8 h-8 text-primary/50 animate-spin-slow" />
                                         </div>
 
                                         {/* Auto-Detection Status Indicator */}
@@ -331,46 +286,31 @@ export default function ScanPage() {
                                             <motion.div
                                                 initial={{ opacity: 0, y: 10 }}
                                                 animate={{ opacity: 1, y: 0 }}
-                                                className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20"
+                                                className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 w-full px-8"
                                             >
-                                                <div className={`px-4 py-2 rounded-full backdrop-blur-md flex items-center gap-2 text-sm font-medium shadow-lg transition-all duration-300 ${detectionStatus === 'aligned'
-                                                    ? 'bg-green-500/90 text-white'
-                                                    : detectionStatus === 'detecting'
-                                                        ? 'bg-white/80 text-stone-700'
-                                                        : 'bg-white/60 text-stone-500'
-                                                    }`}>
+                                                <div className={`w-full py-3 bg-black/80 border border-primary/50 backdrop-blur-sm flex items-center justify-center gap-3 text-sm font-mono uppercase tracking-widest shadow-[0_0_20px_rgba(34,197,94,0.2)] transition-all duration-300 ${detectionStatus === 'aligned' ? 'bg-primary/20 text-white' : 'text-primary'}`}>
                                                     {detectionStatus === 'loading' && (
                                                         <>
                                                             <Loader2 className="w-4 h-4 animate-spin" />
-                                                            <span>Loading AI...</span>
+                                                            <span>Loading AI Model...</span>
                                                         </>
                                                     )}
                                                     {detectionStatus === 'ready' && (
                                                         <>
-                                                            <Sparkles className="w-4 h-4" />
-                                                            <span>Ready to detect</span>
+                                                            <Scan className="w-4 h-4 animate-pulse" />
+                                                            <span>Searching for Target...</span>
                                                         </>
                                                     )}
                                                     {detectionStatus === 'detecting' && (
                                                         <>
-                                                            <motion.div
-                                                                animate={{ scale: [1, 1.2, 1] }}
-                                                                transition={{ repeat: Infinity, duration: 1 }}
-                                                            >
-                                                                <Camera className="w-4 h-4" />
-                                                            </motion.div>
-                                                            <span>Align your tongue...</span>
+                                                            <Camera className="w-4 h-4 animate-bounce" />
+                                                            <span>Align Tongue In Frame</span>
                                                         </>
                                                     )}
                                                     {detectionStatus === 'aligned' && (
                                                         <>
-                                                            <motion.div
-                                                                animate={{ scale: [1, 1.3, 1] }}
-                                                                transition={{ repeat: Infinity, duration: 0.5 }}
-                                                            >
-                                                                <Sparkles className="w-4 h-4" />
-                                                            </motion.div>
-                                                            <span>Perfect! Capturing...</span>
+                                                            <Sparkles className="w-4 h-4 animate-spin" />
+                                                            <span>LOCKED. CAPTURING...</span>
                                                         </>
                                                     )}
                                                 </div>
@@ -390,13 +330,15 @@ export default function ScanPage() {
                                         src={imagePreview}
                                         alt="Tongue Preview"
                                         fill
-                                        className="object-cover"
+                                        className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
                                     />
+                                    <div className="absolute inset-0 bg-primary/10 mix-blend-overlay pointer-events-none" />
+
                                     {!isAnalyzing && (
                                         <Button
                                             variant="destructive"
                                             size="icon"
-                                            className="absolute top-4 right-4 rounded-full z-20"
+                                            className="absolute top-4 right-4 rounded-none w-10 h-10 border border-red-500 bg-black hover:bg-red-900 z-20"
                                             onClick={clearImage}
                                         >
                                             <X className="w-5 h-5" />
@@ -407,20 +349,27 @@ export default function ScanPage() {
 
                             {/* Default State - Upload/Camera Options */}
                             {!isCameraMode && !imagePreview && (
-                                <div className="text-center p-8 space-y-6">
-                                    <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto text-primary">
+                                <div className="text-center p-8 space-y-8 w-full bg-black/80 h-full flex flex-col justify-center border-t border-b border-primary/20">
+                                    <div className="w-24 h-24 border-2 border-primary rounded-full flex items-center justify-center mx-auto text-primary shadow-stark relative group cursor-pointer hover:bg-primary hover:text-black transition-all">
+                                        <div className="absolute inset-0 border border-primary rounded-full animate-ping opacity-20" />
                                         <Camera className="w-10 h-10" />
                                     </div>
                                     <div className="space-y-4">
-                                        <Button onClick={triggerFileInput} size="lg" className="rounded-full w-48">
-                                            <Upload className="mr-2 w-5 h-5" /> {t('analysis.upload_btn')}
-                                        </Button>
-                                        <p className="text-sm text-muted-foreground">or</p>
-                                        <Button onClick={() => startCamera('user')} variant="outline" size="lg" className="rounded-full w-48">
+                                        <Button onClick={() => startCamera('user')} size="lg" className="w-full h-14 rounded-none border-2 border-primary bg-primary text-black font-black uppercase tracking-widest hover:bg-white hover:border-white shadow-stark hover:shadow-stark-hover transition-all">
                                             <Video className="mr-2 w-5 h-5" /> {t('analysis.camera_btn')}
                                         </Button>
+
+                                        <div className="flex items-center gap-2 justify-center opacity-50">
+                                            <div className="h-px bg-primary flex-1" />
+                                            <span className="text-xs font-mono text-primary">OR</span>
+                                            <div className="h-px bg-primary flex-1" />
+                                        </div>
+
+                                        <Button onClick={triggerFileInput} variant="outline" size="lg" className="w-full h-12 rounded-none border border-stone-700 bg-transparent text-stone-400 font-mono text-xs uppercase hover:bg-stone-900 hover:text-white hover:border-white transition-all">
+                                            <Upload className="mr-2 w-4 h-4" /> {t('analysis.upload_btn')}
+                                        </Button>
                                     </div>
-                                    <p className="text-xs text-muted-foreground max-w-xs mx-auto">
+                                    <p className="text-[10px] text-primary/40 font-mono uppercase tracking-widest">
                                         {t('analysis.privacy_note')}
                                     </p>
                                 </div>
@@ -428,9 +377,23 @@ export default function ScanPage() {
 
                             {/* Analyzing Overlay */}
                             {isAnalyzing && (
-                                <div className="absolute inset-0 bg-background/80 backdrop-blur-sm flex flex-col items-center justify-center z-10">
-                                    <Loader2 className="w-12 h-12 text-primary animate-spin mb-4" />
-                                    <p className="text-lg font-medium animate-pulse">{t('analysis.analyzing')}</p>
+                                <div className="absolute inset-0 bg-black/90 flex flex-col items-center justify-center z-30">
+                                    <div className="relative w-20 h-20 mb-6">
+                                        <div className="absolute inset-0 border-4 border-primary/30 rounded-full" />
+                                        <div className="absolute inset-0 border-4 border-t-primary rounded-full animate-spin" />
+                                        <Loader2 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 text-primary" />
+                                    </div>
+                                    <p className="text-xl font-black italic text-white animate-pulse uppercase tracking-widest">{t('analysis.analyzing')}</p>
+                                    <div className="mt-2 font-mono text-xs text-primary">
+                                        <span className="inline-block animate-pulse">Running Neural Net...</span>
+                                    </div>
+                                    <div className="mt-8 font-mono text-[10px] text-stone-500 overflow-hidden w-64 h-20 text-center opacity-50">
+                                        {Array.from({ length: 5 }).map((_, i) => (
+                                            <div key={i} className="animate-pulse" style={{ animationDelay: `${i * 0.1}s` }}>
+                                                0x{Math.random().toString(16).substr(2, 8).toUpperCase()}... PROCESSING ... OK
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             )}
 
@@ -451,43 +414,38 @@ export default function ScanPage() {
                     <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="mt-6 flex flex-col items-center"
+                        className="mt-8 flex flex-col items-center"
                     >
                         <div className="flex items-center justify-center gap-8">
                             {/* Cancel Button */}
                             <Button
                                 variant="outline"
                                 size="icon"
-                                className="rounded-full w-12 h-12 border-2 border-stone-300 hover:border-stone-400 hover:bg-stone-100"
+                                className="rounded-full w-12 h-12 border border-stone-700 bg-black text-white hover:bg-red-900 hover:border-red-500 hover:text-red-100 transition-colors"
                                 onClick={stopCamera}
                             >
-                                <X className="w-5 h-5 text-stone-600" />
+                                <X className="w-5 h-5" />
                             </Button>
 
                             {/* Capture Button */}
                             <button
                                 onClick={capturePhoto}
-                                className="relative w-16 h-16 flex items-center justify-center group"
+                                className="relative w-20 h-20 flex items-center justify-center group"
                             >
-                                <div className="absolute w-full h-full rounded-full border-4 border-primary opacity-80 group-hover:opacity-100 transition-opacity" />
-                                <div className="w-12 h-12 rounded-full bg-primary group-hover:scale-95 transition-transform shadow-lg" />
+                                <div className="absolute w-full h-full rounded-full border-4 border-white opacity-20 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" />
+                                <div className="w-16 h-16 rounded-full bg-white group-hover:bg-primary group-hover:scale-95 transition-all shadow-[0_0_20px_rgba(255,255,255,0.3)]" />
                             </button>
 
                             {/* Switch Camera Button */}
                             <Button
                                 variant="outline"
                                 size="icon"
-                                className="rounded-full w-12 h-12 border-2 border-stone-300 hover:border-stone-400 hover:bg-stone-100"
+                                className="rounded-full w-12 h-12 border border-stone-700 bg-black text-white hover:bg-stone-800 hover:border-white transition-colors"
                                 onClick={switchCamera}
                             >
-                                <RefreshCw className="w-5 h-5 text-stone-600" />
+                                <RefreshCw className="w-5 h-5" />
                             </Button>
                         </div>
-
-                        {/* Camera Mode Indicator */}
-                        <p className="text-center text-stone-500 text-sm mt-3">
-                            {facingMode === 'user' ? '📸 Front Camera' : '📷 Back Camera'}
-                        </p>
                     </motion.div>
                 )}
 
@@ -495,10 +453,10 @@ export default function ScanPage() {
                     <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="mt-8 flex justify-center"
+                        className="mt-8 flex justify-center w-full"
                     >
-                        <Button onClick={handleAnalyze} size="lg" className="px-12 h-14 text-lg rounded-full shadow-xl">
-                            {t('analysis.analyze_now')} <ArrowRight className="ml-2 w-5 h-5" />
+                        <Button onClick={handleAnalyze} size="lg" className="w-full max-w-sm h-16 text-xl rounded-none font-black uppercase bg-primary text-black border-2 border-primary hover:bg-black hover:text-white hover:border-white shadow-stark hover:shadow-stark-hover transition-all skew-x-[-2deg]">
+                            {t('analysis.analyze_now')} <ArrowRight className="ml-3 w-6 h-6 animate-pulse" />
                         </Button>
                     </motion.div>
                 )}
