@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion';
-import { Star, Plus, Check, Eye } from 'lucide-react';
+import { Star, Plus, Check, Eye, Repeat, ShoppingCart, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
@@ -36,9 +36,10 @@ export function ProductCard({
     isSubscription = false,
 }: ProductCardProps) {
     const { addItem } = useCart();
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
     const [isHovered, setIsHovered] = useState(false);
     const [isAdded, setIsAdded] = useState(false);
+    const [purchaseMode, setPurchaseMode] = useState<'once' | 'subscribe'>('once');
 
     // 3D Tilt Effect Logic
     const x = useMotionValue(0);
@@ -72,10 +73,14 @@ export function ProductCard({
         e.preventDefault();
         e.stopPropagation();
 
+        const itemPrice = purchaseMode === 'subscribe' ? price * 0.85 : price; // 15% off for subscription
+
         addItem({
-            id,
-            name,
-            price,
+            id: purchaseMode === 'subscribe' ? `${id}-sub` : id,
+            name: purchaseMode === 'subscribe'
+                ? `${name} (${language === 'cn' ? '订阅' : language === 'jp' ? '定期' : 'Subscribe'})`
+                : name,
+            price: itemPrice,
             imageUrl,
             category,
         });
@@ -83,6 +88,14 @@ export function ProductCard({
         setIsAdded(true);
         setTimeout(() => setIsAdded(false), 2000);
     };
+
+    // Calculate prices
+    const oneTimePrice = price;
+    const subscribePrice = (price * 0.85).toFixed(2);
+
+    // Text translations
+    const buyOnceText = language === 'cn' ? '单次购买' : language === 'jp' ? '単品購入' : 'Buy Once';
+    const subscribeText = language === 'cn' ? '订阅 -15%' : language === 'jp' ? '定期 -15%' : 'Subscribe -15%';
 
     return (
         <motion.div
@@ -108,16 +121,16 @@ export function ProductCard({
                 <Card className="overflow-hidden border-none shadow-xl bg-card h-full flex flex-col relative bg-stone-50 hover:shadow-2xl transition-all duration-300">
 
                     {/* Image Area with "Layer Reveal" Effect */}
-                    <div className="relative aspect-[4/5] overflow-hidden bg-stone-200">
+                    <div className="relative aspect-[4/5] overflow-hidden bg-stone-900">
                         {/* Layer 1: Base Image */}
                         <div className={cn(
                             "absolute inset-0 bg-gradient-to-br transition-opacity duration-700",
-                            category === 'drink' ? "from-emerald-50 to-stone-100" : "from-stone-200 to-stone-100",
+                            "from-stone-800 to-stone-900",
                             "opacity-100"
                         )} />
 
                         {/* Mock Image Content */}
-                        <div className="absolute inset-0 flex items-center justify-center text-muted-foreground/20 font-serif text-8xl">
+                        <div className="absolute inset-0 flex items-center justify-center text-stone-700/30 font-bold text-8xl">
                             {name.charAt(0)}
                         </div>
 
@@ -131,7 +144,7 @@ export function ProductCard({
 
                         {/* Layer 2: Overlay Reveal on Hover */}
                         <div className={cn(
-                            "absolute inset-0 bg-stone-900/10 backdrop-blur-[2px] transition-opacity duration-300 flex items-center justify-center",
+                            "absolute inset-0 bg-stone-900/20 backdrop-blur-[2px] transition-opacity duration-300 flex items-center justify-center",
                             isHovered ? "opacity-100" : "opacity-0"
                         )}>
                             <Button
@@ -143,38 +156,76 @@ export function ProductCard({
                             </Button>
                         </div>
 
-                        {isSubscription && (
-                            <Badge className="absolute top-3 left-3 bg-stone-900/90 text-stone-50 backdrop-blur-md border-none font-serif tracking-wide shadow-sm z-10">
-                                {t('shop.monthly_protocol')}
-                            </Badge>
-                        )}
+                        {/* Punk badge */}
+                        <Badge className="absolute top-3 left-3 bg-gradient-to-r from-pink-600 to-purple-600 text-white backdrop-blur-md border-none font-bold tracking-wide shadow-lg z-10 uppercase text-[10px]">
+                            🔥 Functional Soda
+                        </Badge>
                     </div>
 
-                    <CardContent className="p-6 flex-grow flex flex-col relative z-20 bg-stone-50">
-                        <div className="flex justify-between items-start mb-3">
-                            <div className="flex gap-1">
+                    <CardContent className="p-5 flex-grow flex flex-col relative z-20 bg-stone-50">
+                        <div className="flex justify-between items-start mb-2">
+                            <div className="flex gap-1.5 flex-wrap">
                                 {tags.map((tag) => (
-                                    <span key={tag} className="text-[10px] uppercase tracking-wider font-bold text-stone-400 border border-stone-200 px-2 py-0.5 rounded-full">
+                                    <span key={tag} className="text-[10px] uppercase tracking-wider font-bold text-white bg-stone-800 px-2 py-0.5 rounded-full">
                                         {tag}
                                     </span>
                                 ))}
                             </div>
-
                         </div>
 
-                        <h3 className="font-serif text-xl font-bold mb-2 text-stone-900 group-hover:text-emerald-700 transition-colors duration-300">
+                        <h3 className="font-bold text-xl mb-2 text-stone-900 group-hover:text-pink-600 transition-colors duration-300 tracking-tight">
                             {name}
                         </h3>
-                        <p className="text-sm text-stone-500 line-clamp-2 mb-6 font-light leading-relaxed">
+                        <p className="text-sm text-stone-500 line-clamp-2 mb-4 leading-relaxed">
                             {description}
                         </p>
 
+                        {/* Purchase Mode Toggle */}
+                        {isSubscription && (
+                            <div className="flex gap-2 mb-4">
+                                <button
+                                    onClick={(e) => { e.stopPropagation(); setPurchaseMode('once'); }}
+                                    className={cn(
+                                        "flex-1 py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1",
+                                        purchaseMode === 'once'
+                                            ? "bg-stone-900 text-white shadow-md"
+                                            : "bg-stone-100 text-stone-600 hover:bg-stone-200"
+                                    )}
+                                >
+                                    <ShoppingCart className="w-3 h-3" />
+                                    {buyOnceText}
+                                </button>
+                                <button
+                                    onClick={(e) => { e.stopPropagation(); setPurchaseMode('subscribe'); }}
+                                    className={cn(
+                                        "flex-1 py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1",
+                                        purchaseMode === 'subscribe'
+                                            ? "bg-gradient-to-r from-pink-600 to-purple-600 text-white shadow-md"
+                                            : "bg-stone-100 text-stone-600 hover:bg-stone-200"
+                                    )}
+                                >
+                                    <Repeat className="w-3 h-3" />
+                                    {subscribeText}
+                                </button>
+                            </div>
+                        )}
+
                         <div className="mt-auto flex items-end justify-between">
                             <div className="flex flex-col">
-                                <span className="text-sm text-stone-400 font-medium">{t('shop.price')}</span>
-                                <span className="text-lg font-serif font-bold text-stone-800">
-                                    ${price} <span className="text-xs font-sans font-normal text-stone-400">{isSubscription ? t('shop.monthly') : ''}</span>
-                                </span>
+                                <span className="text-xs text-stone-400 font-medium uppercase tracking-wide">{t('shop.price')}</span>
+                                <div className="flex items-baseline gap-2">
+                                    <span className="text-2xl font-bold text-stone-900">
+                                        ${purchaseMode === 'subscribe' ? subscribePrice : oneTimePrice.toFixed(2)}
+                                    </span>
+                                    {purchaseMode === 'subscribe' && (
+                                        <span className="text-xs font-medium text-stone-400 line-through">
+                                            ${oneTimePrice.toFixed(2)}
+                                        </span>
+                                    )}
+                                    <span className="text-xs font-medium text-stone-400">
+                                        {purchaseMode === 'subscribe' ? t('shop.monthly') : ''}
+                                    </span>
+                                </div>
                             </div>
                             <div className="flex items-center text-yellow-500 bg-yellow-50 px-2 py-1 rounded-md">
                                 <Star className="w-3.5 h-3.5 fill-current" />
@@ -184,13 +235,14 @@ export function ProductCard({
                     </CardContent>
 
                     <CardFooter className="p-4 pt-0 bg-stone-50 relative z-20">
-                        {/* Button slides up on hover sort of effect */}
                         <Button
                             className={cn(
-                                "w-full rounded-full transition-all duration-500 shadow-md",
+                                "w-full rounded-full transition-all duration-500 shadow-md font-bold",
                                 isAdded
                                     ? "bg-emerald-600 hover:bg-emerald-700 text-white"
-                                    : "bg-stone-900 hover:bg-stone-800 text-white group-hover:bg-emerald-800"
+                                    : purchaseMode === 'subscribe'
+                                        ? "bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white"
+                                        : "bg-stone-900 hover:bg-stone-800 text-white"
                             )}
                             onClick={handleAddToCart}
                             size="lg"
@@ -214,7 +266,16 @@ export function ProductCard({
                                         exit={{ opacity: 0, y: -10 }}
                                         className="flex items-center"
                                     >
-                                        <Plus className="w-4 h-4 mr-2" /> {t('shop.add_to_cart')}
+                                        {purchaseMode === 'subscribe' ? (
+                                            <>
+                                                <Zap className="w-4 h-4 mr-2" />
+                                                {language === 'cn' ? '开始订阅' : language === 'jp' ? '定期購入' : 'Start Subscription'}
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Plus className="w-4 h-4 mr-2" /> {t('shop.add_to_cart')}
+                                            </>
+                                        )}
                                     </motion.div>
                                 )}
                             </AnimatePresence>

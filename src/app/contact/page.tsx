@@ -93,7 +93,7 @@ export default function ContactPage() {
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
                                 <div className="p-4 rounded-xl bg-stone-50/50 hover:bg-emerald-50/50 transition-colors">
                                     <Mail className="w-5 h-5 mx-auto mb-2 text-emerald-600" />
-                                    <p className="text-sm text-stone-600">hello@nourishselect.com</p>
+                                    <p className="text-sm text-stone-600">support@nourishselect.co</p>
                                 </div>
                                 <div className="p-4 rounded-xl bg-stone-50/50 hover:bg-emerald-50/50 transition-colors">
                                     <Phone className="w-5 h-5 mx-auto mb-2 text-emerald-600" />

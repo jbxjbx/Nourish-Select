@@ -11,32 +11,58 @@ export default function DrinksPage() {
 
     const drinks = [
         {
-            id: 'dream-weave',
-            name: language === 'en' ? 'Dream Weave' : '梦境编织',
-            description: language === 'en' ? 'A calming blend of Valerian Root and Chamomile to guide you into a deep, restorative sleep.' : '缬草根与洋甘菊的镇静混合，引导您进入深度修复睡眠。',
-            price: 29.99,
-            imageUrl: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=400&fit=crop',
-            tags: language === 'en' ? ['Sleep', 'Relaxation'] : ['助眠', '放松'],
+            id: 'wrecked-ralph',
+            name: language === 'cn' ? '醉后拉尔夫' : language === 'jp' ? '二日酔いラルフ' : 'Wrecked Ralph',
+            description: language === 'cn'
+                ? '派对后的救星！姜黄、朝鲜蓟和电解质的强效组合，帮你告别宿醉。'
+                : language === 'jp'
+                    ? 'パーティー後の救世主！ターメリック、アーティチョーク、電解質で二日酔いをぶっ飛ばせ。'
+                    : 'Party too hard? This turmeric, artichoke & electrolyte powerhouse kicks hangovers to the curb.',
+            price: 4.99,
+            imageUrl: '/wrecked-ralph.png',
+            tags: language === 'cn' ? ['解酒', '护肝'] : language === 'jp' ? ['二日酔い', '肝臓ケア'] : ['Hangover', 'Liver Support'],
             rating: 5,
             isSubscription: true,
         },
         {
-            id: 'calm-flow',
-            name: language === 'en' ? 'Calm Flow' : '静谧心流',
-            description: language === 'en' ? 'Reduce anxiety and center your spirit with Ashwagandha and Lemon Balm.' : '南非醉茄与柠檬香蜂草，缓解焦虑，安神定志。',
-            price: 34.99,
-            imageUrl: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400&h=400&fit=crop',
-            tags: language === 'en' ? ['Anxiety', 'Balance'] : ['抗焦虑', '平衡'],
-            rating: 4,
+            id: 'bloated-bob',
+            name: language === 'cn' ? '胀气鲍勃' : language === 'jp' ? '満腹ボブ' : 'Bloated Bob',
+            description: language === 'cn'
+                ? '吃撑了？消化酵素、益生菌和薄荷来帮忙，让你的肚子恢复平静。'
+                : language === 'jp'
+                    ? '食べすぎた？消化酵素、プロバイオティクス、ペパーミントがお腹をスッキリさせる。'
+                    : 'Ate too much? Digestive enzymes, probiotics & peppermint to calm that angry belly.',
+            price: 4.99,
+            imageUrl: '/bloated-bob.png',
+            tags: language === 'cn' ? ['消化', '益生菌'] : language === 'jp' ? ['消化', 'プロバイオティクス'] : ['Digestion', 'Probiotic'],
+            rating: 5,
             isSubscription: true,
         },
         {
-            id: 'vitality-spark',
-            name: language === 'en' ? 'Vitality Spark' : '活力火花',
-            description: language === 'en' ? 'Awaken your inner fire. A potent mix of Ginseng and Matcha for sustained energy.' : '唤醒内在之火。人参与抹茶的强效组合，提供持久能量。',
-            price: 24.99,
-            imageUrl: 'https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=400&h=400&fit=crop',
-            tags: language === 'en' ? ['Energy', 'Vigor'] : ['能量', '活力'],
+            id: 'heavy-kev',
+            name: language === 'cn' ? '沉重凯文' : language === 'jp' ? 'ヘビー級ケヴィン' : 'Heavy Kev',
+            description: language === 'cn'
+                ? '绿茶提取物、左旋肉碱和藤黄果，助你轻盈起航，告别沉重感。'
+                : language === 'jp'
+                    ? '緑茶エキス、L-カルニチン、ガルシニアで軽やかな毎日を。重さよ、さらば。'
+                    : 'Green tea extract, L-carnitine & garcinia to help you feel lighter. Say goodbye to the heavy feels.',
+            price: 4.99,
+            imageUrl: '/heavy-kev.png',
+            tags: language === 'cn' ? ['代谢', '减脂'] : language === 'jp' ? ['代謝', '脂肪燃焼'] : ['Metabolism', 'Fat Burn'],
+            rating: 5,
+            isSubscription: true,
+        },
+        {
+            id: 'manic-max',
+            name: language === 'cn' ? '狂躁麦克斯' : language === 'jp' ? 'パニックマックス' : 'Manic Max',
+            description: language === 'cn'
+                ? '脑子转太快？南非醉茄、L-茶氨酸和柠檬香蜂草，让你的思绪平静下来。'
+                : language === 'jp'
+                    ? '頭がグルグル？アシュワガンダ、L-テアニン、レモンバームで心を落ち着かせよう。'
+                    : 'Brain going a million miles? Ashwagandha, L-theanine & lemon balm to slow down the mental chaos.',
+            price: 4.99,
+            imageUrl: '/manic-max.png',
+            tags: language === 'cn' ? ['抗焦虑', '放松'] : language === 'jp' ? ['不安解消', 'リラックス'] : ['Anti-Anxiety', 'Calm'],
             rating: 5,
             isSubscription: true,
         },
