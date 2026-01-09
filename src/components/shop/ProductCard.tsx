@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion';
-import { Star, Plus, Check, Eye, Repeat, ShoppingCart, Zap } from 'lucide-react';
+import { Star, Plus, Check, Eye, Repeat, ShoppingCart, Zap, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
@@ -22,6 +22,7 @@ interface ProductCardProps {
     rating?: number;
     tags?: string[];
     isSubscription?: boolean;
+    onLearnMore?: () => void;
 }
 
 export function ProductCard({
@@ -34,6 +35,7 @@ export function ProductCard({
     rating = 5,
     tags = [],
     isSubscription = false,
+    onLearnMore,
 }: ProductCardProps) {
     const { addItem } = useCart();
     const { t, language } = useLanguage();
@@ -151,9 +153,15 @@ export function ProductCard({
                             <Button
                                 variant="secondary"
                                 size="sm"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    onLearnMore?.();
+                                }}
                                 className="scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300 delay-100 shadow-lg text-xs md:text-sm"
                             >
-                                <Eye className="w-4 h-4 mr-2" /> {t('shop.quick_view')}
+                                <Sparkles className="w-4 h-4 mr-2" />
+                                {language === 'cn' ? '了解更多' : 'Learn More'}
                             </Button>
                         </div>
 

@@ -2,71 +2,14 @@
 
 import { motion } from 'framer-motion';
 import { ProductCard } from '@/components/shop/ProductCard';
+import { ProductDetailModal } from '@/components/shop/ProductDetailModal';
 import { useLanguage } from '@/context/language-context';
-import { OrganicBlobs, FloatingParticles } from '@/components/ui/FloatingParticles';
-import { Leaf, Droplets, Sparkles } from 'lucide-react';
+import { products, ProductDetail } from '@/lib/products';
+import { useState } from 'react';
 
 export default function DrinksPage() {
     const { t, language } = useLanguage();
-
-    const drinks = [
-        {
-            id: 'wrecked-ralph',
-            name: language === 'cn' ? '醉后拉尔夫' : language === 'jp' ? '二日酔いラルフ' : 'Wrecked Ralph',
-            description: language === 'cn'
-                ? '派对后的救星！姜黄、朝鲜蓟和电解质的强效组合，帮你告别宿醉。'
-                : language === 'jp'
-                    ? 'パーティー後の救世主！ターメリック、アーティチョーク、電解質で二日酔いをぶっ飛ばせ。'
-                    : 'Party too hard? This turmeric, artichoke & electrolyte powerhouse kicks hangovers to the curb.',
-            price: 4.99,
-            imageUrl: '/wrecked-ralph.png',
-            tags: language === 'cn' ? ['解酒', '护肝'] : language === 'jp' ? ['二日酔い', '肝臓ケア'] : ['Hangover', 'Liver Support'],
-            rating: 5,
-            isSubscription: true,
-        },
-        {
-            id: 'bloated-bob',
-            name: language === 'cn' ? '胀气鲍勃' : language === 'jp' ? '満腹ボブ' : 'Bloated Bob',
-            description: language === 'cn'
-                ? '吃撑了？消化酵素、益生菌和薄荷来帮忙，让你的肚子恢复平静。'
-                : language === 'jp'
-                    ? '食べすぎた？消化酵素、プロバイオティクス、ペパーミントがお腹をスッキリさせる。'
-                    : 'Ate too much? Digestive enzymes, probiotics & peppermint to calm that angry belly.',
-            price: 4.99,
-            imageUrl: '/bloated-bob.png',
-            tags: language === 'cn' ? ['消化', '益生菌'] : language === 'jp' ? ['消化', 'プロバイオティクス'] : ['Digestion', 'Probiotic'],
-            rating: 5,
-            isSubscription: true,
-        },
-        {
-            id: 'heavy-kev',
-            name: language === 'cn' ? '沉重凯文' : language === 'jp' ? 'ヘビー級ケヴィン' : 'Heavy Kev',
-            description: language === 'cn'
-                ? '绿茶提取物、左旋肉碱和藤黄果，助你轻盈起航，告别沉重感。'
-                : language === 'jp'
-                    ? '緑茶エキス、L-カルニチン、ガルシニアで軽やかな毎日を。重さよ、さらば。'
-                    : 'Green tea extract, L-carnitine & garcinia to help you feel lighter. Say goodbye to the heavy feels.',
-            price: 4.99,
-            imageUrl: '/heavy-kev.png',
-            tags: language === 'cn' ? ['代谢', '减脂'] : language === 'jp' ? ['代謝', '脂肪燃焼'] : ['Metabolism', 'Fat Burn'],
-            rating: 5,
-            isSubscription: true,
-        },
-        {
-            id: 'manic-max',
-            name: language === 'cn' ? '狂躁麦克斯' : language === 'jp' ? 'パニックマックス' : 'Manic Max',
-            description: language === 'cn'
-                ? '脑子转太快？南非醉茄、L-茶氨酸和柠檬香蜂草，让你的思绪平静下来。'
-                : language === 'jp'
-                    ? '頭がグルグル？アシュワガンダ、L-テアニン、レモンバームで心を落ち着かせよう。'
-                    : 'Brain going a million miles? Ashwagandha, L-theanine & lemon balm to slow down the mental chaos.',
-            price: 4.99,
-            imageUrl: '/manic-max.png',
-            tags: language === 'cn' ? ['抗焦虑', '放松'] : language === 'jp' ? ['不安解消', 'リラックス'] : ['Anti-Anxiety', 'Calm'],
-            rating: 5,
-            isSubscription: true,
-        },
-    ];
+    const [selectedProduct, setSelectedProduct] = useState<ProductDetail | null>(null);
 
     return (
         <div className="min-h-screen bg-stone-50">
@@ -121,17 +64,25 @@ export default function DrinksPage() {
 
                 <div className="container mx-auto max-w-5xl relative z-10">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-                        {drinks.map((drink, index) => (
+                        {products.map((product, index) => (
                             <motion.div
-                                key={drink.id}
+                                key={product.id}
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1 }}
                             >
                                 <ProductCard
+                                    id={product.id}
+                                    name={language === 'cn' ? product.nameCn : product.name}
+                                    description={language === 'cn' ? product.descriptionCn : product.description}
+                                    price={product.price}
+                                    imageUrl={product.imageUrl}
                                     category="drink"
-                                    {...drink}
+                                    tags={language === 'cn' ? product.tagsCn : product.tags}
+                                    rating={5}
+                                    isSubscription={true}
+                                    onLearnMore={() => setSelectedProduct(product)}
                                 />
                             </motion.div>
                         ))}
@@ -168,6 +119,15 @@ export default function DrinksPage() {
                     </div>
                 </div>
             </section>
+
+            {/* Product Detail Modal */}
+            {selectedProduct && (
+                <ProductDetailModal
+                    product={selectedProduct}
+                    isOpen={!!selectedProduct}
+                    onClose={() => setSelectedProduct(null)}
+                />
+            )}
         </div>
     );
 }
