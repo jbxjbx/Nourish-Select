@@ -119,7 +119,7 @@ export function ProductCard({
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={handleMouseLeave}
             >
-                <Card className="overflow-hidden border-2 border-black shadow-stark hover:shadow-stark-hover bg-background h-full flex flex-col relative transition-all duration-300 rounded-xl">
+                <Card className="overflow-hidden border-4 border-black shadow-stark hover:shadow-stark-hover bg-background h-full flex flex-col relative transition-all duration-100 rounded-none hover:border-[#39FF14]">
 
                     {/* Image Area with "Layer Reveal" Effect */}
                     <div className="relative aspect-[4/5] overflow-hidden bg-stone-900">

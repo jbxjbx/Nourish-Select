@@ -354,3 +354,215 @@
   background: var(--primary);
   color: black;
 }
+
+/* ============================================
+   CYBERPUNK 2.0 ENHANCEMENTS
+   ============================================ */
+
+/* RGB Glitch Effect - Color Separation */
+@keyframes glitch-rgb-1 {
+
+  0%,
+  100% {
+    transform: translate(0);
+  }
+
+  20% {
+    transform: translate(-3px, 3px);
+  }
+
+  40% {
+    transform: translate(-3px, -3px);
+  }
+
+  60% {
+    transform: translate(3px, 3px);
+  }
+
+  80% {
+    transform: translate(3px, -3px);
+  }
+}
+
+@keyframes glitch-rgb-2 {
+
+  0%,
+  100% {
+    transform: translate(0);
+  }
+
+  20% {
+    transform: translate(3px, -3px);
+  }
+
+  40% {
+    transform: translate(3px, 3px);
+  }
+
+  60% {
+    transform: translate(-3px, -3px);
+  }
+
+  80% {
+    transform: translate(-3px, 3px);
+  }
+}
+
+.glitch-rgb {
+  position: relative;
+}
+
+.glitch-rgb:hover::before,
+.glitch-rgb:hover::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  pointer-events: none;
+}
+
+.glitch-rgb:hover::before {
+  color: #FF10F0;
+  animation: glitch-rgb-1 0.2s infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  transform: translate(-2px, -2px);
+  opacity: 0.8;
+}
+
+.glitch-rgb:hover::after {
+  color: #39FF14;
+  animation: glitch-rgb-2 0.2s infinite;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+  transform: translate(2px, 2px);
+  opacity: 0.8;
+}
+
+/* Neon Flicker - Like a faulty neon sign */
+@keyframes neon-flicker {
+
+  0%,
+  19%,
+  21%,
+  23%,
+  25%,
+  54%,
+  56%,
+  100% {
+    opacity: 1;
+    text-shadow:
+      0 0 5px currentColor,
+      0 0 10px currentColor,
+      0 0 20px currentColor;
+  }
+
+  20%,
+  24%,
+  55% {
+    opacity: 0.4;
+    text-shadow: none;
+  }
+}
+
+.neon-flicker {
+  animation: neon-flicker 2s infinite;
+}
+
+/* Scanlines Overlay - CRT Effect */
+.scanlines::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(0deg,
+      rgba(0, 0, 0, 0.15),
+      rgba(0, 0, 0, 0.15) 1px,
+      transparent 1px,
+      transparent 2px);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Cyberpunk Glass - Dirty/Gritty with Neon Edge */
+.glass-cyber {
+  position: relative;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow:
+    inset 0 0 30px rgba(57, 255, 20, 0.05),
+    inset 0 0 60px rgba(255, 16, 240, 0.03),
+    0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.glass-cyber::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Cyberpunk Grid Overlay - Wireframe/Targeting */
+.bg-grid-cyber {
+  background-image:
+    linear-gradient(rgba(57, 255, 20, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(57, 255, 20, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Concrete/Gritty Background */
+.bg-concrete {
+  background-color: #1a1a1a;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Hard Cut Transition - Instant snap */
+.transition-hard {
+  transition-timing-function: steps(1, end) !important;
+}
+
+/* Custom Cursor - Crosshair */
+.cursor-crosshair {
+  cursor: crosshair;
+}
+
+/* Global crosshair cursor for interactive elements */
+a,
+button,
+[role="button"],
+input[type="submit"],
+.clickable {
+  cursor: crosshair;
+}
+
+/* Fast Marquee */
+.animate-marquee-fast {
+  animation: marquee 10s linear infinite;
+}
+
+/* Brutalist Border */
+.border-brutal {
+  border: 4px solid black;
+}
+
+/* Neon Glow Text */
+.text-glow-green {
+  text-shadow: 0 0 10px #39FF14, 0 0 20px #39FF14, 0 0 30px #39FF14;
+}
+
+.text-glow-pink {
+  text-shadow: 0 0 10px #FF10F0, 0 0 20px #FF10F0, 0 0 30px #FF10F0;
+}
+
+/* Hover Invert - Instant color flip */
+.hover-invert:hover {
+  filter: invert(1);
+  transition: filter 0s;
+}
