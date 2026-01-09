@@ -79,12 +79,15 @@ export function IngredientsSection() {
     const { language } = useLanguage();
 
     return (
-        <section className="py-20 md:py-32 bg-stone-950 text-white overflow-hidden relative border-t-2 border-b-2 border-primary">
+        <section className="py-20 md:py-32 bg-background text-stone-900 overflow-hidden relative border-t-2 border-b-2 border-primary">
             {/* Grid Background */}
             <div className="absolute inset-0 z-0 opacity-10" style={{
                 backgroundImage: `linear-gradient(#22c55e 1px, transparent 1px), linear-gradient(90deg, #22c55e 1px, transparent 1px)`,
                 backgroundSize: '20px 20px'
             }} />
+
+            {/* Noise overlay like Hero */}
+            <div className="absolute inset-0 bg-noise opacity-20 z-[1] pointer-events-none" />
 
             {/* Floating Elements */}
             <div className="absolute top-10 right-10 animate-spin-slow opacity-20 hidden md:block">
@@ -102,10 +105,10 @@ export function IngredientsSection() {
                     <span className="inline-block px-4 py-1.5 mb-4 text-sm font-black tracking-widest text-black bg-primary uppercase transform -rotate-2 border-2 border-black shadow-stark">
                         {language === 'cn' ? '核心成分' : 'Super Ingredients'}
                     </span>
-                    <h2 className="text-4xl md:text-6xl font-black mb-4 uppercase text-white tracking-tighter">
+                    <h2 className="text-4xl md:text-6xl font-black mb-4 uppercase text-stone-900 tracking-tighter">
                         {language === 'cn' ? '古老智慧 X 现代科技' : 'Ancient Herbs X Modern Tech'}
                     </h2>
-                    <p className="text-lg text-stone-400 max-w-2xl mx-auto font-mono">
+                    <p className="text-lg text-stone-600 max-w-2xl mx-auto font-mono">
                         {language === 'cn'
                             ? '每一种成分都经过精心挑选，拒绝没有任何作用的安慰剂'
                             : 'No placebo dust. Just effective doses of the real stuff.'}
@@ -126,10 +129,10 @@ export function IngredientsSection() {
                                 whileHover={{ y: -4, scale: 1.05 }}
                                 className="group relative"
                             >
-                                <div className={`bg-stone-900 border-2 border-stone-800 hover:border-primary transition-all duration-300 rounded-sm p-5 text-center h-full group-hover:shadow-[4px_4px_0px_#22c55e]`}>
+                                <div className={`bg-white border-2 border-stone-200 hover:border-primary transition-all duration-300 rounded-sm p-5 text-center h-full group-hover:shadow-[4px_4px_0px_#22c55e]`}>
                                     {/* Icon */}
-                                    <div className={`w-12 h-12 mx-auto mb-3 bg-black border border-stone-700 flex items-center justify-center group-hover:bg-primary group-hover:text-black transition-colors rounded-none`}>
-                                        <Icon className="w-6 h-6 text-white group-hover:text-black" />
+                                    <div className={`w-12 h-12 mx-auto mb-3 bg-stone-100 border border-stone-300 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-colors rounded-none`}>
+                                        <Icon className="w-6 h-6 text-stone-700 group-hover:text-black" />
                                     </div>
 
                                     {/* Benefit Badge */}
@@ -138,7 +141,7 @@ export function IngredientsSection() {
                                     </span>
 
                                     {/* Name */}
-                                    <h3 className="text-lg font-black text-white mt-1 mb-2 uppercase">
+                                    <h3 className="text-lg font-black text-stone-900 mt-1 mb-2 uppercase">
                                         {language === 'cn' ? ingredient.name_zh : ingredient.name_en}
                                     </h3>
 
@@ -159,7 +162,7 @@ export function IngredientsSection() {
                     viewport={{ once: true }}
                     className="text-center mt-12"
                 >
-                    <p className="text-white text-sm flex items-center justify-center gap-2 font-black uppercase tracking-tight">
+                    <p className="text-stone-700 text-sm flex items-center justify-center gap-2 font-black uppercase tracking-tight">
                         <Leaf className="w-4 h-4 text-primary animate-pulse" />
                         {language === 'cn' ? '100% 天然有机成分' : '100% Organic. 0% Bullsh*t.'}
                     </p>
