@@ -16,7 +16,17 @@ export async function POST(request: NextRequest) {
             );
         }
 
+        // Check if API key is configured
+        if (!process.env.RESEND_API_KEY) {
+            console.error('RESEND_API_KEY is not configured');
+            return NextResponse.json(
+                { error: 'Email service not configured' },
+                { status: 500 }
+            );
+        }
+
         // Send email via Resend
+        // NOTE: With Resend free tier using onboarding@resend.dev, you can only send to your own verified email
         const { data, error } = await resend.emails.send({
             from: 'Nourish Select Contact <onboarding@resend.dev>',
             to: process.env.CONTACT_EMAIL || 'support@nourishselect.co',
@@ -42,9 +52,9 @@ export async function POST(request: NextRequest) {
         });
 
         if (error) {
-            console.error('Resend error:', error);
+            console.error('Resend error:', JSON.stringify(error, null, 2));
             return NextResponse.json(
-                { error: 'Failed to send email' },
+                { error: 'Failed to send email', details: error.message || error.name },
                 { status: 500 }
             );
         }
@@ -52,13 +62,13 @@ export async function POST(request: NextRequest) {
         console.log('📬 Email sent successfully:', data?.id);
 
         return NextResponse.json(
-            { success: true, message: 'Message sent successfully!' },
+            { success: true, message: 'Message sent successfully!', id: data?.id },
             { status: 200 }
         );
     } catch (error) {
         console.error('Contact form error:', error);
         return NextResponse.json(
-            { error: 'Failed to send message' },
+            { error: 'Failed to send message', details: error instanceof Error ? error.message : 'Unknown error' },
             { status: 500 }
         );
     }
