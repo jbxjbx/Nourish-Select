@@ -171,49 +171,50 @@ export function ProductCard({
                         </Badge>
                     </div>
 
-                    <CardContent className="p-5 flex-grow flex flex-col relative z-20 bg-stone-50">
-                        <div className="flex justify-between items-start mb-2">
-                            <div className="flex gap-1.5 flex-wrap">
-                                {tags.map((tag) => (
-                                    <span key={tag} className="text-[10px] uppercase tracking-wider font-bold text-white bg-stone-800 px-2 py-0.5 rounded-full">
+                    <CardContent className="p-4 flex-grow flex flex-col relative z-20 bg-stone-50">
+                        {/* Fixed height tags row */}
+                        <div className="flex justify-between items-start mb-2 min-h-[24px]">
+                            <div className="flex gap-1 flex-wrap">
+                                {tags.slice(0, 2).map((tag) => (
+                                    <span key={tag} className="text-[9px] uppercase tracking-wider font-bold text-white bg-stone-800 px-1.5 py-0.5 rounded-full">
                                         {tag}
                                     </span>
                                 ))}
                             </div>
                         </div>
 
-                        <h3 className="font-bold text-xl mb-2 text-stone-900 group-hover:text-pink-600 transition-colors duration-300 tracking-tight">
+                        <h3 className="font-bold text-lg mb-1 text-stone-900 group-hover:text-pink-600 transition-colors duration-300 tracking-tight line-clamp-1">
                             {name}
                         </h3>
-                        <p className="text-sm text-stone-500 line-clamp-2 mb-4 leading-relaxed">
+                        <p className="text-xs text-stone-500 line-clamp-2 mb-3 leading-relaxed min-h-[32px]">
                             {description}
                         </p>
 
                         {/* Purchase Mode Toggle */}
                         {isSubscription && (
-                            <div className="flex gap-2 mb-4">
+                            <div className="flex gap-1.5 mb-3">
                                 <button
                                     onClick={(e) => { e.stopPropagation(); setPurchaseMode('once'); }}
                                     className={cn(
-                                        "flex-1 py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1",
+                                        "flex-1 py-1.5 px-2 rounded-lg text-[10px] font-bold transition-all flex items-center justify-center gap-1",
                                         purchaseMode === 'once'
                                             ? "bg-stone-900 text-white shadow-md"
                                             : "bg-stone-100 text-stone-600 hover:bg-stone-200"
                                     )}
                                 >
-                                    <ShoppingCart className="w-3 h-3" />
+                                    <ShoppingCart className="w-2.5 h-2.5" />
                                     {buyOnceText}
                                 </button>
                                 <button
                                     onClick={(e) => { e.stopPropagation(); setPurchaseMode('subscribe'); }}
                                     className={cn(
-                                        "flex-1 py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1",
+                                        "flex-1 py-1.5 px-2 rounded-lg text-[10px] font-bold transition-all flex items-center justify-center gap-1",
                                         purchaseMode === 'subscribe'
                                             ? "bg-gradient-to-r from-pink-600 to-purple-600 text-white shadow-md"
                                             : "bg-stone-100 text-stone-600 hover:bg-stone-200"
                                     )}
                                 >
-                                    <Repeat className="w-3 h-3" />
+                                    <Repeat className="w-2.5 h-2.5" />
                                     {subscribeText}
                                 </button>
                             </div>
@@ -221,24 +222,21 @@ export function ProductCard({
 
                         <div className="mt-auto flex items-end justify-between">
                             <div className="flex flex-col">
-                                <span className="text-xs text-stone-400 font-medium uppercase tracking-wide">{t('shop.price')}</span>
-                                <div className="flex items-baseline gap-2">
-                                    <span className="text-2xl font-bold text-stone-900">
+                                <span className="text-[10px] text-stone-400 font-medium uppercase tracking-wide">{t('shop.price')}</span>
+                                <div className="flex items-baseline gap-1.5">
+                                    <span className="text-xl font-bold text-stone-900">
                                         ${purchaseMode === 'subscribe' ? subscribePrice : oneTimePrice.toFixed(2)}
                                     </span>
                                     {purchaseMode === 'subscribe' && (
-                                        <span className="text-xs font-medium text-stone-400 line-through">
+                                        <span className="text-[10px] font-medium text-stone-400 line-through">
                                             ${oneTimePrice.toFixed(2)}
                                         </span>
                                     )}
-                                    <span className="text-xs font-medium text-stone-400">
-                                        {purchaseMode === 'subscribe' ? t('shop.monthly') : ''}
-                                    </span>
                                 </div>
                             </div>
-                            <div className="flex items-center text-yellow-500 bg-yellow-50 px-2 py-1 rounded-md">
-                                <Star className="w-3.5 h-3.5 fill-current" />
-                                <span className="text-xs font-bold ml-1 text-yellow-700">{rating}.0</span>
+                            <div className="flex items-center text-yellow-500 bg-yellow-50 px-1.5 py-0.5 rounded-md">
+                                <Star className="w-3 h-3 fill-current" />
+                                <span className="text-[10px] font-bold ml-0.5 text-yellow-700">{rating}.0</span>
                             </div>
                         </div>
                     </CardContent>
