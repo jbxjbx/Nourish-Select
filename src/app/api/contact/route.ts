@@ -6,7 +6,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { name, email, message } = body;
+        const { name, email, subject, message } = body;
 
         // Validate required fields
         if (!name || !email || !message) {
@@ -25,13 +25,18 @@ export async function POST(request: NextRequest) {
             );
         }
 
+        // Build subject line
+        const emailSubject = subject
+            ? `📬 [${subject}] from ${name}`
+            : `📬 New Contact from ${name}`;
+
         // Send email via Resend
         // NOTE: With Resend free tier using onboarding@resend.dev, you can only send to your own verified email
         const { data, error } = await resend.emails.send({
             from: 'Nourish Select Contact <onboarding@resend.dev>',
             to: process.env.CONTACT_EMAIL || 'support@nourishselect.co',
             replyTo: email,
-            subject: `📬 New Contact from ${name}`,
+            subject: emailSubject,
             html: `
                 <div style="font-family: monospace; max-width: 600px; margin: 0 auto; padding: 20px; background: #f5f5f5;">
                     <div style="background: #000; color: #39FF14; padding: 20px; text-align: center;">

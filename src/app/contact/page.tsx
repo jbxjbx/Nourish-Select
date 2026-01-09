@@ -12,7 +12,7 @@ import { useState } from 'react';
 
 export default function ContactPage() {
     const { t, language } = useLanguage();
-    const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+    const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
     const [error, setError] = useState('');
@@ -34,7 +34,7 @@ export default function ContactPage() {
             }
 
             setIsSuccess(true);
-            setFormData({ name: '', email: '', message: '' });
+            setFormData({ name: '', email: '', subject: '', message: '' });
         } catch (err) {
             setError(language === 'cn' ? '发送失败，请稍后再试' : 'Failed to send. Please try again.');
         } finally {
@@ -148,6 +148,17 @@ export default function ContactPage() {
                                             value={formData.email}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                             placeholder={t('contact.email_placeholder')}
+                                            required
+                                            className="bg-stone-100 border-2 border-black rounded-none h-12 focus:ring-0 focus:border-primary focus:bg-white transition-all font-bold placeholder:text-stone-400 text-black caret-black"
+                                        />
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="subject" className="text-black font-black uppercase tracking-wide">{language === 'cn' ? '主题' : 'SUBJECT'}</Label>
+                                        <Input
+                                            id="subject"
+                                            value={formData.subject}
+                                            onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                                            placeholder={language === 'cn' ? '您的咨询主题' : 'What is this about?'}
                                             required
                                             className="bg-stone-100 border-2 border-black rounded-none h-12 focus:ring-0 focus:border-primary focus:bg-white transition-all font-bold placeholder:text-stone-400 text-black caret-black"
                                         />
