@@ -15,12 +15,15 @@ export function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
                     <div className="space-y-4">
                         <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 bg-primary rounded-none flex items-center justify-center transform rotate-3">
-                                <span className="font-black text-black">N</span>
+                            <div className="relative w-48 h-12">
+                                <Link href="/">
+                                    <img
+                                        src="/logo.png"
+                                        alt="Nourish Select"
+                                        className="object-contain object-left w-full h-full"
+                                    />
+                                </Link>
                             </div>
-                            <span className="text-2xl font-black uppercase tracking-tighter">
-                                Nourish<span className="text-primary">Select</span>
-                            </span>
                         </div>
                         <p className="text-sm text-stone-400 leading-relaxed font-mono">
                             {t('footer.desc')}

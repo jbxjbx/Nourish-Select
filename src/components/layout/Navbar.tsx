@@ -80,17 +80,12 @@ export function Navbar() {
                         <SheetContent side="left" className="bg-background/98 backdrop-blur-xl w-[300px] p-0">
                             {/* Header with logo */}
                             <div className="p-6 border-b border-border/50">
-                                <Link href="/" onClick={handleNavClick} className="flex items-center gap-2">
-                                    <Image
-                                        src="/logo-icon.png"
+                                <Link href="/" onClick={handleNavClick} className="block relative w-40 h-10">
+                                    <img
+                                        src="/logo.png"
                                         alt="Nourish Select"
-                                        width={32}
-                                        height={32}
-                                        className="rounded-lg"
+                                        className="object-contain object-left w-full h-full"
                                     />
-                                    <span className="text-xl font-semibold tracking-tight text-foreground">
-                                        Nourish<span className="text-primary font-normal">Select</span>
-                                    </span>
                                 </Link>
                             </div>
 
@@ -248,18 +243,13 @@ export function Navbar() {
                         </SheetContent>
                     </Sheet>
 
-                    {/* Logo */}
-                    <Link href="/" className="flex items-center gap-2">
-                        <Image
-                            src="/logo-icon.png"
+                    {/* Logo - Desktop */}
+                    <Link href="/" className="block relative w-48 h-12">
+                        <img
+                            src="/logo.png"
                             alt="Nourish Select"
-                            width={32}
-                            height={32}
-                            className="rounded-lg"
+                            className="object-contain object-left w-full h-full"
                         />
-                        <span className="text-xl font-semibold tracking-tight text-foreground">
-                            Nourish<span className="text-primary font-normal">Select</span>
-                        </span>
                     </Link>
                 </div>
 
