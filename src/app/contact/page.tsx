@@ -7,10 +7,40 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { useLanguage } from '@/context/language-context';
 import { FAQSection } from '@/components/home/FAQSection';
-import { Mail, Phone, MapPin, Send, Zap, MessageSquare } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Zap, MessageSquare, Loader2, CheckCircle } from 'lucide-react';
+import { useState } from 'react';
 
 export default function ContactPage() {
     const { t, language } = useLanguage();
+    const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [error, setError] = useState('');
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setError('');
+
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to send message');
+            }
+
+            setIsSuccess(true);
+            setFormData({ name: '', email: '', message: '' });
+        } catch (err) {
+            setError(language === 'cn' ? '发送失败，请稍后再试' : 'Failed to send. Please try again.');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-stone-100 font-mono">
@@ -81,37 +111,80 @@ export default function ContactPage() {
                                 <Zap className="w-8 h-8 text-yellow-400 fill-yellow-400" />
                             </div>
 
-                            <div className="space-y-6">
-                                <div className="grid gap-2">
-                                    <Label htmlFor="name" className="text-black font-black uppercase tracking-wide">{t('contact.name_label')}</Label>
-                                    <Input
-                                        id="name"
-                                        placeholder={t('contact.name_placeholder')}
-                                        className="bg-stone-100 border-2 border-black rounded-none h-12 focus:ring-0 focus:border-primary focus:bg-white transition-all font-bold placeholder:text-stone-400"
-                                    />
+                            {isSuccess ? (
+                                <div className="flex flex-col items-center justify-center h-full py-12 text-center">
+                                    <CheckCircle className="w-16 h-16 text-primary mb-4" />
+                                    <h3 className="text-2xl font-black text-black uppercase mb-2">
+                                        {language === 'cn' ? '消息已发送！' : 'MESSAGE SENT!'}
+                                    </h3>
+                                    <p className="text-stone-500 font-bold">
+                                        {language === 'cn' ? '我们会尽快回复你' : "We'll get back to you soon"}
+                                    </p>
+                                    <Button
+                                        onClick={() => setIsSuccess(false)}
+                                        className="mt-6 rounded-none bg-black text-white"
+                                    >
+                                        {language === 'cn' ? '发送另一条消息' : 'Send Another'}
+                                    </Button>
                                 </div>
-                                <div className="grid gap-2">
-                                    <Label htmlFor="email" className="text-black font-black uppercase tracking-wide">{t('contact.email_label')}</Label>
-                                    <Input
-                                        id="email"
-                                        type="email"
-                                        placeholder={t('contact.email_placeholder')}
-                                        className="bg-stone-100 border-2 border-black rounded-none h-12 focus:ring-0 focus:border-primary focus:bg-white transition-all font-bold placeholder:text-stone-400"
-                                    />
-                                </div>
-                                <div className="grid gap-2">
-                                    <Label htmlFor="message" className="text-black font-black uppercase tracking-wide">{t('contact.message_label')}</Label>
-                                    <Textarea
-                                        id="message"
-                                        placeholder={t('contact.message_placeholder')}
-                                        className="bg-stone-100 border-2 border-black rounded-none min-h-[150px] focus:ring-0 focus:border-primary focus:bg-white transition-all font-bold placeholder:text-stone-400 resize-none"
-                                    />
-                                </div>
-                                <Button className="w-full h-14 rounded-none bg-black text-white text-lg font-black uppercase tracking-widest hover:bg-primary hover:text-black border-2 border-transparent hover:border-black shadow-stark hover:shadow-stark-hover transition-all group">
-                                    {t('contact.send_btn')}
-                                    <Send className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                                </Button>
-                            </div>
+                            ) : (
+                                <form onSubmit={handleSubmit} className="space-y-6">
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="name" className="text-black font-black uppercase tracking-wide">{t('contact.name_label')}</Label>
+                                        <Input
+                                            id="name"
+                                            value={formData.name}
+                                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                            placeholder={t('contact.name_placeholder')}
+                                            required
+                                            className="bg-stone-100 border-2 border-black rounded-none h-12 focus:ring-0 focus:border-primary focus:bg-white transition-all font-bold placeholder:text-stone-400 text-black caret-black"
+                                        />
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="email" className="text-black font-black uppercase tracking-wide">{t('contact.email_label')}</Label>
+                                        <Input
+                                            id="email"
+                                            type="email"
+                                            value={formData.email}
+                                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                            placeholder={t('contact.email_placeholder')}
+                                            required
+                                            className="bg-stone-100 border-2 border-black rounded-none h-12 focus:ring-0 focus:border-primary focus:bg-white transition-all font-bold placeholder:text-stone-400 text-black caret-black"
+                                        />
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="message" className="text-black font-black uppercase tracking-wide">{t('contact.message_label')}</Label>
+                                        <Textarea
+                                            id="message"
+                                            value={formData.message}
+                                            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                                            placeholder={t('contact.message_placeholder')}
+                                            required
+                                            className="bg-stone-100 border-2 border-black rounded-none min-h-[150px] focus:ring-0 focus:border-primary focus:bg-white transition-all font-bold placeholder:text-stone-400 resize-none text-black caret-black"
+                                        />
+                                    </div>
+                                    {error && (
+                                        <p className="text-red-600 font-bold text-sm">{error}</p>
+                                    )}
+                                    <Button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        className="w-full h-14 rounded-none bg-black text-white text-lg font-black uppercase tracking-widest hover:bg-primary hover:text-black border-2 border-transparent hover:border-black shadow-stark hover:shadow-stark-hover transition-all group disabled:opacity-50"
+                                    >
+                                        {isSubmitting ? (
+                                            <>
+                                                <Loader2 className="w-5 h-5 animate-spin mr-2" />
+                                                {language === 'cn' ? '发送中...' : 'SENDING...'}
+                                            </>
+                                        ) : (
+                                            <>
+                                                {t('contact.send_btn')}
+                                                <Send className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                            </>
+                                        )}
+                                    </Button>
+                                </form>
+                            )}
                         </div>
                     </motion.div>
                 </div>
