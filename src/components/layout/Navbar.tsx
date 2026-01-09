@@ -80,12 +80,9 @@ export function Navbar() {
                         <SheetContent side="left" className="bg-background/98 backdrop-blur-xl w-[300px] p-0">
                             {/* Header with logo */}
                             <div className="p-6 border-b border-border/50">
-                                <Link href="/" onClick={handleNavClick} className="block relative w-40 h-10">
-                                    <img
-                                        src="/logo.png"
-                                        alt="Nourish Select"
-                                        className="object-contain object-left w-full h-full"
-                                    />
+                                <Link href="/" onClick={handleNavClick} className="flex items-center gap-0">
+                                    <span className="font-black text-xl italic tracking-tight text-[#FF10F0] drop-shadow-[0_0_10px_#FF10F0]">Nourish</span>
+                                    <span className="font-black text-xl tracking-tighter text-[#39FF14] drop-shadow-[0_0_10px_#39FF14] ml-1">SELECT</span>
                                 </Link>
                             </div>
 
@@ -244,12 +241,9 @@ export function Navbar() {
                     </Sheet>
 
                     {/* Logo - Desktop */}
-                    <Link href="/" className="block relative w-48 h-12">
-                        <img
-                            src="/logo.png"
-                            alt="Nourish Select"
-                            className="object-contain object-left w-full h-full"
-                        />
+                    <Link href="/" className="flex items-center gap-0">
+                        <span className="font-black text-2xl italic tracking-tight text-[#FF10F0] drop-shadow-[0_0_10px_#FF10F0]">Nourish</span>
+                        <span className="font-black text-2xl tracking-tighter text-[#39FF14] drop-shadow-[0_0_10px_#39FF14] ml-1">SELECT</span>
                     </Link>
                 </div>
 

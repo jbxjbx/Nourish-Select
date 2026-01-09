@@ -14,16 +14,11 @@ export function Footer() {
             <div className="container mx-auto px-4 py-8 md:py-16">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
                     <div className="space-y-4">
-                        <div className="flex items-center gap-2">
-                            <div className="relative w-48 h-12">
-                                <Link href="/">
-                                    <img
-                                        src="/logo.png"
-                                        alt="Nourish Select"
-                                        className="object-contain object-left w-full h-full"
-                                    />
-                                </Link>
-                            </div>
+                        <div className="flex items-center gap-0">
+                            <Link href="/" className="flex items-center gap-0">
+                                <span className="font-black text-2xl italic tracking-tight text-[#FF10F0] drop-shadow-[0_0_10px_#FF10F0]">Nourish</span>
+                                <span className="font-black text-2xl tracking-tighter text-[#39FF14] drop-shadow-[0_0_10px_#39FF14] ml-1">SELECT</span>
+                            </Link>
                         </div>
                         <p className="text-sm text-stone-400 leading-relaxed font-mono">
                             {t('footer.desc')}
