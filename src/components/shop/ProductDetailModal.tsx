@@ -20,15 +20,19 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
     const { language } = useLanguage();
     const { addItem } = useCart();
     const [isAdded, setIsAdded] = useState(false);
+    const [purchaseMode, setPurchaseMode] = useState<'once' | 'subscribe'>('once');
 
     const handleAddToCart = () => {
+        const itemPrice = purchaseMode === 'subscribe' ? product.price * 0.85 : product.price;
         addItem({
-            id: product.id,
-            name: language === 'cn' ? product.nameCn : product.name,
-            price: product.price,
+            id: purchaseMode === 'subscribe' ? `${product.id}-sub` : product.id,
+            name: purchaseMode === 'subscribe'
+                ? `${language === 'cn' ? product.nameCn : product.name} (${language === 'cn' ? '订阅' : 'Subscribe'})`
+                : (language === 'cn' ? product.nameCn : product.name),
+            price: itemPrice,
             imageUrl: product.imageUrl,
             category: 'drink',
-            isSubscription: false,
+            isSubscription: purchaseMode === 'subscribe',
         });
         setIsAdded(true);
         setTimeout(() => setIsAdded(false), 2000);
@@ -131,21 +135,54 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
                                         </p>
 
                                         {/* Price & CTA */}
-                                        <div className="mt-6 flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start">
-                                            <span className="text-3xl font-black">${product.price}</span>
-                                            <Button
-                                                onClick={handleAddToCart}
-                                                className="h-14 px-8 rounded-none bg-black text-white font-black uppercase hover:bg-primary hover:text-black border-2 border-black shadow-stark"
-                                            >
-                                                {isAdded ? (
-                                                    <>Added! ✓</>
-                                                ) : (
-                                                    <>
-                                                        <ShoppingCart className="w-5 h-5 mr-2" />
-                                                        {language === 'cn' ? '加入购物车' : 'Add to Cart'}
-                                                    </>
-                                                )}
-                                            </Button>
+                                        <div className="mt-6 space-y-4">
+                                            {/* Subscription Toggle */}
+                                            <div className="flex gap-2 bg-stone-100 p-1 rounded-lg max-w-xs mx-auto md:mx-0">
+                                                <button
+                                                    onClick={() => setPurchaseMode('once')}
+                                                    className={`flex-1 py-2 px-4 rounded-md text-xs font-bold transition-all ${purchaseMode === 'once'
+                                                            ? 'bg-black text-white shadow-md'
+                                                            : 'text-stone-600 hover:bg-stone-200'
+                                                        }`}
+                                                >
+                                                    {language === 'cn' ? '单次购买' : 'Buy Once'}
+                                                </button>
+                                                <button
+                                                    onClick={() => setPurchaseMode('subscribe')}
+                                                    className={`flex-1 py-2 px-4 rounded-md text-xs font-bold transition-all ${purchaseMode === 'subscribe'
+                                                            ? 'bg-gradient-to-r from-pink-600 to-purple-600 text-white shadow-md'
+                                                            : 'text-stone-600 hover:bg-stone-200'
+                                                        }`}
+                                                >
+                                                    {language === 'cn' ? '订阅 -15%' : 'Subscribe -15%'}
+                                                </button>
+                                            </div>
+
+                                            <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start">
+                                                <div className="flex items-baseline gap-2">
+                                                    <span className="text-3xl font-black">
+                                                        ${purchaseMode === 'subscribe' ? (product.price * 0.85).toFixed(2) : product.price.toFixed(2)}
+                                                    </span>
+                                                    {purchaseMode === 'subscribe' && (
+                                                        <span className="text-sm text-stone-400 line-through">
+                                                            ${product.price.toFixed(2)}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                                <Button
+                                                    onClick={handleAddToCart}
+                                                    className="h-12 px-6 rounded-none bg-black text-white font-black uppercase hover:bg-primary hover:text-black border-2 border-black shadow-stark text-sm"
+                                                >
+                                                    {isAdded ? (
+                                                        <>Added! ✓</>
+                                                    ) : (
+                                                        <>
+                                                            <ShoppingCart className="w-4 h-4 mr-2" />
+                                                            {language === 'cn' ? '加入购物车' : 'Add to Cart'}
+                                                        </>
+                                                    )}
+                                                </Button>
+                                            </div>
                                         </div>
                                     </motion.div>
                                 </div>
@@ -227,55 +264,7 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
                                 </div>
                             </div>
 
-                            {/* Base Ingredients */}
-                            <div className="py-12 px-6 md:px-12 bg-stone-50">
-                                <div className="max-w-6xl mx-auto">
-                                    <div className="text-center mb-8">
-                                        <div className="inline-block bg-stone-200 text-stone-700 px-4 py-1 font-black uppercase text-sm mb-3">
-                                            <Leaf className="w-4 h-4 inline mr-2" />
-                                            {language === 'cn' ? '基底成分' : 'Base Formula'}
-                                        </div>
-                                        <p className="text-stone-500 max-w-xl mx-auto">
-                                            {language === 'cn'
-                                                ? '每款饮品都由这些温和的基础成分调和，确保口感平衡、易于吸收。'
-                                                : 'Every drink is harmonized with these gentle base ingredients for balanced taste and easy absorption.'
-                                            }
-                                        </p>
-                                    </div>
-
-                                    <div className="flex flex-wrap justify-center gap-4">
-                                        {product.baseIngredients.map((ingredient, index) => (
-                                            <motion.div
-                                                key={ingredient.name}
-                                                initial={{ opacity: 0, scale: 0.8 }}
-                                                whileInView={{ opacity: 1, scale: 1 }}
-                                                viewport={{ once: true }}
-                                                transition={{ delay: index * 0.05 }}
-                                                whileHover={{ scale: 1.05 }}
-                                                className="flex items-center gap-3 px-4 py-3 bg-white border-2 border-stone-200 hover:border-black transition-colors group"
-                                            >
-                                                <motion.span
-                                                    animate={{ rotate: [0, 10, -10, 0] }}
-                                                    transition={{ duration: 4, repeat: Infinity, delay: index * 0.3 }}
-                                                    className="text-2xl"
-                                                >
-                                                    {ingredient.emoji}
-                                                </motion.span>
-                                                <div>
-                                                    <p className="font-bold text-sm group-hover:text-primary transition-colors">
-                                                        {language === 'cn' ? ingredient.nameCn : ingredient.name}
-                                                    </p>
-                                                    <p className="text-xs text-stone-500">
-                                                        {language === 'cn' ? ingredient.benefitCn : ingredient.benefit}
-                                                    </p>
-                                                </div>
-                                            </motion.div>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Benefits */}
+                            {/* Benefits - now directly after Core Ingredients */}
                             <div
                                 className="py-12 px-6 md:px-12"
                                 style={{ background: `linear-gradient(180deg, ${product.color}10, transparent)` }}
@@ -315,9 +304,9 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
                             </div>
 
                             {/* Bottom CTA */}
-                            <div className="py-8 px-6 md:px-12 bg-black text-white text-center">
-                                <div className="max-w-2xl mx-auto">
-                                    <p className="text-lg mb-4 font-bold">
+                            <div className="py-6 px-6 md:px-12 bg-black text-white text-center">
+                                <div className="max-w-2xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4">
+                                    <p className="text-base font-bold">
                                         {language === 'cn'
                                             ? `准备好试试 ${product.nameCn} 了吗？`
                                             : `Ready to try ${product.name}?`
@@ -325,15 +314,18 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
                                     </p>
                                     <Button
                                         onClick={handleAddToCart}
-                                        className="h-14 px-12 rounded-none font-black uppercase text-lg border-2 border-primary shadow-stark"
+                                        className="h-10 px-8 rounded-none font-black uppercase text-sm border-2 border-primary shadow-stark"
                                         style={{ backgroundColor: product.color }}
                                     >
                                         {isAdded ? (
                                             <>Added! ✓</>
                                         ) : (
                                             <>
-                                                {language === 'cn' ? '立即购买' : 'Get It Now'}
-                                                <ArrowRight className="w-5 h-5 ml-2" />
+                                                {purchaseMode === 'subscribe'
+                                                    ? (language === 'cn' ? '开始订阅' : 'Subscribe Now')
+                                                    : (language === 'cn' ? '立即购买' : 'Get It Now')
+                                                }
+                                                <ArrowRight className="w-4 h-4 ml-2" />
                                             </>
                                         )}
                                     </Button>

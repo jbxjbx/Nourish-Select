@@ -124,7 +124,7 @@ export function ProductCard({
                 <Card className="overflow-hidden border-4 border-black shadow-stark hover:shadow-stark-hover bg-background h-full flex flex-col relative transition-all duration-100 rounded-none hover:border-[#39FF14]">
 
                     {/* Image Area with "Layer Reveal" Effect */}
-                    <div className="relative aspect-[4/5] overflow-hidden bg-stone-900">
+                    <div className="relative aspect-[4/4] overflow-hidden bg-stone-900">
                         {/* Layer 1: Base Image */}
                         <div className={cn(
                             "absolute inset-0 bg-gradient-to-br transition-opacity duration-700",
@@ -243,10 +243,10 @@ export function ProductCard({
                         </div>
                     </CardContent>
 
-                    <CardFooter className="p-4 pt-0 bg-stone-50 relative z-20">
+                    <CardFooter className="p-3 pt-0 bg-stone-50 relative z-20">
                         <Button
                             className={cn(
-                                "w-full rounded-full transition-all duration-500 shadow-md font-bold",
+                                "w-full rounded-full transition-all duration-500 shadow-md font-bold text-sm",
                                 isAdded
                                     ? "bg-emerald-600 hover:bg-emerald-700 text-white border-2 border-black"
                                     : purchaseMode === 'subscribe'
@@ -254,7 +254,7 @@ export function ProductCard({
                                         : "bg-black hover:bg-stone-800 text-white"
                             )}
                             onClick={handleAddToCart}
-                            size="lg"
+                            size="default"
                         >
                             <AnimatePresence mode="wait">
                                 {isAdded ? (
