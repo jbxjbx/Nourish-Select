@@ -86,7 +86,7 @@ export default function DrinksPage() {
             </section>
 
             {/* FILTER SECTION */}
-            <section className="py-6 px-4 bg-white border-b-2 border-stone-200 sticky top-16 z-30">
+            <section className="py-6 px-4 bg-white border-b-2 border-stone-200">
                 <div className="container mx-auto max-w-5xl">
                     <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
                         {/* Search Input */}
