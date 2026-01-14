@@ -79,11 +79,13 @@ export default function AboutPage() {
                             viewport={{ once: true }}
                             className="relative"
                         >
-                            {/* Abstract Decorative Placeholders */}
+                            {/* About Hero Image */}
                             <div className="aspect-square bg-black border-4 border-black relative transform rotate-2 shadow-[8px_8px_0px_#22c55e] overflow-hidden group">
-                                <div className="absolute inset-0 flex items-center justify-center bg-stone-900 group-hover:bg-primary transition-colors duration-500">
-                                    <Skull className="w-32 h-32 text-white/20 group-hover:text-black/20 transition-colors" />
-                                </div>
+                                <img
+                                    src="/about-hero.png"
+                                    alt="AI tongue analysis wellness technology"
+                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                />
                                 <div className="absolute top-0 right-0 p-4 bg-white border-b-4 border-l-4 border-black">
                                     <Star className="w-8 h-8 text-black animate-spin-slow" />
                                 </div>
