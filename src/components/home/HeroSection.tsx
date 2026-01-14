@@ -109,6 +109,13 @@ export function HeroSection() {
                     transition={{ duration: 0.5 }}
                     className="max-w-4xl mx-auto"
                 >
+                    {/* Coming Soon Notice */}
+                    <div className="mb-4 inline-block">
+                        <span className="bg-secondary text-white px-4 py-1 rounded-full font-bold text-xs uppercase tracking-wide border-2 border-white/30 animate-pulse">
+                            🚧 Products Coming Soon — We&apos;re sourcing the best ingredients
+                        </span>
+                    </div>
+
                     <div className="mb-8 inline-block animate-pop">
                         <span className="bg-black text-white px-6 py-2 rounded-full font-black uppercase tracking-widest text-sm border-2 border-primary shadow-stark transform -rotate-2 inline-block">
                             {t('hero.badge')}

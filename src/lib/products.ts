@@ -36,8 +36,8 @@ export interface ProductDetail {
 export const products: ProductDetail[] = [
     {
         id: 'wrecked-ralph',
-        name: 'Wrecked Ralph',
-        nameCn: '醉后拉尔夫',
+        name: 'Wrecked Ralph - Placeholder 1',
+        nameCn: '醉后拉尔夫 - 占位符1',
         tagline: 'Party too hard? Ralph\'s got your back.',
         taglineCn: '昨晚喝挂了？拉尔夫来给你洗胃。',
         description: 'A powerful blend of liver-supporting botanicals that helps your body recover after a night out. Designed for the morning after.',
@@ -126,8 +126,8 @@ export const products: ProductDetail[] = [
     },
     {
         id: 'bloated-bob',
-        name: 'Bloated Bob',
-        nameCn: '胀气鲍勃',
+        name: 'Bloated Bob - Placeholder 2',
+        nameCn: '胀气鲍伯 - 占位符2',
         tagline: 'Ate too much? Bob helps you deflate.',
         taglineCn: '吃太多撑得像气球？鲍勃帮你放气。',
         description: 'A warming digestive tonic that eases bloating, gas, and discomfort. Your belly\'s new best friend after big meals.',
@@ -224,8 +224,8 @@ export const products: ProductDetail[] = [
     },
     {
         id: 'heavy-kev',
-        name: 'Heavy Kev',
-        nameCn: '沉重凯文',
+        name: 'Heavy Kev - Placeholder 3',
+        nameCn: '沉重凯文 - 占位符3',
         tagline: 'Feeling heavy? Kev helps you lighten up.',
         taglineCn: '感觉身体重得像灌了铅？凯文帮你排水。',
         description: 'A gentle metabolism-boosting blend that helps reduce water retention and supports healthy weight management.',
@@ -322,8 +322,8 @@ export const products: ProductDetail[] = [
     },
     {
         id: 'manic-max',
-        name: 'Manic Max',
-        nameCn: '狂躁麦克斯',
+        name: 'Manic Max - Placeholder 4',
+        nameCn: '狂躁麦克斯 - 占位符4',
         tagline: 'Brain won\'t stop? Max helps you power down.',
         taglineCn: '脑子转得停不下来？麦克斯给你强行关机。',
         description: 'A calming botanical blend for overstimulated minds. Helps reduce anxiety, quiet racing thoughts, and promote restful sleep.',
