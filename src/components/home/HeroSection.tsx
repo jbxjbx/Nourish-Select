@@ -112,7 +112,7 @@ export function HeroSection() {
                     {/* Coming Soon Notice */}
                     <div className="mb-4 inline-block">
                         <span className="bg-secondary text-white px-4 py-1 rounded-full font-bold text-xs uppercase tracking-wide border-2 border-white/30 animate-pulse">
-                            🚧 Products Coming Soon — We&apos;re sourcing the best ingredients
+                            🌿 We Source The Best Herbal Drinks For Your Health — Your Wellness, Our Priority
                         </span>
                     </div>
 
