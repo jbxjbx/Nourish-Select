@@ -5,11 +5,42 @@ import { ProductCard } from '@/components/shop/ProductCard';
 import { ProductDetailModal } from '@/components/shop/ProductDetailModal';
 import { useLanguage } from '@/context/language-context';
 import { products, ProductDetail } from '@/lib/products';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+import { Search, Filter, X } from 'lucide-react';
+
+// Extract unique brands and tags for filters
+const brands = ['Brand A', 'Brand B', 'Brand C', 'Brand D'];
+const allTags = ['Hangover', 'Detox', 'Liver Support', 'Digestion', 'Bloating Relief', 'Gut Health', 'Metabolism', 'Water Retention', 'Slimming', 'Calm', 'Anti-Anxiety', 'Sleep Support'];
 
 export default function DrinksPage() {
     const { t, language } = useLanguage();
     const [selectedProduct, setSelectedProduct] = useState<ProductDetail | null>(null);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
+    const [selectedTag, setSelectedTag] = useState<string | null>(null);
+
+    // Filter products based on search, brand, and tag
+    const filteredProducts = useMemo(() => {
+        return products.filter(product => {
+            const name = language === 'cn' ? product.nameCn : product.name;
+            const matchesSearch = searchQuery === '' ||
+                name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                product.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+
+            const matchesBrand = !selectedBrand || product.name.includes(selectedBrand);
+            const matchesTag = !selectedTag || product.tags.includes(selectedTag);
+
+            return matchesSearch && matchesBrand && matchesTag;
+        });
+    }, [searchQuery, selectedBrand, selectedTag, language]);
+
+    const clearFilters = () => {
+        setSearchQuery('');
+        setSelectedBrand(null);
+        setSelectedTag(null);
+    };
+
+    const hasActiveFilters = searchQuery || selectedBrand || selectedTag;
 
     return (
         <div className="min-h-screen bg-stone-50">
@@ -54,6 +85,76 @@ export default function DrinksPage() {
                 </div>
             </section>
 
+            {/* FILTER SECTION */}
+            <section className="py-6 px-4 bg-white border-b-2 border-stone-200 sticky top-16 z-30">
+                <div className="container mx-auto max-w-5xl">
+                    <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+                        {/* Search Input */}
+                        <div className="relative w-full md:w-auto md:flex-1 max-w-md">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+                            <input
+                                type="text"
+                                placeholder={language === 'cn' ? '搜索品牌或功效...' : 'Search by brand or benefit...'}
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="w-full pl-10 pr-4 py-2 border-2 border-black rounded-none bg-white text-black font-mono text-sm focus:outline-none focus:border-primary transition-colors"
+                            />
+                        </div>
+
+                        {/* Filter Buttons */}
+                        <div className="flex flex-wrap gap-2 items-center">
+                            <Filter className="w-4 h-4 text-stone-500 hidden md:block" />
+
+                            {/* Brand Filter */}
+                            <div className="flex gap-1">
+                                {brands.map(brand => (
+                                    <button
+                                        key={brand}
+                                        onClick={() => setSelectedBrand(selectedBrand === brand ? null : brand)}
+                                        className={`px-3 py-1 text-xs font-bold uppercase border-2 transition-all ${selectedBrand === brand
+                                            ? 'bg-black text-white border-black'
+                                            : 'bg-white text-black border-stone-300 hover:border-black'
+                                            }`}
+                                    >
+                                        {brand}
+                                    </button>
+                                ))}
+                            </div>
+
+                            {/* Clear Filters */}
+                            {hasActiveFilters && (
+                                <button
+                                    onClick={clearFilters}
+                                    className="flex items-center gap-1 px-3 py-1 text-xs font-bold uppercase bg-red-500 text-white border-2 border-red-600 hover:bg-red-600 transition-colors"
+                                >
+                                    <X className="w-3 h-3" />
+                                    {language === 'cn' ? '清除' : 'Clear'}
+                                </button>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Benefit Tags */}
+                    <div className="flex flex-wrap gap-2 mt-4">
+                        <span className="text-xs font-bold text-stone-500 uppercase mr-2">
+                            {language === 'cn' ? '按功效:' : 'By Benefit:'}
+                        </span>
+                        {allTags.slice(0, 6).map(tag => (
+                            <button
+                                key={tag}
+                                onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
+                                className={`px-2 py-0.5 text-[10px] font-bold uppercase rounded-full border transition-all ${selectedTag === tag
+                                    ? 'bg-primary text-black border-primary'
+                                    : 'bg-stone-100 text-stone-600 border-stone-200 hover:border-primary'
+                                    }`}
+                            >
+                                {tag}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
             {/* Product Grid - PUNK */}
             <section className="py-16 px-4 relative overflow-hidden">
                 {/* Grid Pattern */}
@@ -63,8 +164,18 @@ export default function DrinksPage() {
                 }} />
 
                 <div className="container mx-auto max-w-5xl relative z-10">
+                    {/* Results count */}
+                    {hasActiveFilters && (
+                        <p className="text-sm text-stone-500 mb-6 font-mono">
+                            {language === 'cn'
+                                ? `找到 ${filteredProducts.length} 个产品`
+                                : `Found ${filteredProducts.length} product${filteredProducts.length !== 1 ? 's' : ''}`
+                            }
+                        </p>
+                    )}
+
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-                        {products.map((product, index) => (
+                        {filteredProducts.map((product, index) => (
                             <motion.div
                                 key={product.id}
                                 initial={{ opacity: 0, scale: 0.9 }}
@@ -88,34 +199,49 @@ export default function DrinksPage() {
                         ))}
                     </div>
 
-                    {/* Why Subscribe Section - BRUTALIST */}
-                    <div className="mt-24 text-center pt-12 relative border-t-4 border-black border-dashed">
-                        <motion.div className="inline-block bg-black text-white px-8 py-2 transform -translate-y-[calc(100%+24px)] -rotate-1 border-2 border-primary shadow-stark">
-                            <h3 className="text-2xl font-black uppercase tracking-tight">
-                                {t('shop.why_subscribe')}
-                            </h3>
-                        </motion.div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto -mt-4">
-                            {[1, 2, 3].map((num, index) => (
-                                <motion.div
-                                    key={num}
-                                    initial={{ opacity: 0, x: num % 2 === 0 ? 20 : -20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: index * 0.1 }}
-                                    className="p-6 bg-white border-2 border-black shadow-stark hover:shadow-stark-hover hover:-translate-y-1 transition-all duration-300 relative group"
-                                >
-                                    <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-primary border-2 border-black flex items-center justify-center font-black text-xl text-black shadow-[2px_2px_0px_#000] group-hover:bg-black group-hover:text-primary transition-colors">
-                                        {num}
-                                    </div>
-                                    <div className="mt-4">
-                                        <h4 className="font-black mb-2 text-black text-lg uppercase">{t(`shop.reason_${num}_title`)}</h4>
-                                        <p className="text-sm text-stone-600 font-medium leading-relaxed">{t(`shop.reason_${num}_desc`)}</p>
-                                    </div>
-                                </motion.div>
-                            ))}
+                    {/* No results message */}
+                    {filteredProducts.length === 0 && (
+                        <div className="text-center py-12">
+                            <p className="text-lg font-bold text-stone-500">
+                                {language === 'cn' ? '没有找到匹配的产品' : 'No products found'}
+                            </p>
+                            <button
+                                onClick={clearFilters}
+                                className="mt-4 px-6 py-2 bg-black text-white font-bold uppercase text-sm border-2 border-black hover:bg-primary hover:text-black transition-colors"
+                            >
+                                {language === 'cn' ? '清除筛选' : 'Clear Filters'}
+                            </button>
                         </div>
+                    )}
+                </div>
+
+                {/* Why Subscribe Section - BRUTALIST */}
+                <div className="mt-24 text-center pt-12 relative border-t-4 border-black border-dashed">
+                    <motion.div className="inline-block bg-black text-white px-8 py-2 transform -translate-y-[calc(100%+24px)] -rotate-1 border-2 border-primary shadow-stark">
+                        <h3 className="text-2xl font-black uppercase tracking-tight">
+                            {t('shop.why_subscribe')}
+                        </h3>
+                    </motion.div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto -mt-4">
+                        {[1, 2, 3].map((num, index) => (
+                            <motion.div
+                                key={num}
+                                initial={{ opacity: 0, x: num % 2 === 0 ? 20 : -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: index * 0.1 }}
+                                className="p-6 bg-white border-2 border-black shadow-stark hover:shadow-stark-hover hover:-translate-y-1 transition-all duration-300 relative group"
+                            >
+                                <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-primary border-2 border-black flex items-center justify-center font-black text-xl text-black shadow-[2px_2px_0px_#000] group-hover:bg-black group-hover:text-primary transition-colors">
+                                    {num}
+                                </div>
+                                <div className="mt-4">
+                                    <h4 className="font-black mb-2 text-black text-lg uppercase">{t(`shop.reason_${num}_title`)}</h4>
+                                    <p className="text-sm text-stone-600 font-medium leading-relaxed">{t(`shop.reason_${num}_desc`)}</p>
+                                </div>
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
             </section>
