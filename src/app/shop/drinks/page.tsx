@@ -94,7 +94,7 @@ export default function DrinksPage() {
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
                             <input
                                 type="text"
-                                placeholder={language === 'cn' ? '搜索品牌或功效...' : 'Search by brand or benefit...'}
+                                placeholder={t('shop.search_placeholder')}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 className="w-full pl-10 pr-4 py-2 border-2 border-black rounded-none bg-white text-black font-mono text-sm focus:outline-none focus:border-primary transition-colors"
@@ -128,7 +128,7 @@ export default function DrinksPage() {
                                     className="flex items-center gap-1 px-3 py-1 text-xs font-bold uppercase bg-red-500 text-white border-2 border-red-600 hover:bg-red-600 transition-colors"
                                 >
                                     <X className="w-3 h-3" />
-                                    {language === 'cn' ? '清除' : 'Clear'}
+                                    {t('shop.clear_filter')}
                                 </button>
                             )}
                         </div>
@@ -137,7 +137,7 @@ export default function DrinksPage() {
                     {/* Benefit Tags */}
                     <div className="flex flex-wrap gap-2 mt-4">
                         <span className="text-xs font-bold text-stone-500 uppercase mr-2">
-                            {language === 'cn' ? '按功效:' : 'By Benefit:'}
+                            {t('shop.by_benefit')}
                         </span>
                         {allTags.slice(0, 6).map(tag => (
                             <button
@@ -167,10 +167,7 @@ export default function DrinksPage() {
                     {/* Results count */}
                     {hasActiveFilters && (
                         <p className="text-sm text-stone-500 mb-6 font-mono">
-                            {language === 'cn'
-                                ? `找到 ${filteredProducts.length} 个产品`
-                                : `Found ${filteredProducts.length} product${filteredProducts.length !== 1 ? 's' : ''}`
-                            }
+                            {t('shop.found_products').replace('{count}', filteredProducts.length.toString())}
                         </p>
                     )}
 
@@ -203,13 +200,13 @@ export default function DrinksPage() {
                     {filteredProducts.length === 0 && (
                         <div className="text-center py-12">
                             <p className="text-lg font-bold text-stone-500">
-                                {language === 'cn' ? '没有找到匹配的产品' : 'No products found'}
+                                {t('shop.no_products')}
                             </p>
                             <button
                                 onClick={clearFilters}
                                 className="mt-4 px-6 py-2 bg-black text-white font-bold uppercase text-sm border-2 border-black hover:bg-primary hover:text-black transition-colors"
                             >
-                                {language === 'cn' ? '清除筛选' : 'Clear Filters'}
+                                {t('shop.clear_filters')}
                             </button>
                         </div>
                     )}
