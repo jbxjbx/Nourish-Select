@@ -107,7 +107,7 @@ export function CartSheet() {
                     <div className="bg-black text-white p-6 relative overflow-hidden">
                         <div className="absolute inset-0 bg-noise opacity-20 pointer-events-none" />
                         <SheetTitle className="text-4xl font-black uppercase italic tracking-tighter relative z-10 flex items-center gap-2">
-                            YOUR STASH <Zap className="w-6 h-6 text-primary fill-primary animate-pulse" />
+                            {t('cart.title')} <Zap className="w-6 h-6 text-primary fill-primary animate-pulse" />
                         </SheetTitle>
                         <p className="font-mono text-xs text-stone-400 mt-1 uppercase relative z-10">
                             Transaction ID: #{Math.floor(Math.random() * 999999).toString().padStart(6, '0')}
@@ -128,13 +128,13 @@ export function CartSheet() {
                             >
                                 <ShoppingBag className="w-24 h-24 text-black" />
                             </motion.div>
-                            <h3 className="text-2xl font-black uppercase text-black">Empty AF</h3>
+                            <h3 className="text-2xl font-black uppercase text-black">{t('cart.empty_title')}</h3>
                             <p className="text-stone-500 font-mono text-center max-w-xs">
-                                Your stash is looking lighter than air. Fix that.
+                                {t('cart.empty_desc')}
                             </p>
                             <SheetClose asChild>
                                 <Button className="rounded-full px-8 py-6 text-lg font-black uppercase bg-black text-white border-2 border-transparent hover:bg-primary hover:text-black hover:border-black transition-all shadow-stark hover:shadow-stark-hover">
-                                    Fill It Up
+                                    {t('cart.fill_it')}
                                 </Button>
                             </SheetClose>
                         </div>
@@ -169,7 +169,7 @@ export function CartSheet() {
                                                         <span className="inline-block px-1.5 py-0.5 text-[10px] font-bold uppercase bg-black text-white">{item.category}</span>
                                                         {item.isSubscription && (
                                                             <span className="inline-block px-1.5 py-0.5 text-[10px] font-bold uppercase bg-primary text-black border border-black animate-pulse">
-                                                                Subscribed
+                                                                {t('cart.subscribed')}
                                                             </span>
                                                         )}
                                                     </div>
@@ -208,21 +208,21 @@ export function CartSheet() {
                             <div className="border-t-2 border-black p-6 space-y-4 bg-white relative">
                                 {/* Decor */}
                                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-2">
-                                    <span className="font-mono text-xs uppercase bg-black text-white px-1">Total</span>
+                                    <span className="font-mono text-xs uppercase bg-black text-white px-1">{t('cart.total')}</span>
                                 </div>
 
                                 <div className="space-y-2 font-mono text-sm">
                                     <div className="flex justify-between text-stone-600">
-                                        <p>Subtotal</p>
+                                        <p>{t('cart.subtotal')}</p>
                                         <p className="font-bold text-black">${cartTotal.toFixed(2)}</p>
                                     </div>
                                     <div className="flex justify-between text-xl font-black text-black border-t-2 border-dashed border-black pt-2">
-                                        <p className="uppercase">Due Amount</p>
+                                        <p className="uppercase">{t('cart.due_amount')}</p>
                                         <p>${cartTotal.toFixed(2)}</p>
                                     </div>
                                 </div>
                                 <p className="text-[10px] font-mono text-center text-stone-500 uppercase">
-                                    Calculated at next step • NO REFUNDS ON VIBES
+                                    {t('cart.note')}
                                 </p>
                                 <Button
                                     className="w-full rounded-none h-14 text-xl font-black uppercase bg-black text-white border-2 border-transparent hover:bg-primary hover:text-black hover:border-black shadow-stark hover:shadow-stark-hover transition-all skew-x-[-2deg] hover:skew-x-0"
@@ -230,10 +230,10 @@ export function CartSheet() {
                                     disabled={isLoading}
                                 >
                                     {isLoading ? (
-                                        <span className="animate-pulse">Processing...</span>
+                                        <span className="animate-pulse">{t('cart.processing')}</span>
                                     ) : (
                                         <>
-                                            Secure The Bag <ArrowRight className="ml-2 w-5 h-5" />
+                                            {t('cart.checkout')} <ArrowRight className="ml-2 w-5 h-5" />
                                         </>
                                     )}
                                 </Button>
@@ -249,15 +249,15 @@ export function CartSheet() {
                     <DialogHeader className="p-6 bg-black text-white">
                         <DialogTitle className="flex items-center gap-2 text-2xl font-black uppercase italic">
                             <UserCircle className="w-8 h-8 text-primary" />
-                            Identity Check
+                            {t('cart.identity_check')}
                         </DialogTitle>
                         <DialogDescription className="text-stone-400 font-mono text-xs uppercase">
-                            Login required to process transaction
+                            {t('cart.identity_desc')}
                         </DialogDescription>
                     </DialogHeader>
                     <div className="p-8 space-y-6">
                         <p className="text-lg font-bold text-black text-center leading-tight">
-                            Who are you? We need to know where to send the goods.
+                            {t('cart.identity_question')}
                         </p>
                         <DialogFooter className="flex flex-col sm:flex-row gap-3">
                             <Button variant="outline" onClick={handleLoginRedirect} className="w-full h-12 text-lg font-bold uppercase border-2 border-black shadow-stark hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
