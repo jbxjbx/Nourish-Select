@@ -24,20 +24,26 @@ export function IngredientFlipCard({ ingredient, index, accentColor }: Ingredien
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.1 }}
-            className="relative h-56 md:h-64 cursor-pointer perspective-1000"
+            className="relative h-56 md:h-64 cursor-pointer"
+            style={{ perspective: '1000px' }}
             onMouseEnter={() => setIsFlipped(true)}
             onMouseLeave={() => setIsFlipped(false)}
             onClick={() => setIsFlipped(!isFlipped)}
         >
             <div
-                className={`relative w-full h-full transition-transform duration-500 preserve-3d ${isFlipped ? 'rotate-y-180' : ''
-                    }`}
-                style={{ transformStyle: 'preserve-3d' }}
+                className="relative w-full h-full transition-transform duration-500"
+                style={{
+                    transformStyle: 'preserve-3d',
+                    transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                }}
             >
                 {/* Front - Photo */}
                 <div
-                    className="absolute inset-0 backface-hidden overflow-hidden rounded-xl border-2 border-white/20 group"
-                    style={{ backfaceVisibility: 'hidden' }}
+                    className="absolute inset-0 overflow-hidden rounded-xl border-2 border-white/20"
+                    style={{
+                        backfaceVisibility: 'hidden',
+                        WebkitBackfaceVisibility: 'hidden',
+                    }}
                 >
                     {/* Realistic herbal photo background */}
                     <div
@@ -52,9 +58,7 @@ export function IngredientFlipCard({ ingredient, index, accentColor }: Ingredien
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
 
                     {/* Index number */}
-                    <span
-                        className="absolute top-3 left-3 text-xs font-bold px-2 py-1 rounded bg-white/20 text-white backdrop-blur-sm"
-                    >
+                    <span className="absolute top-3 left-3 text-xs font-bold px-2 py-1 rounded bg-white/20 text-white backdrop-blur-sm">
                         {String(index + 1).padStart(2, '0')}
                     </span>
 
@@ -76,9 +80,10 @@ export function IngredientFlipCard({ ingredient, index, accentColor }: Ingredien
 
                 {/* Back - Benefit */}
                 <div
-                    className="absolute inset-0 backface-hidden rotate-y-180 overflow-hidden rounded-xl border-2 p-5 flex flex-col justify-center"
+                    className="absolute inset-0 overflow-hidden rounded-xl border-2 p-5 flex flex-col justify-center"
                     style={{
                         backfaceVisibility: 'hidden',
+                        WebkitBackfaceVisibility: 'hidden',
                         transform: 'rotateY(180deg)',
                         backgroundColor: accentColor,
                         borderColor: accentColor,
@@ -99,3 +104,4 @@ export function IngredientFlipCard({ ingredient, index, accentColor }: Ingredien
         </motion.div>
     );
 }
+
