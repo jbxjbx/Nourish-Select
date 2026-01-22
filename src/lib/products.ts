@@ -59,7 +59,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Pueraria lobata',
                 benefit: 'Supports liver function and helps process alcohol byproducts faster',
                 benefitCn: '支持肝脏功能，加速酒精代谢',
-                emoji: '🌿'
+                emoji: '🌿',
+                imageUrl: 'https://images.unsplash.com/photo-1515023115689-589c33041d3c?w=400&h=400&fit=crop'
             },
             {
                 name: 'Schisandra Berry',
@@ -67,7 +68,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Schisandra chinensis',
                 benefit: 'Powerful adaptogen that protects liver cells and reduces fatigue',
                 benefitCn: '强效适应原，保护肝细胞，减轻疲劳',
-                emoji: '🍇'
+                emoji: '🍇',
+                imageUrl: 'https://images.unsplash.com/photo-1474206258878-6b5b9f8b3fe0?w=400&h=400&fit=crop'
             },
             {
                 name: 'Gardenia Fruit',
@@ -75,7 +77,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Gardenia jasminoides',
                 benefit: 'Natural anti-inflammatory that helps clear toxins from your system',
                 benefitCn: '天然抗炎成分，帮助清除体内毒素',
-                emoji: '🌸'
+                emoji: '🌸',
+                imageUrl: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&h=400&fit=crop'
             }
         ],
         baseIngredients: [
@@ -85,7 +88,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Lilium brownii',
                 benefit: 'Soothes and hydrates, calming internal heat',
                 benefitCn: '滋润舒缓，清热降燥',
-                emoji: '🪻'
+                emoji: '🪻',
+                imageUrl: 'https://images.unsplash.com/photo-1518882605630-8991c6849c5a?w=400&h=400&fit=crop'
             },
             {
                 name: 'Longan',
@@ -93,7 +97,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Dimocarpus longan',
                 benefit: 'Natural sweetness with restorative properties',
                 benefitCn: '天然甜味，滋补元气',
-                emoji: '🫐'
+                emoji: '🫐',
+                imageUrl: 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=400&h=400&fit=crop'
             },
             {
                 name: 'Tangerine Peel',
@@ -101,7 +106,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Citrus reticulata',
                 benefit: 'Aids digestion and adds bright citrus notes',
                 benefitCn: '助消化，增添清新柑橘风味',
-                emoji: '🍊'
+                emoji: '🍊',
+                imageUrl: 'https://images.unsplash.com/photo-1547514701-42782101795e?w=400&h=400&fit=crop'
             },
             {
                 name: 'Licorice Root',
@@ -109,7 +115,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Glycyrrhiza glabra',
                 benefit: 'Harmonizes all ingredients and provides natural sweetness',
                 benefitCn: '调和配方，天然回甘',
-                emoji: '🌾'
+                emoji: '🌾',
+                imageUrl: 'https://images.unsplash.com/photo-1518882605630-8991c6849c5a?w=400&h=400&fit=crop'
             }
         ],
         benefits: [
@@ -149,7 +156,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Raphanus sativus',
                 benefit: 'Breaks down food stagnation and relieves bloating fast',
                 benefitCn: '消食化积，快速缓解胀气',
-                emoji: '🌱'
+                emoji: '🌱',
+                imageUrl: 'https://images.unsplash.com/photo-1582284540020-8acbe03f4924?w=400&h=400&fit=crop'
             },
             {
                 name: 'Galangal',
@@ -157,7 +165,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Alpinia officinarum',
                 benefit: 'Warms the stomach and stimulates digestive enzymes',
                 benefitCn: '温胃散寒，促进消化酶分泌',
-                emoji: '🫚'
+                emoji: '🫚',
+                imageUrl: 'https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=400&h=400&fit=crop'
             },
             {
                 name: 'Clove',
@@ -165,7 +174,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Syzygium aromaticum',
                 benefit: 'Soothes nausea and prevents acid reflux',
                 benefitCn: '缓解恶心，防止胃酸返流',
-                emoji: '🌺'
+                emoji: '🌺',
+                imageUrl: 'https://images.unsplash.com/photo-1599909631715-0b5e0f0c35f3?w=400&h=400&fit=crop'
             },
             {
                 name: 'Jujube Date',
@@ -173,7 +183,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Ziziphus jujuba',
                 benefit: 'Strengthens digestive function and adds natural sweetness',
                 benefitCn: '补中益气，增添天然甜味',
-                emoji: '🌰'
+                emoji: '🌰',
+                imageUrl: 'https://images.unsplash.com/photo-1551462147-ff29053bfc14?w=400&h=400&fit=crop'
             }
         ],
         baseIngredients: [
@@ -183,7 +194,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Lilium brownii',
                 benefit: 'Soothes and hydrates, calming internal heat',
                 benefitCn: '滋润舒缓，清热降燥',
-                emoji: '🪻'
+                emoji: '🪻',
+                imageUrl: 'https://images.unsplash.com/photo-1518882605630-8991c6849c5a?w=400&h=400&fit=crop'
             },
             {
                 name: 'Longan',
@@ -191,7 +203,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Dimocarpus longan',
                 benefit: 'Natural sweetness with restorative properties',
                 benefitCn: '天然甜味，滋补元气',
-                emoji: '🫐'
+                emoji: '🫐',
+                imageUrl: 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=400&h=400&fit=crop'
             },
             {
                 name: 'Tangerine Peel',
@@ -199,7 +212,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Citrus reticulata',
                 benefit: 'Aids digestion and adds bright citrus notes',
                 benefitCn: '助消化，增添清新柑橘风味',
-                emoji: '🍊'
+                emoji: '🍊',
+                imageUrl: 'https://images.unsplash.com/photo-1547514701-42782101795e?w=400&h=400&fit=crop'
             },
             {
                 name: 'Licorice Root',
@@ -207,7 +221,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Glycyrrhiza glabra',
                 benefit: 'Harmonizes all ingredients and provides natural sweetness',
                 benefitCn: '调和配方，天然回甘',
-                emoji: '🌾'
+                emoji: '🌾',
+                imageUrl: 'https://images.unsplash.com/photo-1518882605630-8991c6849c5a?w=400&h=400&fit=crop'
             }
         ],
         benefits: [
@@ -247,7 +262,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Nelumbo nucifera',
                 benefit: 'Boosts metabolism and helps break down body fat',
                 benefitCn: '促进代谢，帮助分解体脂',
-                emoji: '🍃'
+                emoji: '🍃',
+                imageUrl: 'https://images.unsplash.com/photo-1474557157379-8aa74a6ef541?w=400&h=400&fit=crop'
             },
             {
                 name: 'Astragalus',
@@ -255,7 +271,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Astragalus membranaceus',
                 benefit: 'Increases energy and supports healthy fluid balance',
                 benefitCn: '增强能量，促进水液代谢平衡',
-                emoji: '🌿'
+                emoji: '🌿',
+                imageUrl: 'https://images.unsplash.com/photo-1515023115689-589c33041d3c?w=400&h=400&fit=crop'
             },
             {
                 name: 'Coix Seed',
@@ -263,7 +280,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Coix lacryma-jobi',
                 benefit: 'Reduces water retention and supports kidney function',
                 benefitCn: '减少水肿，支持肾脏功能',
-                emoji: '🌾'
+                emoji: '🌾',
+                imageUrl: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&h=400&fit=crop'
             },
             {
                 name: 'Alisma',
@@ -271,7 +289,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Alisma plantago-aquatica',
                 benefit: 'Natural diuretic that flushes excess fluids',
                 benefitCn: '天然利尿，排出多余水分',
-                emoji: '💧'
+                emoji: '💧',
+                imageUrl: 'https://images.unsplash.com/photo-1518882605630-8991c6849c5a?w=400&h=400&fit=crop'
             }
         ],
         baseIngredients: [
@@ -281,7 +300,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Lilium brownii',
                 benefit: 'Soothes and hydrates, calming internal heat',
                 benefitCn: '滋润舒缓，清热降燥',
-                emoji: '🪻'
+                emoji: '🪻',
+                imageUrl: 'https://images.unsplash.com/photo-1518882605630-8991c6849c5a?w=400&h=400&fit=crop'
             },
             {
                 name: 'Longan',
@@ -289,7 +309,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Dimocarpus longan',
                 benefit: 'Natural sweetness with restorative properties',
                 benefitCn: '天然甜味，滋补元气',
-                emoji: '🫐'
+                emoji: '🫐',
+                imageUrl: 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=400&h=400&fit=crop'
             },
             {
                 name: 'Tangerine Peel',
@@ -297,7 +318,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Citrus reticulata',
                 benefit: 'Aids digestion and adds bright citrus notes',
                 benefitCn: '助消化，增添清新柑橘风味',
-                emoji: '🍊'
+                emoji: '🍊',
+                imageUrl: 'https://images.unsplash.com/photo-1547514701-42782101795e?w=400&h=400&fit=crop'
             },
             {
                 name: 'Licorice Root',
@@ -305,7 +327,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Glycyrrhiza glabra',
                 benefit: 'Harmonizes all ingredients and provides natural sweetness',
                 benefitCn: '调和配方，天然回甘',
-                emoji: '🌾'
+                emoji: '🌾',
+                imageUrl: 'https://images.unsplash.com/photo-1518882605630-8991c6849c5a?w=400&h=400&fit=crop'
             }
         ],
         benefits: [
@@ -345,7 +368,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Ziziphus spinosa',
                 benefit: 'Calms the nervous system and promotes deep, restful sleep',
                 benefitCn: '镇静神经系统，促进深度睡眠',
-                emoji: '🌙'
+                emoji: '🌙',
+                imageUrl: 'https://images.unsplash.com/photo-1551462147-ff29053bfc14?w=400&h=400&fit=crop'
             },
             {
                 name: 'Prince Shen',
@@ -353,7 +377,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Pseudostellaria heterophylla',
                 benefit: 'Gently restores energy without stimulation',
                 benefitCn: '温和恢复能量，不产生刺激',
-                emoji: '✨'
+                emoji: '✨',
+                imageUrl: 'https://images.unsplash.com/photo-1515023115689-589c33041d3c?w=400&h=400&fit=crop'
             },
             {
                 name: 'Rose Petals',
@@ -361,7 +386,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Rosa rugosa',
                 benefit: 'Eases tension and lifts mood naturally',
                 benefitCn: '舒缓紧张，自然提升心情',
-                emoji: '🌹'
+                emoji: '🌹',
+                imageUrl: 'https://images.unsplash.com/photo-1518882605630-8991c6849c5a?w=400&h=400&fit=crop'
             }
         ],
         baseIngredients: [
@@ -371,7 +397,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Lilium brownii',
                 benefit: 'Extra calming effect, deeply soothes and moisturizes',
                 benefitCn: '加倍安神效果，深层滋润舒缓',
-                emoji: '🪻'
+                emoji: '🪻',
+                imageUrl: 'https://images.unsplash.com/photo-1518882605630-8991c6849c5a?w=400&h=400&fit=crop'
             },
             {
                 name: 'Longan',
@@ -379,7 +406,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Dimocarpus longan',
                 benefit: 'Natural sweetness with restorative properties',
                 benefitCn: '天然甜味，滋补元气',
-                emoji: '🫐'
+                emoji: '🫐',
+                imageUrl: 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=400&h=400&fit=crop'
             },
             {
                 name: 'Tangerine Peel',
@@ -387,7 +415,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Citrus reticulata',
                 benefit: 'Aids digestion and adds bright citrus notes',
                 benefitCn: '助消化，增添清新柑橘风味',
-                emoji: '🍊'
+                emoji: '🍊',
+                imageUrl: 'https://images.unsplash.com/photo-1547514701-42782101795e?w=400&h=400&fit=crop'
             },
             {
                 name: 'Licorice Root',
@@ -395,7 +424,8 @@ export const products: ProductDetail[] = [
                 scientificName: 'Glycyrrhiza glabra',
                 benefit: 'Harmonizes all ingredients and provides natural sweetness',
                 benefitCn: '调和配方，天然回甘',
-                emoji: '🌾'
+                emoji: '🌾',
+                imageUrl: 'https://images.unsplash.com/photo-1518882605630-8991c6849c5a?w=400&h=400&fit=crop'
             }
         ],
         benefits: [
