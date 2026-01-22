@@ -9,6 +9,7 @@ import { useLanguage } from '@/context/language-context';
 import { useCart } from '@/context/cart-context';
 import { useState } from 'react';
 import Image from 'next/image';
+import { IngredientFlipCard } from './IngredientFlipCard';
 
 interface ProductDetailModalProps {
     product: ProductDetail;
@@ -141,8 +142,8 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
                                                 <button
                                                     onClick={() => setPurchaseMode('once')}
                                                     className={`flex-1 py-2 px-4 rounded-md text-xs font-bold transition-all ${purchaseMode === 'once'
-                                                            ? 'bg-black text-white shadow-md'
-                                                            : 'text-stone-600 hover:bg-stone-200'
+                                                        ? 'bg-black text-white shadow-md'
+                                                        : 'text-stone-600 hover:bg-stone-200'
                                                         }`}
                                                 >
                                                     {language === 'cn' ? '单次购买' : 'Buy Once'}
@@ -150,8 +151,8 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
                                                 <button
                                                     onClick={() => setPurchaseMode('subscribe')}
                                                     className={`flex-1 py-2 px-4 rounded-md text-xs font-bold transition-all ${purchaseMode === 'subscribe'
-                                                            ? 'bg-gradient-to-r from-pink-600 to-purple-600 text-white shadow-md'
-                                                            : 'text-stone-600 hover:bg-stone-200'
+                                                        ? 'bg-gradient-to-r from-pink-600 to-purple-600 text-white shadow-md'
+                                                        : 'text-stone-600 hover:bg-stone-200'
                                                         }`}
                                                 >
                                                     {language === 'cn' ? '订阅 -15%' : 'Subscribe -15%'}
@@ -207,7 +208,7 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
                             </div>
 
                             {/* Core Ingredients */}
-                            <div className="py-12 px-6 md:px-12 bg-black text-white">
+                            <div className="py-12 px-6 md:px-12 bg-stone-900 text-white">
                                 <div className="max-w-6xl mx-auto">
                                     <div className="text-center mb-10">
                                         <div
@@ -220,45 +221,28 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
                                         <h2 className="text-3xl md:text-4xl font-black uppercase">
                                             {language === 'cn' ? '配方揭秘' : 'The Formula'}
                                         </h2>
+                                        <p className="text-stone-400 text-sm mt-2">
+                                            {language === 'cn' ? '将鼠标移到卡片上查看详情' : 'Hover over a card to learn more'}
+                                        </p>
                                     </div>
 
-                                    {/* Animated Ingredient Cards */}
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    {/* Flip Card Grid */}
+                                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
                                         {product.coreIngredients.map((ingredient, index) => (
-                                            <motion.div
+                                            <IngredientFlipCard
                                                 key={ingredient.name}
-                                                initial={{ opacity: 0, y: 30 }}
-                                                whileInView={{ opacity: 1, y: 0 }}
-                                                viewport={{ once: true }}
-                                                transition={{ delay: index * 0.1 }}
-                                                whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                                                className="relative p-6 border-2 border-white/30 bg-white/5 backdrop-blur-sm group hover:border-primary transition-colors"
-                                            >
-                                                {/* Floating animation for emoji */}
-                                                <motion.div
-                                                    animate={{
-                                                        y: [0, -10, 0],
-                                                    }}
-                                                    transition={{
-                                                        duration: 3 + index * 0.5,
-                                                        repeat: Infinity,
-                                                        ease: 'easeInOut'
-                                                    }}
-                                                    className="text-5xl mb-4"
-                                                >
-                                                    {ingredient.emoji}
-                                                </motion.div>
-
-                                                <h4 className="text-xl font-black mb-1 group-hover:text-primary transition-colors">
-                                                    {language === 'cn' ? ingredient.nameCn : ingredient.name}
-                                                </h4>
-                                                <p className="text-xs text-stone-500 italic mb-3">
-                                                    {ingredient.scientificName}
-                                                </p>
-                                                <p className="text-sm text-stone-300 leading-relaxed">
-                                                    {language === 'cn' ? ingredient.benefitCn : ingredient.benefit}
-                                                </p>
-                                            </motion.div>
+                                                ingredient={ingredient}
+                                                index={index}
+                                                accentColor={product.color}
+                                            />
+                                        ))}
+                                        {product.baseIngredients.slice(0, 4).map((ingredient, index) => (
+                                            <IngredientFlipCard
+                                                key={ingredient.name}
+                                                ingredient={ingredient}
+                                                index={index + product.coreIngredients.length}
+                                                accentColor={product.color}
+                                            />
                                         ))}
                                     </div>
                                 </div>

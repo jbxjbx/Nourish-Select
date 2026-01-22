@@ -8,6 +8,7 @@ export interface Ingredient {
     benefit: string;
     benefitCn: string;
     emoji: string;
+    imageUrl?: string; // Optional path to real ingredient photo
 }
 
 export interface ProductDetail {
