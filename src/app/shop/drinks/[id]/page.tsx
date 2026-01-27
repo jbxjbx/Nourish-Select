@@ -87,31 +87,14 @@ export default function ProductDetailPage() {
             >
                 <motion.button
                     onClick={() => router.push('/shop/drinks')}
-                    className="group relative px-6 py-3 bg-black text-white font-black uppercase tracking-wider border-4 border-black rounded-none overflow-hidden"
+                    className="group relative px-6 py-3 bg-black text-white font-black uppercase tracking-wider border-4 border-black rounded-none overflow-hidden hover:bg-secondary transition-colors duration-200"
                     whileHover={{ scale: 1.05, rotate: -2 }}
                     whileTap={{ scale: 0.95 }}
                 >
-                    {/* Glitch layers */}
-                    <motion.div
-                        className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-100"
-                        animate={{ x: [0, -3, 3, -3, 0], opacity: [0, 1, 1, 1, 0] }}
-                        transition={{ duration: 0.3, repeat: Infinity, repeatDelay: 2 }}
-                    />
-                    <motion.div
-                        className="absolute inset-0 bg-secondary opacity-0 group-hover:opacity-100"
-                        animate={{ x: [0, 3, -3, 3, 0], opacity: [0, 1, 1, 1, 0] }}
-                        transition={{ duration: 0.3, repeat: Infinity, repeatDelay: 2, delay: 0.1 }}
-                    />
-
                     <span className="relative z-10 flex items-center gap-2">
-                        <ArrowLeft className="w-5 h-5 group-hover:animate-pulse" />
+                        <ArrowLeft className="w-5 h-5" />
                         {language === 'cn' ? '返回商店' : 'Back to Shop'}
                     </span>
-
-                    {/* Neon glow effect */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                        <div className="absolute inset-0 shadow-[0_0_20px_5px_rgba(57,255,20,0.5)] group-hover:shadow-[0_0_30px_10px_rgba(255,16,240,0.6)]" />
-                    </div>
                 </motion.button>
             </motion.div>
 
