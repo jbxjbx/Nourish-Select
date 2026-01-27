@@ -102,6 +102,11 @@ export default function AboutPage() {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                             <Card className="bg-white border-2 border-black shadow-stark hover:shadow-stark-hover transition-all hover:-translate-y-2 rounded-none overflow-hidden relative group">
                                 <div className="h-2 bg-green-500 w-full" />
+                                {/* Blurred Background Image */}
+                                <div className="absolute inset-0 z-0">
+                                    <img src="/images/ai-matching-bg.png" alt="" className="w-full h-full object-cover blur-sm" />
+                                    <div className="absolute inset-0 bg-white/70" />
+                                </div>
                                 <CardContent className="p-8 pt-12 text-center relative z-10">
                                     <div className="w-20 h-20 bg-stone-100 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-black group-hover:bg-green-400 transition-colors">
                                         <Leaf className="w-10 h-10 text-black" />
@@ -109,11 +114,16 @@ export default function AboutPage() {
                                     <h3 className="text-2xl font-black uppercase mb-4 italic">{t('about.pillar_1_title')}</h3>
                                     <p className="font-mono text-sm leading-relaxed">{t('about.pillar_1_desc')}</p>
                                 </CardContent>
-                                <div className="absolute inset-0 bg-noise opacity-10 pointer-events-none" />
+                                <div className="absolute inset-0 bg-noise opacity-10 pointer-events-none z-20" />
                             </Card>
 
                             <Card className="bg-white border-2 border-black shadow-stark hover:shadow-stark-hover transition-all hover:-translate-y-2 rounded-none overflow-hidden relative group mt-8 md:mt-0">
                                 <div className="h-2 bg-pink-500 w-full" />
+                                {/* Blurred Background Image */}
+                                <div className="absolute inset-0 z-0">
+                                    <img src="/images/organic-herbs-bg.png" alt="" className="w-full h-full object-cover blur-sm" />
+                                    <div className="absolute inset-0 bg-white/70" />
+                                </div>
                                 <CardContent className="p-8 pt-12 text-center relative z-10">
                                     <div className="w-20 h-20 bg-stone-100 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-black group-hover:bg-pink-400 transition-colors">
                                         <Heart className="w-10 h-10 text-black" />
@@ -121,11 +131,16 @@ export default function AboutPage() {
                                     <h3 className="text-2xl font-black uppercase mb-4 italic">{t('about.pillar_2_title')}</h3>
                                     <p className="font-mono text-sm leading-relaxed">{t('about.pillar_2_desc')}</p>
                                 </CardContent>
-                                <div className="absolute inset-0 bg-noise opacity-10 pointer-events-none" />
+                                <div className="absolute inset-0 bg-noise opacity-10 pointer-events-none z-20" />
                             </Card>
 
                             <Card className="bg-white border-2 border-black shadow-stark hover:shadow-stark-hover transition-all hover:-translate-y-2 rounded-none overflow-hidden relative group mt-16 md:mt-0">
                                 <div className="h-2 bg-blue-500 w-full" />
+                                {/* Blurred Background Image */}
+                                <div className="absolute inset-0 z-0">
+                                    <img src="/images/personalized-results-bg.png" alt="" className="w-full h-full object-cover blur-sm" />
+                                    <div className="absolute inset-0 bg-white/70" />
+                                </div>
                                 <CardContent className="p-8 pt-12 text-center relative z-10">
                                     <div className="w-20 h-20 bg-stone-100 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-black group-hover:bg-blue-400 transition-colors">
                                         <Globe className="w-10 h-10 text-black" />
@@ -133,7 +148,7 @@ export default function AboutPage() {
                                     <h3 className="text-2xl font-black uppercase mb-4 italic">{t('about.pillar_3_title')}</h3>
                                     <p className="font-mono text-sm leading-relaxed">{t('about.pillar_3_desc')}</p>
                                 </CardContent>
-                                <div className="absolute inset-0 bg-noise opacity-10 pointer-events-none" />
+                                <div className="absolute inset-0 bg-noise opacity-10 pointer-events-none z-20" />
                             </Card>
                         </div>
                     </div>
