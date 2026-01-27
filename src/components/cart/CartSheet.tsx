@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Minus, Plus, Trash2, ShoppingBag, X, ArrowRight, UserCircle, Zap } from 'lucide-react';
 import { useCart } from '@/context/cart-context';
 import { useLanguage } from '@/context/language-context';
@@ -33,6 +33,11 @@ export function CartSheet() {
     const { t } = useLanguage();
     const supabase = createClient();
     const router = useRouter();
+
+    // Generate stable transaction ID that doesn't change on re-render
+    const transactionId = useMemo(() =>
+        Math.floor(Math.random() * 999999).toString().padStart(6, '0'),
+        []);
 
     const handleCheckout = async () => {
         setIsLoading(true);
@@ -110,7 +115,7 @@ export function CartSheet() {
                             {t('cart.title')} <Zap className="w-6 h-6 text-primary fill-primary animate-pulse" />
                         </SheetTitle>
                         <p className="font-mono text-xs text-stone-400 mt-1 uppercase relative z-10">
-                            Transaction ID: #{Math.floor(Math.random() * 999999).toString().padStart(6, '0')}
+                            Transaction ID: #{transactionId}
                         </p>
                     </div>
 
