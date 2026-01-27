@@ -60,7 +60,7 @@ export const products: ProductDetail[] = [
                 benefit: 'Supports liver function and helps process alcohol byproducts faster',
                 benefitCn: '支持肝脏功能，加速酒精代谢',
                 emoji: '🌿',
-                imageUrl: 'https://images.unsplash.com/photo-1515023115689-589c33041d3c?w=400&h=400&fit=crop'
+                imageUrl: '/images/ingredients/kudzu_root.png'
             },
             {
                 name: 'Schisandra Berry',
@@ -69,7 +69,7 @@ export const products: ProductDetail[] = [
                 benefit: 'Powerful adaptogen that protects liver cells and reduces fatigue',
                 benefitCn: '强效适应原，保护肝细胞，减轻疲劳',
                 emoji: '🍇',
-                imageUrl: 'https://images.unsplash.com/photo-1474206258878-6b5b9f8b3fe0?w=400&h=400&fit=crop'
+                imageUrl: '/images/ingredients/schisandra_berry.png'
             },
             {
                 name: 'Gardenia Fruit',
@@ -78,7 +78,7 @@ export const products: ProductDetail[] = [
                 benefit: 'Natural anti-inflammatory that helps clear toxins from your system',
                 benefitCn: '天然抗炎成分，帮助清除体内毒素',
                 emoji: '🌸',
-                imageUrl: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&h=400&fit=crop'
+                imageUrl: '/images/ingredients/gardenia_fruit.png'
             }
         ],
 
@@ -120,7 +120,7 @@ export const products: ProductDetail[] = [
                 benefit: 'Breaks down food stagnation and relieves bloating fast',
                 benefitCn: '消食化积，快速缓解胀气',
                 emoji: '🌱',
-                imageUrl: 'https://images.unsplash.com/photo-1582284540020-8acbe03f4924?w=400&h=400&fit=crop'
+                imageUrl: '/images/ingredients/radish_seed.png'
             },
             {
                 name: 'Galangal',
@@ -129,7 +129,7 @@ export const products: ProductDetail[] = [
                 benefit: 'Warms the stomach and stimulates digestive enzymes',
                 benefitCn: '温胃散寒，促进消化酶分泌',
                 emoji: '🫚',
-                imageUrl: 'https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=400&h=400&fit=crop'
+                imageUrl: '/images/ingredients/galangal.png'
             },
             {
                 name: 'Clove',
@@ -138,7 +138,7 @@ export const products: ProductDetail[] = [
                 benefit: 'Soothes nausea and prevents acid reflux',
                 benefitCn: '缓解恶心，防止胃酸返流',
                 emoji: '🌺',
-                imageUrl: 'https://images.unsplash.com/photo-1599909631715-0b5e0f0c35f3?w=400&h=400&fit=crop'
+                imageUrl: '/images/ingredients/clove.png'
             },
             {
                 name: 'Jujube Date',
@@ -147,7 +147,7 @@ export const products: ProductDetail[] = [
                 benefit: 'Strengthens digestive function and adds natural sweetness',
                 benefitCn: '补中益气，增添天然甜味',
                 emoji: '🌰',
-                imageUrl: 'https://images.unsplash.com/photo-1551462147-ff29053bfc14?w=400&h=400&fit=crop'
+                imageUrl: '/images/ingredients/jujube_date.png'
             }
         ],
 
