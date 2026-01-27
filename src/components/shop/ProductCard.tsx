@@ -153,15 +153,13 @@ export function ProductCard({
                             <Button
                                 variant="secondary"
                                 size="sm"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    onLearnMore?.();
-                                }}
+                                asChild
                                 className="scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300 delay-100 shadow-lg text-xs md:text-sm"
                             >
-                                <Sparkles className="w-4 h-4 mr-2" />
-                                {language === 'cn' ? '了解更多' : 'Learn More'}
+                                <Link href={`/shop/drinks/${id}`}>
+                                    <Sparkles className="w-4 h-4 mr-2" />
+                                    {language === 'cn' ? '了解更多' : 'Learn More'}
+                                </Link>
                             </Button>
                         </div>
 
