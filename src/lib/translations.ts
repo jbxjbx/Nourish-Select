@@ -3,7 +3,7 @@ export const translations = {
         nav: {
             home: 'Home',
             shop: 'Shop',
-            drinks: 'Wellness Drinks',
+            drinks: 'Our Products',
             masks: 'Foot Masks',
             analysis: 'Tongue Analysis',
             about: 'Our Story',
@@ -244,7 +244,7 @@ export const translations = {
         nav: {
             home: '首页',
             shop: '商店',
-            drinks: '养生饮品',
+            drinks: '我们的产品',
             masks: '足部护理',
             analysis: 'AI舌诊',
             about: '品牌故事',
@@ -485,7 +485,7 @@ export const translations = {
         nav: {
             home: 'ホーム',
             shop: 'ショップ',
-            drinks: 'ウェルネスドリンク',
+            drinks: '製品一覧',
             masks: 'フットマスク',
             analysis: '舌診断',
             about: 'ストーリー',
