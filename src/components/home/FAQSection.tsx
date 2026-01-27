@@ -126,12 +126,12 @@ export function FAQSection() {
                         <HelpCircle className="w-10 h-10 text-primary" />
                     </div>
                     <h2 className="text-4xl md:text-7xl font-black text-white mb-4 uppercase tracking-tighter">
-                        {language === 'cn' ? '常见问题' : 'F*cking Asked Qs'}
+                        {language === 'cn' ? '常见问题' : 'Frequently Asked Questions'}
                     </h2>
                     <p className="text-xl text-stone-400 max-w-2xl mx-auto font-mono">
                         {language === 'cn'
-                            ? '别问了，答案都在这'
-                            : 'Don\'t DM us, read this first.'}
+                            ? '我们在这为您解答'
+                            : 'Find answers to common questions below.'}
                     </p>
                 </motion.div>
 

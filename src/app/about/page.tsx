@@ -41,7 +41,7 @@ export default function AboutPage() {
                             {t('about.title') || 'THE MANIFESTO'}
                         </h1>
                         <p className="text-2xl md:text-4xlfont-bold text-stone-300 leading-tight max-w-3xl mx-auto font-serif italic">
-                            "{t('about.quote') || 'Normal wellness is boring as hell. We chose violence.'}"
+                            "{t('about.quote') || 'We believe wellness should be accessible, effective, and enjoyable for everyone.'}"
                         </p>
                     </motion.div>
                 </div>

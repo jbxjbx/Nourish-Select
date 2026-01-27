@@ -10,7 +10,7 @@ interface MarqueeTickerProps {
 }
 
 export function MarqueeTicker({
-    text = "FUNCTIONAL SODA • PUNK ROCK ELIXIR • HANGOVER CURE • PARTY PROOF • ",
+    text = "HERBAL WELLNESS • NATURAL INGREDIENTS • HEALTH BENEFITS • PREMIUM QUALITY • ",
     className,
     speed = 'normal'
 }: MarqueeTickerProps) {
