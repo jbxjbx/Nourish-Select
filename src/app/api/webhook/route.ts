@@ -92,6 +92,10 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     }));
 
     // Create order record
+    // Use type assertion for shipping_details as it may not be in base Session type
+    const sessionAny = session as any;
+    const shippingDetails = sessionAny.shipping_details;
+
     const orderData = {
         user_id: userId,
         stripe_session_id: session.id,
@@ -103,14 +107,14 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
         items: items,
         order_type: orderType,
         customer_email: session.customer_details?.email,
-        shipping_address: session.shipping_details?.address ? {
-            name: session.shipping_details.name,
-            line1: session.shipping_details.address.line1,
-            line2: session.shipping_details.address.line2,
-            city: session.shipping_details.address.city,
-            state: session.shipping_details.address.state,
-            postal_code: session.shipping_details.address.postal_code,
-            country: session.shipping_details.address.country,
+        shipping_address: shippingDetails?.address ? {
+            name: shippingDetails.name,
+            line1: shippingDetails.address.line1,
+            line2: shippingDetails.address.line2,
+            city: shippingDetails.address.city,
+            state: shippingDetails.address.state,
+            postal_code: shippingDetails.address.postal_code,
+            country: shippingDetails.address.country,
         } : null,
     };
 
@@ -133,21 +137,24 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
 async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
     console.log('💰 Invoice payment succeeded:', invoice.id);
 
+    // Use type assertion for subscription property
+    const invoiceAny = invoice as any;
+
     // This handles recurring subscription payments
-    if (!invoice.subscription) {
+    if (!invoiceAny.subscription) {
         console.log('Not a subscription invoice, skipping');
         return;
     }
 
     // For recurring payments, we might want to create a new order record
     // or update the subscription status
-    const subscription = await stripe.subscriptions.retrieve(invoice.subscription as string);
+    const subscription = await stripe.subscriptions.retrieve(invoiceAny.subscription as string);
 
     // Find existing orders with this subscription ID and update status
     const { data: existingOrder } = await supabase
         .from('orders')
         .select('id, user_id')
-        .eq('stripe_subscription_id', invoice.subscription)
+        .eq('stripe_subscription_id', invoiceAny.subscription)
         .limit(1)
         .single();
 
