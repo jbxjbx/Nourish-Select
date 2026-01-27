@@ -77,9 +77,11 @@ export async function POST(req: Request) {
         });
 
         // If we have subscription items, create a subscription checkout
+        // One-time items will be included and charged on first payment
         if (subscriptionItems.length > 0) {
             const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
+            // Add subscription items
             for (const item of subscriptionItems) {
                 // Extract product key from item id (e.g., "wrecked-ralph-sub" -> "wrecked-ralph")
                 const productKey = item.id.replace('-sub', '');
@@ -124,7 +126,24 @@ export async function POST(req: Request) {
                 }
             }
 
-            console.log('Creating subscription session with line items:', JSON.stringify(lineItems, null, 2));
+            // Add one-time items to the same session (charged on first payment only)
+            for (const item of oneTimeItems) {
+                lineItems.push({
+                    price_data: {
+                        currency: 'usd',
+                        product_data: {
+                            name: item.name,
+                            images: getFullImageUrl(item.imageUrl, origin),
+                        },
+                        unit_amount: Math.round(item.price * 100),
+                        // No 'recurring' field = one-time charge
+                    },
+                    quantity: item.quantity,
+                });
+                console.log(`Adding one-time item to subscription checkout: ${item.name}`);
+            }
+
+            console.log('Creating mixed/subscription session with line items:', JSON.stringify(lineItems, null, 2));
 
             const sessionConfig: Stripe.Checkout.SessionCreateParams = {
                 line_items: lineItems,
@@ -132,9 +151,13 @@ export async function POST(req: Request) {
                 success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&type=subscription`,
                 cancel_url: `${origin}/?canceled=true`,
                 billing_address_collection: 'required',
+                shipping_address_collection: {
+                    allowed_countries: ['US', 'CA', 'GB', 'AU', 'CN', 'JP'],
+                },
                 metadata: {
                     user_id: userId || '',
-                    type: 'subscription',
+                    type: oneTimeItems.length > 0 ? 'mixed' : 'subscription',
+                    has_one_time_items: oneTimeItems.length > 0 ? 'true' : 'false',
                 },
             };
 
