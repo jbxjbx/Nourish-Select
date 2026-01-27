@@ -236,14 +236,7 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
                                                 accentColor={product.color}
                                             />
                                         ))}
-                                        {product.baseIngredients.slice(0, 4).map((ingredient, index) => (
-                                            <IngredientFlipCard
-                                                key={ingredient.name}
-                                                ingredient={ingredient}
-                                                index={index + product.coreIngredients.length}
-                                                accentColor={product.color}
-                                            />
-                                        ))}
+
                                     </div>
                                 </div>
                             </div>

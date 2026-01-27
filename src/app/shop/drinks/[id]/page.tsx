@@ -381,22 +381,7 @@ export default function ProductDetailPage() {
                             </div>
                         </div>
 
-                        {/* Base Ingredients */}
-                        <div>
-                            <h3 className="text-xl font-black uppercase mb-6 text-center text-stone-400">
-                                {language === 'cn' ? '基础配料' : 'Base Ingredients'}
-                            </h3>
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                {product.baseIngredients.slice(0, 4).map((ingredient, idx) => (
-                                    <IngredientFlipCard
-                                        key={idx}
-                                        ingredient={ingredient}
-                                        index={idx + product.coreIngredients.length}
-                                        accentColor={product.color}
-                                    />
-                                ))}
-                            </div>
-                        </div>
+
                     </section>
 
                     {/* Benefits Section */}

@@ -28,7 +28,7 @@ export interface ProductDetail {
     flavorDescription: string;
     flavorDescriptionCn: string;
     coreIngredients: Ingredient[];
-    baseIngredients: Ingredient[];
+
     benefits: string[];
     benefitsCn: string[];
     color: string; // Accent color for the product
@@ -81,44 +81,7 @@ export const products: ProductDetail[] = [
                 imageUrl: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&h=400&fit=crop'
             }
         ],
-        baseIngredients: [
-            {
-                name: 'Lily Bulb',
-                nameCn: '百合',
-                scientificName: 'Lilium brownii',
-                benefit: 'Soothes and hydrates, calming internal heat',
-                benefitCn: '滋润舒缓，清热降燥',
-                emoji: '🪻',
-                imageUrl: 'https://images.unsplash.com/photo-1518882605630-8991c6849c5a?w=400&h=400&fit=crop'
-            },
-            {
-                name: 'Longan',
-                nameCn: '龙眼',
-                scientificName: 'Dimocarpus longan',
-                benefit: 'Natural sweetness with restorative properties',
-                benefitCn: '天然甜味，滋补元气',
-                emoji: '🫐',
-                imageUrl: 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=400&h=400&fit=crop'
-            },
-            {
-                name: 'Tangerine Peel',
-                nameCn: '陈皮',
-                scientificName: 'Citrus reticulata',
-                benefit: 'Aids digestion and adds bright citrus notes',
-                benefitCn: '助消化，增添清新柑橘风味',
-                emoji: '🍊',
-                imageUrl: 'https://images.unsplash.com/photo-1547514701-42782101795e?w=400&h=400&fit=crop'
-            },
-            {
-                name: 'Licorice Root',
-                nameCn: '甘草',
-                scientificName: 'Glycyrrhiza glabra',
-                benefit: 'Harmonizes all ingredients and provides natural sweetness',
-                benefitCn: '调和配方，天然回甘',
-                emoji: '🌾',
-                imageUrl: 'https://images.unsplash.com/photo-1518882605630-8991c6849c5a?w=400&h=400&fit=crop'
-            }
-        ],
+
         benefits: [
             'Accelerates alcohol metabolism for faster recovery',
             'Protects liver cells from oxidative stress',
@@ -187,44 +150,7 @@ export const products: ProductDetail[] = [
                 imageUrl: 'https://images.unsplash.com/photo-1551462147-ff29053bfc14?w=400&h=400&fit=crop'
             }
         ],
-        baseIngredients: [
-            {
-                name: 'Lily Bulb',
-                nameCn: '百合',
-                scientificName: 'Lilium brownii',
-                benefit: 'Soothes and hydrates, calming internal heat',
-                benefitCn: '滋润舒缓，清热降燥',
-                emoji: '🪻',
-                imageUrl: 'https://images.unsplash.com/photo-1518882605630-8991c6849c5a?w=400&h=400&fit=crop'
-            },
-            {
-                name: 'Longan',
-                nameCn: '龙眼',
-                scientificName: 'Dimocarpus longan',
-                benefit: 'Natural sweetness with restorative properties',
-                benefitCn: '天然甜味，滋补元气',
-                emoji: '🫐',
-                imageUrl: 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=400&h=400&fit=crop'
-            },
-            {
-                name: 'Tangerine Peel',
-                nameCn: '陈皮',
-                scientificName: 'Citrus reticulata',
-                benefit: 'Aids digestion and adds bright citrus notes',
-                benefitCn: '助消化，增添清新柑橘风味',
-                emoji: '🍊',
-                imageUrl: 'https://images.unsplash.com/photo-1547514701-42782101795e?w=400&h=400&fit=crop'
-            },
-            {
-                name: 'Licorice Root',
-                nameCn: '甘草',
-                scientificName: 'Glycyrrhiza glabra',
-                benefit: 'Harmonizes all ingredients and provides natural sweetness',
-                benefitCn: '调和配方，天然回甘',
-                emoji: '🌾',
-                imageUrl: 'https://images.unsplash.com/photo-1518882605630-8991c6849c5a?w=400&h=400&fit=crop'
-            }
-        ],
+
         benefits: [
             'Relieves bloating and trapped gas within 30 minutes',
             'Stimulates natural digestive enzyme production',
@@ -293,44 +219,7 @@ export const products: ProductDetail[] = [
                 imageUrl: 'https://images.unsplash.com/photo-1518882605630-8991c6849c5a?w=400&h=400&fit=crop'
             }
         ],
-        baseIngredients: [
-            {
-                name: 'Lily Bulb',
-                nameCn: '百合',
-                scientificName: 'Lilium brownii',
-                benefit: 'Soothes and hydrates, calming internal heat',
-                benefitCn: '滋润舒缓，清热降燥',
-                emoji: '🪻',
-                imageUrl: 'https://images.unsplash.com/photo-1518882605630-8991c6849c5a?w=400&h=400&fit=crop'
-            },
-            {
-                name: 'Longan',
-                nameCn: '龙眼',
-                scientificName: 'Dimocarpus longan',
-                benefit: 'Natural sweetness with restorative properties',
-                benefitCn: '天然甜味，滋补元气',
-                emoji: '🫐',
-                imageUrl: 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=400&h=400&fit=crop'
-            },
-            {
-                name: 'Tangerine Peel',
-                nameCn: '陈皮',
-                scientificName: 'Citrus reticulata',
-                benefit: 'Aids digestion and adds bright citrus notes',
-                benefitCn: '助消化，增添清新柑橘风味',
-                emoji: '🍊',
-                imageUrl: 'https://images.unsplash.com/photo-1547514701-42782101795e?w=400&h=400&fit=crop'
-            },
-            {
-                name: 'Licorice Root',
-                nameCn: '甘草',
-                scientificName: 'Glycyrrhiza glabra',
-                benefit: 'Harmonizes all ingredients and provides natural sweetness',
-                benefitCn: '调和配方，天然回甘',
-                emoji: '🌾',
-                imageUrl: 'https://images.unsplash.com/photo-1518882605630-8991c6849c5a?w=400&h=400&fit=crop'
-            }
-        ],
+
         benefits: [
             'Reduces visible bloating and puffiness',
             'Supports healthy metabolism and energy levels',
@@ -390,44 +279,7 @@ export const products: ProductDetail[] = [
                 imageUrl: 'https://images.unsplash.com/photo-1518882605630-8991c6849c5a?w=400&h=400&fit=crop'
             }
         ],
-        baseIngredients: [
-            {
-                name: 'Lily Bulb (Double)',
-                nameCn: '百合（加倍）',
-                scientificName: 'Lilium brownii',
-                benefit: 'Extra calming effect, deeply soothes and moisturizes',
-                benefitCn: '加倍安神效果，深层滋润舒缓',
-                emoji: '🪻',
-                imageUrl: 'https://images.unsplash.com/photo-1518882605630-8991c6849c5a?w=400&h=400&fit=crop'
-            },
-            {
-                name: 'Longan',
-                nameCn: '龙眼',
-                scientificName: 'Dimocarpus longan',
-                benefit: 'Natural sweetness with restorative properties',
-                benefitCn: '天然甜味，滋补元气',
-                emoji: '🫐',
-                imageUrl: 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=400&h=400&fit=crop'
-            },
-            {
-                name: 'Tangerine Peel',
-                nameCn: '陈皮',
-                scientificName: 'Citrus reticulata',
-                benefit: 'Aids digestion and adds bright citrus notes',
-                benefitCn: '助消化，增添清新柑橘风味',
-                emoji: '🍊',
-                imageUrl: 'https://images.unsplash.com/photo-1547514701-42782101795e?w=400&h=400&fit=crop'
-            },
-            {
-                name: 'Licorice Root',
-                nameCn: '甘草',
-                scientificName: 'Glycyrrhiza glabra',
-                benefit: 'Harmonizes all ingredients and provides natural sweetness',
-                benefitCn: '调和配方，天然回甘',
-                emoji: '🌾',
-                imageUrl: 'https://images.unsplash.com/photo-1518882605630-8991c6849c5a?w=400&h=400&fit=crop'
-            }
-        ],
+
         benefits: [
             'Reduces anxiety and racing thoughts',
             'Promotes natural, restful sleep without grogginess',
