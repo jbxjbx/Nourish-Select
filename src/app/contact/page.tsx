@@ -90,7 +90,7 @@ export default function ContactPage() {
                                     <h3 className="text-2xl font-black uppercase mb-1 flex items-center gap-2">
                                         <Phone className="w-6 h-6 border-2 border-black p-0.5 rounded-full" /> Phone
                                     </h3>
-                                    <p className="font-bold">+1 (555) 666-PUNK</p>
+                                    <p className="font-bold">+1 (201) 682-7728</p>
                                 </div>
                                 <div>
                                     <h3 className="text-2xl font-black uppercase mb-1 flex items-center gap-2">
