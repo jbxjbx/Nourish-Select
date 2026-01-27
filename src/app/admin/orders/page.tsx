@@ -166,6 +166,49 @@ export default function AdminOrdersPage() {
         }
     };
 
+    // Process refund through Stripe API
+    const processRefund = async (orderId: string) => {
+        setUpdating(true);
+        setMessage(null);
+
+        try {
+            const response = await fetch('/api/admin/refund', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ orderId, reason: 'requested_by_customer' }),
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.error || 'Failed to process refund');
+            }
+
+            if (result.refund) {
+                setMessage({
+                    type: 'success',
+                    text: `Refund processed successfully! Amount: $${result.refund.amount} (${result.refund.id})`
+                });
+            } else {
+                setMessage({
+                    type: 'success',
+                    text: result.message || 'Order marked as refunded'
+                });
+            }
+
+            await fetchOrders();
+
+            // Update selected order if open
+            if (selectedOrder?.id === orderId) {
+                setSelectedOrder(prev => prev ? { ...prev, status: 'refunded' } : null);
+            }
+        } catch (error: any) {
+            setMessage({ type: 'error', text: error.message });
+        } finally {
+            setUpdating(false);
+        }
+    };
+
     const updateTrackingNumber = async (orderId: string) => {
         if (!trackingInput.trim()) return;
 
@@ -377,10 +420,10 @@ export default function AdminOrdersPage() {
                                                                     <Button
                                                                         size="sm"
                                                                         className="bg-green-600 hover:bg-green-700"
-                                                                        onClick={() => updateOrderStatus(order.id, 'refunded')}
+                                                                        onClick={() => processRefund(order.id)}
                                                                         disabled={updating}
                                                                     >
-                                                                        Approve
+                                                                        {updating ? 'Processing...' : 'Approve & Refund'}
                                                                     </Button>
                                                                     <Button
                                                                         size="sm"
