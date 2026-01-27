@@ -125,14 +125,14 @@ export function HeroSection() {
 
                     <div className="flex flex-col sm:flex-row gap-16 justify-center items-center py-4 relative z-20">
                         <div className="relative group transition-all duration-300 hover:z-50">
-                            <Button asChild size="lg" className="h-14 px-8 text-lg shadow-stark hover:shadow-stark-hover hover:-translate-y-1 transition-all border-2 border-black bg-black text-white hover:bg-stone-900 rounded-full">
+                            <Button asChild size="default" className="h-11 px-6 text-sm shadow-stark hover:shadow-stark-hover hover:-translate-y-1 transition-all border-2 border-black bg-black text-white hover:bg-stone-900 rounded-full">
                                 <Link href="/analysis">
-                                    {t('hero.cta_scan')} <ArrowRight className="ml-2 w-5 h-5" />
+                                    Analyze Tongue <ArrowRight className="ml-2 w-4 h-4" />
                                 </Link>
                             </Button>
                         </div>
                         <div className="relative group transition-all duration-300 hover:z-50">
-                            <Button asChild size="lg" variant="outline" className="h-14 px-8 text-lg shadow-stark hover:shadow-stark-hover hover:-translate-y-1 transition-all bg-white text-black border-2 border-black hover:bg-primary hover:text-black rounded-full">
+                            <Button asChild size="default" variant="outline" className="h-11 px-6 text-sm shadow-stark hover:shadow-stark-hover hover:-translate-y-1 transition-all bg-white text-black border-2 border-black hover:bg-primary hover:text-black rounded-full">
                                 <Link href="/shop/drinks">
                                     {t('hero.cta_shop')}
                                 </Link>
