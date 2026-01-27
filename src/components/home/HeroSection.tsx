@@ -69,15 +69,11 @@ export function HeroSection() {
                     transition={{ delay: 0.2 }}
                     className="absolute left-[5%] top-[20%] w-[240px] aspect-[9/16] bg-black border-4 border-black rounded-3xl shadow-2xl overflow-hidden rotate-[-6deg] hover:rotate-0 transition-transform duration-500 hover:z-50 hover:scale-105"
                 >
-                    <div className="w-full h-full bg-stone-800 relative">
-                        <div className="absolute inset-0 bg-gradient-to-br from-primary/80 to-stone-900 animate-pulse" />
-                        <div className="absolute bottom-4 left-4 text-white font-black text-2xl tracking-tighter leading-none">
-                            WRECKED<br />RALPH<br /><span className="text-primary">VIBES</span>
-                        </div>
-                        <div className="absolute top-4 right-4 bg-red-600 text-white text-[10px] uppercase font-bold px-2 py-0.5 rounded-sm animate-pulse">
-                            LIVE
-                        </div>
-                    </div>
+                    <img
+                        src="/hero-left.png"
+                        alt="Wrecked Ralph - Hangover Relief Drink"
+                        className="w-full h-full object-cover"
+                    />
                 </motion.div>
 
                 {/* Right Video */}
@@ -87,16 +83,11 @@ export function HeroSection() {
                     transition={{ delay: 0.4 }}
                     className="absolute right-[5%] bottom-[15%] w-[220px] aspect-[9/16] bg-black border-4 border-black rounded-3xl shadow-2xl overflow-hidden rotate-[6deg] hover:rotate-0 transition-transform duration-500 hover:z-50 hover:scale-105"
                 >
-                    <div className="w-full h-full bg-stone-800 relative">
-                        <div className="absolute inset-0 bg-gradient-to-bl from-secondary/80 to-purple-900 animate-pulse" style={{ animationDelay: '1s' }} />
-                        <div className="absolute bottom-4 left-4 text-white font-black text-2xl tracking-tighter leading-none">
-                            POPPIN'<br />OFF
-                        </div>
-                        <div className="absolute top-4 left-4 bg-black/50 backdrop-blur-md rounded-full px-2 py-1 flex items-center gap-1">
-                            <div className="w-2 h-2 rounded-full bg-primary" />
-                            <span className="text-[10px] text-white font-bold">@nourishselect</span>
-                        </div>
-                    </div>
+                    <img
+                        src="/hero-right.png"
+                        alt="Party Poppin' Off - Functional Wellness Drinks"
+                        className="w-full h-full object-cover"
+                    />
                 </motion.div>
             </div>
 
