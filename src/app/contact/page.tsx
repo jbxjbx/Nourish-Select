@@ -96,7 +96,7 @@ export default function ContactPage() {
                                     <h3 className="text-2xl font-black uppercase mb-1 flex items-center gap-2">
                                         <MapPin className="w-6 h-6 border-2 border-black p-0.5 rounded-full" /> HQ
                                     </h3>
-                                    <p className="font-bold">Underground Bunker<br />San Francisco, CA</p>
+                                    <p className="font-bold">Fort Lee, NJ</p>
                                 </div>
                             </div>
 
