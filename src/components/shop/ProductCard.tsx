@@ -147,14 +147,14 @@ export function ProductCard({
 
                         {/* Layer 2: Overlay Reveal on Hover */}
                         <div className={cn(
-                            "absolute inset-0 bg-stone-900/20 backdrop-blur-[2px] transition-opacity duration-300 flex items-center justify-center",
-                            isHovered ? "opacity-100" : "opacity-0"
+                            "absolute inset-0 bg-stone-900/20 backdrop-blur-[2px] transition-opacity duration-300 flex items-center justify-center z-20",
+                            isHovered ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
                         )}>
                             <Button
                                 variant="secondary"
                                 size="sm"
                                 asChild
-                                className="scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300 delay-100 shadow-lg text-xs md:text-sm"
+                                className="scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300 delay-100 shadow-lg text-xs md:text-sm pointer-events-auto"
                             >
                                 <Link href={`/shop/drinks/${id}`}>
                                     <Sparkles className="w-4 h-4 mr-2" />
