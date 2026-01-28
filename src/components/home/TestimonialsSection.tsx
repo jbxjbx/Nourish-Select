@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Star, Quote, Sparkles } from 'lucide-react';
+import { Star } from 'lucide-react';
 import { useLanguage } from '@/context/language-context';
 
 const testimonials = [
@@ -72,60 +72,46 @@ export function TestimonialsSection() {
                 </motion.div>
 
                 {/* Mobile: Horizontal Scroll Carousel */}
-                <div className="md:hidden">
+                <div className="md:hidden overflow-hidden">
                     <div
-                        className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-6 -mx-4 px-4 scrollbar-hide"
-                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                        className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 px-2"
+                        style={{
+                            scrollbarWidth: 'none',
+                            msOverflowStyle: 'none',
+                            WebkitOverflowScrolling: 'touch'
+                        } as React.CSSProperties}
                     >
                         {testimonials.map((testimonial, index) => (
-                            <motion.div
+                            <div
                                 key={index}
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: index * 0.1, duration: 0.5 }}
-                                className="flex-shrink-0 w-[85vw] snap-center"
+                                className="flex-shrink-0 w-[80vw] max-w-[320px] snap-center pt-4"
                             >
-                                {/* SCOTCH TAPE EFFECT */}
-                                <div className="relative">
-                                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-6 bg-white/30 backdrop-blur-sm z-20 transform -rotate-2 border-l border-r border-white/50 shadow-sm"></div>
-
-                                    <div className={`h-full bg-white p-6 shadow-stark border-2 border-black ${index % 2 === 0 ? 'rotate-1' : '-rotate-1'}`}>
-                                        {/* Rating */}
-                                        <div className="flex gap-1 mb-4">
-                                            {Array.from({ length: testimonial.rating }).map((_, i) => (
-                                                <Star key={i} className="w-4 h-4 fill-black text-black" />
-                                            ))}
-                                        </div>
-
-                                        {/* Content */}
-                                        <p className="text-black font-medium mb-6 leading-relaxed text-sm font-mono uppercase bg-yellow-100 p-2 inline-block transform -rotate-1">
-                                            "{language === 'cn' ? testimonial.content_zh : language === 'jp' ? testimonial.content_jp : testimonial.content_en}"
-                                        </p>
-
-                                        {/* Author */}
-                                        <div className="flex items-center gap-3 mt-auto">
-                                            <div className="relative">
-                                                <img
-                                                    src={testimonial.avatar}
-                                                    alt={testimonial.name}
-                                                    className="w-12 h-12 grayscale contrast-125 border-2 border-black object-cover"
-                                                />
-                                            </div>
-                                            <div>
-                                                <p className="font-black text-black text-sm uppercase tracking-tighter">{testimonial.name}</p>
-                                                <p className="text-xs text-stone-500 font-bold uppercase">{testimonial.role}</p>
-                                            </div>
+                                <div className={`bg-white p-5 shadow-stark border-2 border-black ${index % 2 === 0 ? 'rotate-1' : '-rotate-1'}`}>
+                                    <div className="flex gap-1 mb-3">
+                                        {Array.from({ length: testimonial.rating }).map((_, i) => (
+                                            <Star key={i} className="w-4 h-4 fill-black text-black" />
+                                        ))}
+                                    </div>
+                                    <p className="text-black font-medium mb-4 leading-relaxed text-xs font-mono bg-yellow-100 p-2">
+                                        &quot;{language === 'cn' ? testimonial.content_zh : language === 'jp' ? testimonial.content_jp : testimonial.content_en}&quot;
+                                    </p>
+                                    <div className="flex items-center gap-3">
+                                        <img
+                                            src={testimonial.avatar}
+                                            alt={testimonial.name}
+                                            className="w-10 h-10 grayscale contrast-125 border-2 border-black object-cover"
+                                        />
+                                        <div>
+                                            <p className="font-black text-black text-xs uppercase tracking-tighter">{testimonial.name}</p>
+                                            <p className="text-[10px] text-stone-500 font-bold uppercase">{testimonial.role}</p>
                                         </div>
                                     </div>
                                 </div>
-                            </motion.div>
+                            </div>
                         ))}
                     </div>
-
-                    {/* Swipe hint */}
                     <div className="flex justify-center items-center gap-2 mt-2 text-white/70">
-                        <span className="text-xs font-mono uppercase">← {language === 'cn' ? '左右滑动' : language === 'jp' ? 'スワイプ' : 'Swipe'} →</span>
+                        <span className="text-xs font-mono">← {language === 'cn' ? '左右滑动' : language === 'jp' ? 'スワイプ' : 'Swipe'} →</span>
                     </div>
                 </div>
 
@@ -140,24 +126,17 @@ export function TestimonialsSection() {
                             transition={{ delay: index * 0.1, duration: 0.5 }}
                             className="group relative"
                         >
-                            {/* SCOTCH TAPE EFFECT */}
                             <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-6 bg-white/30 backdrop-blur-sm z-20 transform -rotate-2 border-l border-r border-white/50 shadow-sm"></div>
 
                             <div className={`h-full bg-white p-6 shadow-stark border-2 border-black transition-all duration-300 hover:shadow-stark-hover transform ${index % 2 === 0 ? 'rotate-1' : '-rotate-1'} hover:rotate-0 hover:z-10 relative`}>
-
-                                {/* Rating */}
                                 <div className="flex gap-1 mb-4">
                                     {Array.from({ length: testimonial.rating }).map((_, i) => (
                                         <Star key={i} className="w-4 h-4 fill-black text-black" />
                                     ))}
                                 </div>
-
-                                {/* Content */}
                                 <p className="text-black font-medium mb-6 leading-relaxed text-sm font-mono uppercase bg-yellow-100 p-2 inline-block transform -rotate-1">
-                                    "{language === 'cn' ? testimonial.content_zh : language === 'jp' ? testimonial.content_jp : testimonial.content_en}"
+                                    &quot;{language === 'cn' ? testimonial.content_zh : language === 'jp' ? testimonial.content_jp : testimonial.content_en}&quot;
                                 </p>
-
-                                {/* Author */}
                                 <div className="flex items-center gap-3 mt-auto">
                                     <div className="relative">
                                         <img
