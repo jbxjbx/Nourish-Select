@@ -158,14 +158,14 @@ export function ProductCard({
                             >
                                 <Link href={`/shop/drinks/${id}`}>
                                     <Sparkles className="w-4 h-4 mr-2" />
-                                    {language === 'cn' ? '了解更多' : 'Learn More'}
+                                    {language === 'cn' ? '了解更多' : language === 'jp' ? '詳細を見る' : 'Learn More'}
                                 </Link>
                             </Button>
                         </div>
 
                         {/* Punk badge */}
                         <Badge className="absolute top-3 left-3 bg-gradient-to-r from-pink-600 to-purple-600 text-white backdrop-blur-md border-none font-bold tracking-wide shadow-lg z-10 uppercase text-[10px]">
-                            🔥 Functional Soda
+                            🔥 {language === 'cn' ? '功能饮料' : language === 'jp' ? '機能性ソーダ' : 'Functional Soda'}
                         </Badge>
                     </div>
 

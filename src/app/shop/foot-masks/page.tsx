@@ -61,7 +61,7 @@ export default function FootMasksPage() {
                         className="inline-flex items-center gap-2 px-4 py-2 mb-6 text-sm font-medium text-amber-300 border border-amber-500/30 rounded-full bg-stone-900/50 backdrop-blur-sm animate-glow"
                     >
                         <Footprints className="w-4 h-4" />
-                        {language === 'cn' ? '足部护理' : 'Foot Care'}
+                        {language === 'cn' ? '足部护理' : language === 'jp' ? 'フットケア' : 'Foot Care'}
                     </motion.div>
 
                     <motion.h1

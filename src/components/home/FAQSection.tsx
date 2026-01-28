@@ -9,50 +9,66 @@ const faqs = [
     {
         question_en: 'What is AI Tongue Analysis?',
         question_zh: 'AI舌诊是什么？',
+        question_jp: 'AI舌診断とは？',
         answer_en: 'Computer vision meets TCM. Snap a pic, get roasted (and helped). We analyze coating, shape, and color to tell you exactly what your body is screaming for.',
         answer_zh: '计算机视觉遇上中医。拍张照，不仅能被吐槽（还能被拯救）。我们分析舌苔、形状和颜色，告诉你身体到底渴望什么。',
+        answer_jp: 'コンピュータビジョンと漢方の融合。写真を撮るだけで、あなたの体が何を求めているか分析します。',
     },
     {
         question_en: 'Any nasty additives?',
         question_zh: '有任何糟糕的添加剂吗？',
+        question_jp: '添加物は入っていますか？',
         answer_en: 'Zero. None. Zilch. 100% natural, organic, and clean AF. No fake sweeteners, no preservatives, no BS.',
         answer_zh: '零。没有。完全没有。100%天然、有机、超级干净。无人工甜味剂，无防腐剂，无废话。',
+        answer_jp: 'ゼロ。一切なし。100%天然、オーガニック、クリーン。人工甘味料なし、保存料なし。',
     },
     {
         question_en: 'Pregnancy safe?',
         question_zh: '孕期安全吗？',
+        question_jp: '姊娠中でも安全？',
         answer_en: 'Usually yes, but ask your doc. You\'re growing a human, don\'t take advice from a soda website.',
         answer_zh: '通常是安全的，但请咨询医生。你在孕育生命，别听汽水网站的建议。',
+        answer_jp: '通常は安全ですが、医師にご確認ください。',
     },
     {
         question_en: 'When to drink?',
         question_zh: '什么时候喝？',
+        question_jp: 'いつ飲む？',
         answer_en: 'Morning for energy. Night for chill. Anytime for immunity. It\'s functional soda, not rocket science.',
         answer_zh: '早上喝提神。晚上喝放松。随时喝增强免疫。这是功能性汽水，不是火箭科学。',
+        answer_jp: '朝はエネルギー。夜はリラックス。いつでも免疫力。',
     },
     {
         question_en: 'Shipping time?',
         question_zh: '配送时间？',
+        question_jp: '配送時間は？',
         answer_en: 'We ship fast. 3-5 days in the US. International coming soon-ish.',
         answer_zh: '我们发货很快。美国境内3-5天。国际配送即将推出（大概吧）。',
+        answer_jp: '迅速配送。米国内は3-5日。国際配送は近日対応予定。',
     },
     {
         question_en: 'Why better than tea?',
         question_zh: '为什么比茶好？',
+        question_jp: 'お茶よりいい理由は？',
         answer_en: 'Tea is boring. This is effective doses of TCM herbs that actually taste good. Plus, our AI customizes it for you.',
         answer_zh: '茶太无聊了。这是有效剂量的中草药，而且真的好喝。另外，我们的AI为你量身定制。',
+        answer_jp: 'お茶は退屈。これは効果的な漢方ハーブで、しかも美味しい。さらにAIがあなたに合わせてカスタマイズ。',
     },
     {
         question_en: 'Organic?',
         question_zh: '有机吗？',
+        question_jp: 'オーガニック？',
         answer_en: '100% Organic. Certified Gluten-Free. Ethical sourcing. We care about the planet, unlike your ex.',
         answer_zh: '100%有机。无麸质认证。道德采购。我们关心地球，不像你的前任。',
+        answer_jp: '100%オーガニック。グルテンフリー認定。エシカルな調達。',
     },
     {
         question_en: 'How to cancel sub?',
         question_zh: '怎么取消订阅？',
+        question_jp: '解約方法は？',
         answer_en: 'One click in your dashboard. We don\'t hold you hostage. Save 15% if you stay, though.',
         answer_zh: '仪表板一键取消。要把你绑架。不过留下来的话能省15%。',
+        answer_jp: 'ダッシュボードでワンクリック。縛りはありません。継続すれは15%オフ。',
     },
 ];
 
@@ -71,7 +87,7 @@ function FAQItem({ faq, isOpen, onToggle, index }: {
                 className={`w-full py-6 px-4 flex items-center justify-between text-left transition-all duration-300 ${isOpen ? 'bg-primary text-black' : 'bg-transparent text-white hover:bg-stone-900'}`}
             >
                 <span className="text-lg md:text-xl font-black uppercase tracking-tight pr-4">
-                    {language === 'cn' ? faq.question_zh : faq.question_en}
+                    {language === 'cn' ? faq.question_zh : language === 'jp' ? faq.question_jp : faq.question_en}
                 </span>
                 <motion.div
                     animate={{ rotate: isOpen ? 180 : 0 }}
@@ -93,7 +109,7 @@ function FAQItem({ faq, isOpen, onToggle, index }: {
                     >
                         <p className="p-6 text-stone-300 leading-relaxed font-mono text-sm border-t border-stone-800">
                             <span className="text-primary font-bold mr-2">&gt;</span>
-                            {language === 'cn' ? faq.answer_zh : faq.answer_en}
+                            {language === 'cn' ? faq.answer_zh : language === 'jp' ? faq.answer_jp : faq.answer_en}
                         </p>
                     </motion.div>
                 )}
@@ -126,12 +142,14 @@ export function FAQSection() {
                         <HelpCircle className="w-10 h-10 text-primary" />
                     </div>
                     <h2 className="text-4xl md:text-7xl font-black text-white mb-4 uppercase tracking-tighter">
-                        {language === 'cn' ? '常见问题' : 'Frequently Asked Questions'}
+                        {language === 'cn' ? '常见问题' : language === 'jp' ? 'よくある質問' : 'Frequently Asked Questions'}
                     </h2>
                     <p className="text-xl text-stone-400 max-w-2xl mx-auto font-mono">
                         {language === 'cn'
                             ? '我们在这为您解答'
-                            : 'Find answers to common questions below.'}
+                            : language === 'jp'
+                                ? '以下でよくある質問の回答をご覧ください。'
+                                : 'Find answers to common questions below.'}
                     </p>
                 </motion.div>
 
@@ -156,7 +174,7 @@ export function FAQSection() {
                     className="text-center mt-16"
                 >
                     <p className="text-stone-500 font-mono text-sm uppercase">
-                        {language === 'cn' ? '还有其他问题？' : 'Still unclear?'}{' '}
+                        {language === 'cn' ? '还有其他问题？' : language === 'jp' ? 'まだ不明な点が？' : 'Still unclear?'}{' '}
                         <a href="mailto:support@nourishselect.co" className="text-primary font-bold hover:underline hover:text-white transition-colors">
                             support@nourishselect.co
                         </a>

@@ -10,6 +10,7 @@ const testimonials = [
         role: 'Yoga Instructor',
         content_en: "I've tried many wellness drinks, but Nourish Select is different. It genuinely improved my energy and focus without any jitters. My students have noticed the difference!",
         content_zh: "我尝试过很多养生饮品，但Nourish Select与众不同。它真正提升了我的能量和专注力，没有任何不适。我的学生都注意到了变化！",
+        content_jp: "多くのウェルネスドリンクを試しましたが、Nourish Selectは違います。本当にエネルギーと集中力が向上し、不快感はありません。生徒たちも変化に気づいています！",
         rating: 5,
         avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face',
     },
@@ -18,6 +19,7 @@ const testimonials = [
         role: 'Software Engineer',
         content_en: "As someone who stares at screens all day, I needed something for my tired eyes and mental fatigue. The AI tongue analysis recommended the perfect blend for me. Game changer!",
         content_zh: "作为一个整天盯着屏幕的人，我需要缓解眼疲劳和精神疲劳。AI舌诊为我推荐了完美的配方。太棒了！",
+        content_jp: "一日中画面を見ている者として、疲れ目と精神的疲労に必要なものを探していました。AI舌診断が私に最適なブレンドを推薦してくれました。革命的です！",
         rating: 5,
         avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face',
     },
@@ -26,6 +28,7 @@ const testimonials = [
         role: 'Busy Mom of 3',
         content_en: "With three kids, I'm always exhausted. Nourish Select has completely changed how my days feel. I have sustained energy from morning to evening!",
         content_zh: "带着三个孩子，我总是筋疲力尽。Nourish Select完全改变了我的日常感受。从早到晚都有持续的能量！",
+        content_jp: "3人の子供がいて、いつも疲れ果てています。Nourish Selectは私の日々の感覚を完全に変えました。朝から晩まで持続するエネルギーがあります！",
         rating: 5,
         avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face',
     },
@@ -34,6 +37,7 @@ const testimonials = [
         role: 'Martial Arts Coach',
         content_en: "Just 8 simple ingredients that provide immune support, improved focus, and boosted metabolism. Everything I need for my training career!",
         content_zh: "只有8种简单成分，提供免疫支持、改善专注力和促进新陈代谢。这正是我训练事业所需要的一切！",
+        content_jp: "たった8つのシンプルな成分で、免疫サポート、集中力向上、代謝促進。私のトレーニングキャリアに必要なすべてです！",
         rating: 5,
         avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face',
     },
@@ -60,10 +64,10 @@ export function TestimonialsSection() {
                     className="text-center mb-16"
                 >
                     <h2 className="text-4xl md:text-7xl font-black text-white mb-4 uppercase stroke-black tracking-tighter drop-shadow-[4px_4px_0px_rgba(0,0,0,1)] text-shadow">
-                        {language === 'cn' ? '用户怎么说' : 'REAL TALK'}
+                        {language === 'cn' ? '用户怎么说' : language === 'jp' ? 'リアルな声' : 'REAL TALK'}
                     </h2>
                     <div className="inline-block bg-black text-white px-4 py-1 font-mono text-sm transform -rotate-2">
-                        NO BS REVIEWS
+                        {language === 'cn' ? '真实评价' : language === 'jp' ? '本音レビュー' : 'NO BS REVIEWS'}
                     </div>
                 </motion.div>
 
@@ -92,7 +96,7 @@ export function TestimonialsSection() {
 
                                 {/* Content */}
                                 <p className="text-black font-medium mb-6 leading-relaxed text-sm font-mono uppercase bg-yellow-100 p-2 inline-block transform -rotate-1">
-                                    "{language === 'cn' ? testimonial.content_zh : testimonial.content_en}"
+                                    "{language === 'cn' ? testimonial.content_zh : language === 'jp' ? testimonial.content_jp : testimonial.content_en}"
                                 </p>
 
                                 {/* Author */}

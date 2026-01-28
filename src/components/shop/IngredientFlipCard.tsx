@@ -64,7 +64,7 @@ export function IngredientFlipCard({ ingredient, index, accentColor }: Ingredien
                         {getName()}
                     </h4>
                     <p className="text-xs text-white/60 font-medium">
-                        {language === 'cn' ? '了解更多' : 'Learn more'}
+                        {language === 'cn' ? '了解更多' : language === 'jp' ? '詳細を見る' : 'Learn more'}
                     </p>
                 </div>
 

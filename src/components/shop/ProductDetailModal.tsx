@@ -28,7 +28,7 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
         addItem({
             id: purchaseMode === 'subscribe' ? `${product.id}-sub` : product.id,
             name: purchaseMode === 'subscribe'
-                ? `${language === 'cn' ? product.nameCn : product.name} (${language === 'cn' ? '订阅' : 'Subscribe'})`
+                ? `${language === 'cn' ? product.nameCn : product.name} (${language === 'cn' ? '订阅' : language === 'jp' ? '定期' : 'Subscribe'})`
                 : (language === 'cn' ? product.nameCn : product.name),
             price: itemPrice,
             imageUrl: product.imageUrl,
@@ -146,7 +146,7 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
                                                         : 'text-stone-600 hover:bg-stone-200'
                                                         }`}
                                                 >
-                                                    {language === 'cn' ? '单次购买' : 'Buy Once'}
+                                                    {language === 'cn' ? '单次购买' : language === 'jp' ? '単品購入' : 'Buy Once'}
                                                 </button>
                                                 <button
                                                     onClick={() => setPurchaseMode('subscribe')}
@@ -155,7 +155,7 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
                                                         : 'text-stone-600 hover:bg-stone-200'
                                                         }`}
                                                 >
-                                                    {language === 'cn' ? '订阅 -15%' : 'Subscribe -15%'}
+                                                    {language === 'cn' ? '订阅 -15%' : language === 'jp' ? '定期 -15%' : 'Subscribe -15%'}
                                                 </button>
                                             </div>
 
@@ -175,11 +175,11 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
                                                     className="h-12 px-6 rounded-none bg-black text-white font-black uppercase hover:bg-primary hover:text-black border-2 border-black shadow-stark text-sm"
                                                 >
                                                     {isAdded ? (
-                                                        <>Added! ✓</>
+                                                        <>{language === 'cn' ? '已添加! ✓' : language === 'jp' ? '追加済み! ✓' : 'Added! ✓'}</>
                                                     ) : (
                                                         <>
                                                             <ShoppingCart className="w-4 h-4 mr-2" />
-                                                            {language === 'cn' ? '加入购物车' : 'Add to Cart'}
+                                                            {language === 'cn' ? '加入购物车' : language === 'jp' ? 'カートに追加' : 'Add to Cart'}
                                                         </>
                                                     )}
                                                 </Button>
@@ -193,7 +193,7 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
                             <div className="bg-stone-100 py-8 px-6 md:px-12 border-y-4 border-black">
                                 <div className="max-w-6xl mx-auto text-center">
                                     <div className="inline-block bg-black text-white px-4 py-1 font-black uppercase text-sm mb-3 transform -rotate-1">
-                                        {language === 'cn' ? '风味档案' : 'Flavor Profile'}
+                                        {language === 'cn' ? '风味档案' : language === 'jp' ? 'フレーバー' : 'Flavor Profile'}
                                     </div>
                                     <h3
                                         className="text-2xl md:text-3xl font-black mb-2"
@@ -216,13 +216,13 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
                                             style={{ borderColor: product.color, color: product.color }}
                                         >
                                             <Sparkles className="w-4 h-4 inline mr-2" />
-                                            {language === 'cn' ? '核心成分' : 'Power Ingredients'}
+                                            {language === 'cn' ? '核心成分' : language === 'jp' ? 'パワー成分' : 'Power Ingredients'}
                                         </div>
                                         <h2 className="text-3xl md:text-4xl font-black uppercase">
-                                            {language === 'cn' ? '配方揭秘' : 'The Formula'}
+                                            {language === 'cn' ? '配方揭秘' : language === 'jp' ? '配合処方' : 'The Formula'}
                                         </h2>
                                         <p className="text-stone-400 text-sm mt-2">
-                                            {language === 'cn' ? '将鼠标移到卡片上查看详情' : 'Hover over a card to learn more'}
+                                            {language === 'cn' ? '将鼠标移到卡片上查看详情' : language === 'jp' ? 'カードにカーソルを合わせて詳細を表示' : 'Hover over a card to learn more'}
                                         </p>
                                     </div>
 
@@ -249,7 +249,7 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
                                 <div className="max-w-4xl mx-auto">
                                     <div className="text-center mb-8">
                                         <h2 className="text-3xl font-black uppercase mb-2">
-                                            {language === 'cn' ? '健康益处' : 'Health Benefits'}
+                                            {language === 'cn' ? '健康益处' : language === 'jp' ? '健康効果' : 'Health Benefits'}
                                         </h2>
                                         <div
                                             className="w-24 h-1 mx-auto"
@@ -286,7 +286,9 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
                                     <p className="text-base font-bold">
                                         {language === 'cn'
                                             ? `准备好试试 ${product.nameCn} 了吗？`
-                                            : `Ready to try ${product.name}?`
+                                            : language === 'jp'
+                                                ? `${product.name}を試してみませんか？`
+                                                : `Ready to try ${product.name}?`
                                         }
                                     </p>
                                     <Button
@@ -295,12 +297,12 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
                                         style={{ backgroundColor: product.color }}
                                     >
                                         {isAdded ? (
-                                            <>Added! ✓</>
+                                            <>{language === 'cn' ? '已添加! ✓' : language === 'jp' ? '追加済み! ✓' : 'Added! ✓'}</>
                                         ) : (
                                             <>
                                                 {purchaseMode === 'subscribe'
-                                                    ? (language === 'cn' ? '开始订阅' : 'Subscribe Now')
-                                                    : (language === 'cn' ? '立即购买' : 'Get It Now')
+                                                    ? (language === 'cn' ? '开始订阅' : language === 'jp' ? '定期購入' : 'Subscribe Now')
+                                                    : (language === 'cn' ? '立即购买' : language === 'jp' ? '今すぐ購入' : 'Get It Now')
                                                 }
                                                 <ArrowRight className="w-4 h-4 ml-2" />
                                             </>

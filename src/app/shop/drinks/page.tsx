@@ -71,7 +71,7 @@ export default function DrinksPage() {
                     >
                         <div className="absolute -inset-2 bg-primary blur-xl opacity-20 rounded-full animate-pulse"></div>
                         <span className="relative z-10 inline-block px-4 py-1 text-xs font-black tracking-[0.2em] text-black bg-primary uppercase transform -skew-x-12 border border-black shadow-[2px_2px_0px_#fff]">
-                            {language === 'cn' ? '养生饮品' : 'Wellness Elixirs'}
+                            {language === 'cn' ? '养生饮品' : language === 'jp' ? 'ウェルネスドリンク' : 'Wellness Elixirs'}
                         </span>
                     </motion.div>
 
