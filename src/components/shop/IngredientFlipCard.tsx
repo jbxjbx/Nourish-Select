@@ -68,10 +68,7 @@ export function IngredientFlipCard({ ingredient, index, accentColor }: Ingredien
                     </p>
                 </div>
 
-                {/* Emoji */}
-                <span className="absolute top-3 right-3 text-2xl drop-shadow-lg">
-                    {ingredient.emoji}
-                </span>
+
             </motion.div>
 
             {/* Back - Benefit */}
@@ -90,7 +87,7 @@ export function IngredientFlipCard({ ingredient, index, accentColor }: Ingredien
                     pointerEvents: isFlipped ? 'auto' : 'none',
                 }}
             >
-                <span className="text-4xl mb-3">{ingredient.emoji}</span>
+
                 <h4 className="text-lg font-black text-white mb-2 leading-tight">
                     {getName()}
                 </h4>
