@@ -145,23 +145,39 @@ export function ProductCard({
                             onLoadingComplete={(img) => img.classList.remove('opacity-0')}
                         />
 
-                        {/* Layer 2: Overlay Reveal on Hover */}
-                        <div className={cn(
-                            "absolute inset-0 bg-stone-900/20 backdrop-blur-[2px] transition-opacity duration-300 flex items-center justify-center z-20",
-                            isHovered ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-                        )}>
+                        {/* Layer 2: Overlay Reveal on Hover - Always clickable, visual changes on hover */}
+                        <div
+                            className={cn(
+                                "absolute inset-0 bg-stone-900/20 backdrop-blur-[2px] transition-opacity duration-300 flex items-center justify-center z-20",
+                                isHovered ? "opacity-100" : "opacity-0 md:opacity-0"
+                            )}
+                            style={{ pointerEvents: 'none' }}
+                        >
                             <Button
                                 variant="secondary"
                                 size="sm"
-                                asChild
-                                className="scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300 delay-100 shadow-lg text-xs md:text-sm pointer-events-auto"
+                                className={cn(
+                                    "transition-all duration-300 shadow-lg text-xs md:text-sm",
+                                    isHovered ? "scale-100 opacity-100" : "scale-90 opacity-0"
+                                )}
+                                style={{ pointerEvents: 'auto' }}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    window.location.href = `/shop/drinks/${id}`;
+                                }}
                             >
-                                <Link href={`/shop/drinks/${id}`}>
-                                    <Sparkles className="w-4 h-4 mr-2" />
-                                    {language === 'cn' ? '了解更多' : language === 'jp' ? '詳細を見る' : 'Learn More'}
-                                </Link>
+                                <Sparkles className="w-4 h-4 mr-2" />
+                                {language === 'cn' ? '了解更多' : language === 'jp' ? '詳細を見る' : 'Learn More'}
                             </Button>
                         </div>
+
+                        {/* Mobile tap area - always visible on touch devices */}
+                        <Link
+                            href={`/shop/drinks/${id}`}
+                            className="absolute inset-0 z-30 md:hidden"
+                            aria-label={`View ${name} details`}
+                        />
 
                         {/* Punk badge */}
                         <Badge className="absolute top-3 left-3 bg-gradient-to-r from-pink-600 to-purple-600 text-white backdrop-blur-md border-none font-bold tracking-wide shadow-lg z-10 uppercase text-[10px]">
