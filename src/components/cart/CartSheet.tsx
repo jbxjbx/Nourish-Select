@@ -181,27 +181,30 @@ export function CartSheet() {
                                                 </div>
 
                                                 <div className="flex items-center justify-between mt-2">
-                                                    <div className="flex items-center gap-2 border-2 border-black bg-white shadow-[2px_2px_0px_#000]">
+                                                    <div className="flex items-center border-2 border-black bg-white shadow-[2px_2px_0px_#000]">
                                                         <button
                                                             onClick={() => updateQuantity(item.id, -1)}
-                                                            className="w-6 h-6 flex items-center justify-center hover:bg-stone-100 disabled:opacity-30 border-r border-black"
+                                                            className="w-10 h-10 flex items-center justify-center hover:bg-stone-100 active:bg-stone-200 disabled:opacity-30 border-r border-black transition-colors"
+                                                            aria-label="Decrease quantity"
                                                         >
-                                                            <Minus className="w-3 h-3" />
+                                                            <Minus className="w-4 h-4" />
                                                         </button>
-                                                        <span className="w-6 text-center text-sm font-bold font-mono">{item.quantity}</span>
+                                                        <span className="w-10 text-center text-sm font-bold font-mono">{item.quantity}</span>
                                                         <button
                                                             onClick={() => updateQuantity(item.id, 1)}
-                                                            className="w-6 h-6 flex items-center justify-center hover:bg-stone-100 border-l border-black"
+                                                            className="w-10 h-10 flex items-center justify-center hover:bg-stone-100 active:bg-stone-200 border-l border-black transition-colors"
+                                                            aria-label="Increase quantity"
                                                         >
-                                                            <Plus className="w-3 h-3" />
+                                                            <Plus className="w-4 h-4" />
                                                         </button>
                                                     </div>
                                                     <button
                                                         type="button"
                                                         onClick={() => removeItem(item.id)}
-                                                        className="text-stone-400 hover:text-red-600 transition-colors p-1 hover:rotate-12 transform"
+                                                        className="w-10 h-10 flex items-center justify-center text-stone-400 hover:text-red-600 hover:bg-red-50 active:bg-red-100 rounded-lg transition-colors"
+                                                        aria-label="Remove item"
                                                     >
-                                                        <Trash2 className="w-4 h-4" />
+                                                        <Trash2 className="w-5 h-5" />
                                                     </button>
                                                 </div>
                                             </div>

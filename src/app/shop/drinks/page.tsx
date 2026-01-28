@@ -106,12 +106,12 @@ export default function DrinksPage() {
                             <Filter className="w-4 h-4 text-stone-500 hidden md:block" />
 
                             {/* Brand Filter */}
-                            <div className="flex gap-1">
+                            <div className="flex gap-1.5 flex-wrap">
                                 {brands.map(brand => (
                                     <button
                                         key={brand}
                                         onClick={() => setSelectedBrand(selectedBrand === brand ? null : brand)}
-                                        className={`px-3 py-1 text-xs font-bold uppercase border-2 transition-all ${selectedBrand === brand
+                                        className={`px-4 py-2.5 text-xs font-bold uppercase border-2 transition-all active:scale-95 ${selectedBrand === brand
                                             ? 'bg-black text-white border-black'
                                             : 'bg-white text-black border-stone-300 hover:border-black'
                                             }`}
@@ -125,9 +125,9 @@ export default function DrinksPage() {
                             {hasActiveFilters && (
                                 <button
                                     onClick={clearFilters}
-                                    className="flex items-center gap-1 px-3 py-1 text-xs font-bold uppercase bg-red-500 text-white border-2 border-red-600 hover:bg-red-600 transition-colors"
+                                    className="flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold uppercase bg-red-500 text-white border-2 border-red-600 hover:bg-red-600 active:scale-95 transition-all"
                                 >
-                                    <X className="w-3 h-3" />
+                                    <X className="w-4 h-4" />
                                     {t('shop.clear_filter')}
                                 </button>
                             )}
@@ -143,7 +143,7 @@ export default function DrinksPage() {
                             <button
                                 key={tag}
                                 onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
-                                className={`px-2 py-0.5 text-[10px] font-bold uppercase rounded-full border transition-all ${selectedTag === tag
+                                className={`px-3 py-1.5 text-xs font-bold uppercase rounded-full border transition-all active:scale-95 ${selectedTag === tag
                                     ? 'bg-primary text-black border-primary'
                                     : 'bg-stone-100 text-stone-600 border-stone-200 hover:border-primary'
                                     }`}
