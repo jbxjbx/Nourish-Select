@@ -123,15 +123,8 @@ export function ProductCard({
             >
                 <Card className="overflow-hidden border-4 border-black shadow-stark hover:shadow-stark-hover bg-background h-full flex flex-col relative transition-all duration-100 rounded-none hover:border-[#39FF14]">
 
-                    {/* Image Area with "Layer Reveal" Effect - ENTIRE AREA IS CLICKABLE */}
-                    <a
-                        href={`/shop/drinks/${id}`}
-                        className="relative aspect-[4/4] overflow-hidden bg-stone-900 block cursor-pointer"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            window.location.href = `/shop/drinks/${id}`;
-                        }}
-                    >
+                    {/* Image Area with "Layer Reveal" Effect */}
+                    <div className="relative aspect-[4/4] overflow-hidden bg-stone-900">
                         {/* Layer 1: Base Image */}
                         <div className={cn(
                             "absolute inset-0 bg-gradient-to-br transition-opacity duration-700",
@@ -140,7 +133,7 @@ export function ProductCard({
                         )} />
 
                         {/* Mock Image Content */}
-                        <div className="absolute inset-0 flex items-center justify-center text-stone-700/30 font-bold text-8xl pointer-events-none">
+                        <div className="absolute inset-0 flex items-center justify-center text-stone-700/30 font-bold text-8xl">
                             {name.charAt(0)}
                         </div>
 
@@ -148,35 +141,37 @@ export function ProductCard({
                             src={imageUrl}
                             alt={name}
                             fill
-                            className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-0 pointer-events-none"
+                            className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-0"
                             onLoadingComplete={(img) => img.classList.remove('opacity-0')}
                         />
 
-                        {/* Layer 2: Visual Overlay on Hover - purely decorative */}
+                        {/* Layer 2: Visual Overlay on Hover with CLICKABLE BUTTON */}
                         <div
                             className={cn(
-                                "absolute inset-0 bg-stone-900/20 backdrop-blur-[2px] transition-opacity duration-300 flex items-center justify-center pointer-events-none",
-                                isHovered ? "opacity-100" : "opacity-0"
+                                "absolute inset-0 bg-stone-900/20 backdrop-blur-[2px] transition-opacity duration-300 flex items-center justify-center",
+                                isHovered ? "opacity-100" : "opacity-0 pointer-events-none"
                             )}
                         >
-                            <div
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    window.location.href = `/shop/drinks/${id}`;
+                                }}
                                 className={cn(
-                                    "transition-all duration-300",
+                                    "inline-flex items-center px-6 py-3 bg-secondary text-secondary-foreground rounded-md shadow-lg text-sm font-bold cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95",
                                     isHovered ? "scale-100 opacity-100" : "scale-90 opacity-0"
                                 )}
                             >
-                                <span className="inline-flex items-center px-4 py-2 bg-secondary text-secondary-foreground rounded-md shadow-lg text-xs md:text-sm font-medium">
-                                    <Sparkles className="w-4 h-4 mr-2" />
-                                    {language === 'cn' ? '了解更多' : language === 'jp' ? '詳細を見る' : 'Learn More'}
-                                </span>
-                            </div>
+                                <Sparkles className="w-4 h-4 mr-2" />
+                                {language === 'cn' ? '了解更多' : language === 'jp' ? '詳細を見る' : 'Learn More'}
+                            </button>
                         </div>
 
                         {/* Punk badge */}
-                        <Badge className="absolute top-3 left-3 bg-gradient-to-r from-pink-600 to-purple-600 text-white backdrop-blur-md border-none font-bold tracking-wide shadow-lg uppercase text-[10px] pointer-events-none">
+                        <Badge className="absolute top-3 left-3 bg-gradient-to-r from-pink-600 to-purple-600 text-white backdrop-blur-md border-none font-bold tracking-wide shadow-lg uppercase text-[10px]">
                             🔥 {language === 'cn' ? '功能饮料' : language === 'jp' ? '機能性ソーダ' : 'Functional Soda'}
                         </Badge>
-                    </a>
+                    </div>
 
                     <CardContent className="p-4 flex-grow flex flex-col relative z-20 bg-stone-50">
                         {/* Fixed height tags row */}
