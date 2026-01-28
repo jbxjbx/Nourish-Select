@@ -189,7 +189,7 @@ export const products: ProductDetail[] = [
                 benefit: 'Boosts metabolism and helps break down body fat',
                 benefitCn: '促进代谢，帮助分解体脂',
                 emoji: '🍃',
-                imageUrl: 'https://images.unsplash.com/photo-1474557157379-8aa74a6ef541?w=400&h=400&fit=crop'
+                imageUrl: '/images/ingredients/lotus_leaf.png'
             },
             {
                 name: 'Astragalus',
@@ -198,7 +198,7 @@ export const products: ProductDetail[] = [
                 benefit: 'Increases energy and supports healthy fluid balance',
                 benefitCn: '增强能量，促进水液代谢平衡',
                 emoji: '🌿',
-                imageUrl: 'https://images.unsplash.com/photo-1515023115689-589c33041d3c?w=400&h=400&fit=crop'
+                imageUrl: '/images/ingredients/astragalus.png'
             },
             {
                 name: 'Coix Seed',
@@ -207,7 +207,7 @@ export const products: ProductDetail[] = [
                 benefit: 'Reduces water retention and supports kidney function',
                 benefitCn: '减少水肿，支持肾脏功能',
                 emoji: '🌾',
-                imageUrl: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&h=400&fit=crop'
+                imageUrl: '/images/ingredients/coix_seed.png'
             },
             {
                 name: 'Alisma',
@@ -216,7 +216,7 @@ export const products: ProductDetail[] = [
                 benefit: 'Natural diuretic that flushes excess fluids',
                 benefitCn: '天然利尿，排出多余水分',
                 emoji: '💧',
-                imageUrl: 'https://images.unsplash.com/photo-1518882605630-8991c6849c5a?w=400&h=400&fit=crop'
+                imageUrl: '/images/ingredients/alisma.png'
             }
         ],
 
@@ -258,7 +258,7 @@ export const products: ProductDetail[] = [
                 benefit: 'Calms the nervous system and promotes deep, restful sleep',
                 benefitCn: '镇静神经系统，促进深度睡眠',
                 emoji: '🌙',
-                imageUrl: 'https://images.unsplash.com/photo-1551462147-ff29053bfc14?w=400&h=400&fit=crop'
+                imageUrl: '/images/ingredients/jujube_seed.png'
             },
             {
                 name: 'Prince Shen',
@@ -267,7 +267,7 @@ export const products: ProductDetail[] = [
                 benefit: 'Gently restores energy without stimulation',
                 benefitCn: '温和恢复能量，不产生刺激',
                 emoji: '✨',
-                imageUrl: 'https://images.unsplash.com/photo-1515023115689-589c33041d3c?w=400&h=400&fit=crop'
+                imageUrl: '/images/ingredients/prince_shen.png'
             },
             {
                 name: 'Rose Petals',
@@ -276,7 +276,7 @@ export const products: ProductDetail[] = [
                 benefit: 'Eases tension and lifts mood naturally',
                 benefitCn: '舒缓紧张，自然提升心情',
                 emoji: '🌹',
-                imageUrl: 'https://images.unsplash.com/photo-1518882605630-8991c6849c5a?w=400&h=400&fit=crop'
+                imageUrl: '/images/ingredients/rose_petals.png'
             }
         ],
 
