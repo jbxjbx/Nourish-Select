@@ -78,9 +78,9 @@ export default function ProductDetailPage() {
 
     return (
         <div className="min-h-screen bg-stone-100">
-            {/* Punk Back Button */}
+            {/* Punk Back Button - Fixed at top right of page, not floating */}
             <motion.div
-                className="fixed top-24 right-6 z-50"
+                className="absolute top-24 right-6 z-40"
                 initial={{ x: 100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: 0.3 }}
