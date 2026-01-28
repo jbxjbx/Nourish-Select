@@ -7,10 +7,12 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 });
 
 // Use service role key for webhook (server-side, no user context)
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+function getSupabase() {
+    return createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+}
 
 export async function POST(req: Request) {
     const body = await req.text();
@@ -120,7 +122,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
 
     console.log('💾 Saving order to database:', JSON.stringify(orderData, null, 2));
 
-    const { data, error } = await supabase
+    const { data, error } = await getSupabase()
         .from('orders')
         .insert(orderData)
         .select()
@@ -151,7 +153,7 @@ async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
     const subscription = await stripe.subscriptions.retrieve(invoiceAny.subscription as string);
 
     // Find existing orders with this subscription ID and update status
-    const { data: existingOrder } = await supabase
+    const { data: existingOrder } = await getSupabase()
         .from('orders')
         .select('id, user_id')
         .eq('stripe_subscription_id', invoiceAny.subscription)
@@ -172,7 +174,7 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription, event
         subscription.status === 'canceled' ? 'cancelled' :
             subscription.status === 'past_due' ? 'past_due' : 'pending';
 
-    const { error } = await supabase
+    const { error } = await getSupabase()
         .from('orders')
         .update({
             subscription_status: newStatus,

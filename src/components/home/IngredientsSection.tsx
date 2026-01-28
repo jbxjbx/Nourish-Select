@@ -16,7 +16,7 @@ const ingredients = [
         desc_en: 'Supports liver function and helps process alcohol byproducts faster.',
         desc_zh: '支持肝脏功能，加速酒精代谢。',
         desc_jp: '肝機能をサポートし、アルコール代謝を促進。',
-        imageUrl: '/images/home-ingredients/kudzu_root.png',
+        imageUrl: '/images/home-ingredients/kudzu_root.png?v=1',
     },
     {
         icon: Brain,
@@ -29,7 +29,7 @@ const ingredients = [
         desc_en: 'Powerful adaptogen that protects liver cells and reduces fatigue.',
         desc_zh: '强效适应原，保护肝细胞，减轻疲劳。',
         desc_jp: '肝細胞を保護し、疲労を軽減する強力なアダプトゲン。',
-        imageUrl: '/images/home-ingredients/schisandra_berry.png',
+        imageUrl: '/images/home-ingredients/schisandra_berry.png?v=1',
     },
     {
         icon: Leaf,
@@ -42,7 +42,7 @@ const ingredients = [
         desc_en: 'Boosts metabolism and helps break down body fat naturally.',
         desc_zh: '促进代谢，帮助分解体脂。',
         desc_jp: '代謝を促進し、体脂肪の分解をサポート。',
-        imageUrl: '/images/home-ingredients/lotus_leaf.png',
+        imageUrl: '/images/home-ingredients/lotus_leaf.png?v=1',
     },
     {
         icon: Shield,
@@ -55,7 +55,7 @@ const ingredients = [
         desc_en: 'Breaks down food stagnation and relieves bloating fast.',
         desc_zh: '消食化积，快速缓解胀气。',
         desc_jp: '食滞を解消し、膨満感を素早く軽減。',
-        imageUrl: '/images/home-ingredients/radish_seed.png',
+        imageUrl: '/images/home-ingredients/radish_seed.png?v=1',
     },
     {
         icon: Heart,
@@ -68,7 +68,7 @@ const ingredients = [
         desc_en: 'Eases tension and lifts mood naturally for calm relaxation.',
         desc_zh: '舒缓紧张，自然提升心情。',
         desc_jp: '緊張を和らげ、自然に気分を高めます。',
-        imageUrl: '/images/home-ingredients/rose_petals.png',
+        imageUrl: '/images/home-ingredients/rose_petals.png?v=1',
     },
     {
         icon: Moon,
@@ -81,7 +81,7 @@ const ingredients = [
         desc_en: 'Calms the nervous system and promotes deep, restful sleep.',
         desc_zh: '镇静神经系统，促进深度睡眠。',
         desc_jp: '神経系を落ち着かせ、深い眠りを促進。',
-        imageUrl: '/images/home-ingredients/jujube_seed.png',
+        imageUrl: '/images/home-ingredients/jujube_seed.png?v=1',
     },
 ];
 

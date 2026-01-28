@@ -7,10 +7,12 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 });
 
 // Use service role key for admin operations
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+function getSupabase() {
+    return createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+}
 
 export async function POST(req: Request) {
     try {
@@ -21,7 +23,7 @@ export async function POST(req: Request) {
         }
 
         // Get order details
-        const { data: order, error: orderError } = await supabase
+        const { data: order, error: orderError } = await getSupabase()
             .from('orders')
             .select('*')
             .eq('id', orderId)
@@ -45,7 +47,7 @@ export async function POST(req: Request) {
                 paymentIntentId = session.payment_intent as string;
 
                 // Store it for future use
-                await supabase
+                await getSupabase()
                     .from('orders')
                     .update({ stripe_payment_intent: paymentIntentId })
                     .eq('id', orderId);
@@ -56,7 +58,7 @@ export async function POST(req: Request) {
 
         if (!paymentIntentId) {
             // For test orders without real payment, just update status
-            await supabase
+            await getSupabase()
                 .from('orders')
                 .update({
                     status: 'refunded',
@@ -82,7 +84,7 @@ export async function POST(req: Request) {
         console.log('✅ Stripe refund created:', refund.id);
 
         // Update order status
-        const { error: updateError } = await supabase
+        const { error: updateError } = await getSupabase()
             .from('orders')
             .update({
                 status: 'refunded',

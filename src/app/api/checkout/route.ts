@@ -7,10 +7,12 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 });
 
 // Create Supabase client for server-side usage
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+function getSupabase() {
+    return createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+}
 
 interface CartItem {
     id: string;
@@ -212,7 +214,7 @@ export async function POST(req: Request) {
 
         if (userId) {
             try {
-                const { data: shippingAddr } = await supabase
+                const { data: shippingAddr } = await getSupabase()
                     .from('addresses')
                     .select('*')
                     .eq('user_id', userId)
