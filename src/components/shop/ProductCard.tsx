@@ -123,8 +123,15 @@ export function ProductCard({
             >
                 <Card className="overflow-hidden border-4 border-black shadow-stark hover:shadow-stark-hover bg-background h-full flex flex-col relative transition-all duration-100 rounded-none hover:border-[#39FF14]">
 
-                    {/* Image Area with "Layer Reveal" Effect */}
-                    <div className="relative aspect-[4/4] overflow-hidden bg-stone-900">
+                    {/* Image Area with "Layer Reveal" Effect - ENTIRE AREA IS CLICKABLE */}
+                    <a
+                        href={`/shop/drinks/${id}`}
+                        className="relative aspect-[4/4] overflow-hidden bg-stone-900 block cursor-pointer"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            window.location.href = `/shop/drinks/${id}`;
+                        }}
+                    >
                         {/* Layer 1: Base Image */}
                         <div className={cn(
                             "absolute inset-0 bg-gradient-to-br transition-opacity duration-700",
@@ -133,7 +140,7 @@ export function ProductCard({
                         )} />
 
                         {/* Mock Image Content */}
-                        <div className="absolute inset-0 flex items-center justify-center text-stone-700/30 font-bold text-8xl">
+                        <div className="absolute inset-0 flex items-center justify-center text-stone-700/30 font-bold text-8xl pointer-events-none">
                             {name.charAt(0)}
                         </div>
 
@@ -141,14 +148,14 @@ export function ProductCard({
                             src={imageUrl}
                             alt={name}
                             fill
-                            className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-0"
+                            className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-0 pointer-events-none"
                             onLoadingComplete={(img) => img.classList.remove('opacity-0')}
                         />
 
                         {/* Layer 2: Visual Overlay on Hover - purely decorative */}
                         <div
                             className={cn(
-                                "absolute inset-0 bg-stone-900/20 backdrop-blur-[2px] transition-opacity duration-300 flex items-center justify-center z-20 pointer-events-none",
+                                "absolute inset-0 bg-stone-900/20 backdrop-blur-[2px] transition-opacity duration-300 flex items-center justify-center pointer-events-none",
                                 isHovered ? "opacity-100" : "opacity-0"
                             )}
                         >
@@ -165,18 +172,11 @@ export function ProductCard({
                             </div>
                         </div>
 
-                        {/* Clickable overlay - works on ALL devices and browsers */}
-                        <Link
-                            href={`/shop/drinks/${id}`}
-                            className="absolute inset-0 z-30 cursor-pointer"
-                            aria-label={`View ${name} details`}
-                        />
-
                         {/* Punk badge */}
-                        <Badge className="absolute top-3 left-3 bg-gradient-to-r from-pink-600 to-purple-600 text-white backdrop-blur-md border-none font-bold tracking-wide shadow-lg z-10 uppercase text-[10px]">
+                        <Badge className="absolute top-3 left-3 bg-gradient-to-r from-pink-600 to-purple-600 text-white backdrop-blur-md border-none font-bold tracking-wide shadow-lg uppercase text-[10px] pointer-events-none">
                             🔥 {language === 'cn' ? '功能饮料' : language === 'jp' ? '機能性ソーダ' : 'Functional Soda'}
                         </Badge>
-                    </div>
+                    </a>
 
                     <CardContent className="p-4 flex-grow flex flex-col relative z-20 bg-stone-50">
                         {/* Fixed height tags row */}
