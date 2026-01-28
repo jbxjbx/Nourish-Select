@@ -145,37 +145,30 @@ export function ProductCard({
                             onLoadingComplete={(img) => img.classList.remove('opacity-0')}
                         />
 
-                        {/* Layer 2: Overlay Reveal on Hover - Always clickable, visual changes on hover */}
+                        {/* Layer 2: Visual Overlay on Hover - purely decorative */}
                         <div
                             className={cn(
-                                "absolute inset-0 bg-stone-900/20 backdrop-blur-[2px] transition-opacity duration-300 flex items-center justify-center z-20",
-                                isHovered ? "opacity-100" : "opacity-0 md:opacity-0"
+                                "absolute inset-0 bg-stone-900/20 backdrop-blur-[2px] transition-opacity duration-300 flex items-center justify-center z-20 pointer-events-none",
+                                isHovered ? "opacity-100" : "opacity-0"
                             )}
-                            style={{ pointerEvents: 'none' }}
                         >
-                            <Button
-                                variant="secondary"
-                                size="sm"
+                            <div
                                 className={cn(
-                                    "transition-all duration-300 shadow-lg text-xs md:text-sm",
+                                    "transition-all duration-300",
                                     isHovered ? "scale-100 opacity-100" : "scale-90 opacity-0"
                                 )}
-                                style={{ pointerEvents: 'auto' }}
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    window.location.href = `/shop/drinks/${id}`;
-                                }}
                             >
-                                <Sparkles className="w-4 h-4 mr-2" />
-                                {language === 'cn' ? '了解更多' : language === 'jp' ? '詳細を見る' : 'Learn More'}
-                            </Button>
+                                <span className="inline-flex items-center px-4 py-2 bg-secondary text-secondary-foreground rounded-md shadow-lg text-xs md:text-sm font-medium">
+                                    <Sparkles className="w-4 h-4 mr-2" />
+                                    {language === 'cn' ? '了解更多' : language === 'jp' ? '詳細を見る' : 'Learn More'}
+                                </span>
+                            </div>
                         </div>
 
-                        {/* Mobile tap area - always visible on touch devices */}
+                        {/* Clickable overlay - works on ALL devices and browsers */}
                         <Link
                             href={`/shop/drinks/${id}`}
-                            className="absolute inset-0 z-30 md:hidden"
+                            className="absolute inset-0 z-30 cursor-pointer"
                             aria-label={`View ${name} details`}
                         />
 
